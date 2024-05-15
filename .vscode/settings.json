@@ -1,8 +1,16 @@
 {
+  "css.lint.unknownAtRules": "ignore",
+  "scss.lint.unknownAtRules": "ignore",
+  "eslint.enable": true,
+
+  "eslint.format.enable": true,
+  "eslint.validate": ["javascript", "typescript", "react", "react-native"],
+  "eslint.experimental.useFlatConfig": true,
   "eslint.workingDirectories": [
-    {
-      "mode": "auto"
-    }
+    { "pattern": "./apps/*/" },
+    { "pattern": "./packages/*/" }
   ],
-  "eslint.runtime": "node"
+  "eslint.trace.server": "verbose",
+
+  "eslint.runtime": "C:/Program Files/nodejs/node.exe"
 }

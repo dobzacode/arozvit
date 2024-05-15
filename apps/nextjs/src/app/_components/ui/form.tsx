@@ -1,10 +1,11 @@
 import type * as LabelPrimitive from "@radix-ui/react-label";
 import type { ControllerProps, FieldPath, FieldValues } from "react-hook-form";
 import * as React from "react";
-import { cn } from "@planty/utils";
 import { Slot } from "@radix-ui/react-slot";
 import { Controller, FormProvider, useFormContext } from "react-hook-form";
 import { Label } from "src/app/_components/ui/label";
+
+import { cn } from "@planty/utils";
 
 const Form = FormProvider;
 
@@ -36,6 +37,11 @@ const useFormField = () => {
   const fieldContext = React.useContext(FormFieldContext);
   const itemContext = React.useContext(FormItemContext);
   const { getFieldState, formState } = useFormContext();
+
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  if (!fieldContext) {
+    throw new Error("useFormField must be used within a FormField");
+  }
 
   const fieldState = getFieldState(fieldContext.name, formState);
 
