@@ -1,0 +1,12 @@
+{
+  "name": "@planty/utils",
+  "private": true,
+  "version": "0.1.0",
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^2.3.0"
+  },
+  "exports": {
+    "default": "./utils.ts"
+  }
+}

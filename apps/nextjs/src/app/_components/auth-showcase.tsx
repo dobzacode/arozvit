@@ -1,5 +1,4 @@
-import { auth, signIn, signOut } from "@acme/auth";
-import { Button } from "@acme/ui/button";
+import { auth, signIn, signOut } from "@planty/auth";
 
 export async function AuthShowcase() {
   const session = await auth();
@@ -7,15 +6,14 @@ export async function AuthShowcase() {
   if (!session) {
     return (
       <form>
-        <Button
-          size="lg"
+        <button
           formAction={async () => {
             "use server";
             await signIn("discord");
           }}
         >
           Sign in with Discord
-        </Button>
+        </button>
       </form>
     );
   }
@@ -27,15 +25,14 @@ export async function AuthShowcase() {
       </p>
 
       <form>
-        <Button
-          size="lg"
+        <button
           formAction={async () => {
             "use server";
             await signOut();
           }}
         >
           Sign out
-        </Button>
+        </button>
       </form>
     </div>
   );

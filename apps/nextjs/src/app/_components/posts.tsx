@@ -1,27 +1,22 @@
 "use client";
 
 import { use } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 
-import type { RouterOutputs } from "@acme/api";
-import { CreatePostSchema } from "@acme/db/schema";
-import { cn } from "@acme/ui";
-import { Button } from "@acme/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-  useForm,
-} from "@acme/ui/form";
-import { Input } from "@acme/ui/input";
-import { toast } from "@acme/ui/toast";
+import type { RouterOutputs } from "@planty/api";
+import { CreatePostSchema } from "@planty/db/schema";
+import { cn } from "@planty/utils";
 
 import { api } from "~/trpc/react";
+import { Button } from "./ui/button";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form";
+import { Input } from "./ui/input";
+import { toast } from "./ui/use-toast";
 
 export function CreatePostForm() {
   const form = useForm({
-    schema: CreatePostSchema,
+    resolver: zodResolver(CreatePostSchema),
     defaultValues: {
       content: "",
       title: "",
@@ -35,11 +30,12 @@ export function CreatePostForm() {
       await utils.post.invalidate();
     },
     onError: (err) => {
-      toast.error(
-        err.data?.code === "UNAUTHORIZED"
-          ? "You must be logged in to post"
-          : "Failed to create post",
-      );
+      toast({
+        description:
+          err.data?.code === "UNAUTHORIZED"
+            ? "You must be logged in to post"
+            : "Failed to create post",
+      });
     },
   });
 
@@ -122,11 +118,12 @@ export function PostCard(props: {
       await utils.post.invalidate();
     },
     onError: (err) => {
-      toast.error(
-        err.data?.code === "UNAUTHORIZED"
-          ? "You must be logged in to delete a post"
-          : "Failed to delete post",
-      );
+      toast({
+        description:
+          err.data?.code === "UNAUTHORIZED"
+            ? "You must be logged in to delete a post"
+            : "Failed to delete post",
+      });
     },
   });
 

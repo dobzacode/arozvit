@@ -2,15 +2,15 @@ import type { Metadata, Viewport } from "next";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 
-import { cn } from "@acme/ui";
-import { ThemeProvider, ThemeToggle } from "@acme/ui/theme";
-import { Toaster } from "@acme/ui/toast";
-
-import { TRPCReactProvider } from "~/trpc/react";
+import { cn } from "@planty/utils";
 
 import "~/app/globals.css";
 
 import { env } from "~/env";
+import { TRPCReactProvider } from "~/trpc/react";
+import DarkModeButton from "./_components/darkmode-button";
+import { ThemeProvider } from "./_components/theme-provider";
+import { Toaster } from "./_components/ui/toaster";
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -53,10 +53,10 @@ export default function RootLayout(props: { children: React.ReactNode }) {
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <TRPCReactProvider>{props.children}</TRPCReactProvider>
           <div className="absolute bottom-4 right-4">
-            <ThemeToggle />
+            <DarkModeButton />
           </div>
-          <Toaster />
         </ThemeProvider>
+        <Toaster></Toaster>
       </body>
     </html>
   );
