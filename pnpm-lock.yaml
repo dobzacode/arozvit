@@ -211,9 +211,6 @@ importers:
       '@planty/api':
         specifier: workspace:*
         version: link:../../packages/api
-      '@planty/auth':
-        specifier: workspace:*
-        version: link:../../packages/auth
       '@planty/db':
         specifier: workspace:*
         version: link:../../packages/db
@@ -326,9 +323,6 @@ importers:
 
   packages/api:
     dependencies:
-      '@planty/auth':
-        specifier: workspace:*
-        version: link:../auth
       '@planty/db':
         specifier: workspace:*
         version: link:../db
@@ -341,52 +335,6 @@ importers:
       superjson:
         specifier: 2.2.1
         version: 2.2.1
-      zod:
-        specifier: ^3.23.8
-        version: 3.23.8
-    devDependencies:
-      '@planty/eslint-config':
-        specifier: workspace:*
-        version: link:../../tooling/eslint
-      '@planty/prettier-config':
-        specifier: workspace:*
-        version: link:../../tooling/prettier
-      '@planty/tsconfig':
-        specifier: workspace:*
-        version: link:../../tooling/typescript
-      eslint:
-        specifier: ^9.2.0
-        version: 9.2.0
-      prettier:
-        specifier: ^3.2.5
-        version: 3.2.5
-      typescript:
-        specifier: ^5.4.5
-        version: 5.4.5
-
-  packages/auth:
-    dependencies:
-      '@auth/drizzle-adapter':
-        specifier: ^1.1.0
-        version: 1.1.0
-      '@planty/db':
-        specifier: workspace:*
-        version: link:../db
-      '@t3-oss/env-nextjs':
-        specifier: ^0.10.1
-        version: 0.10.1(typescript@5.4.5)(zod@3.23.8)
-      next:
-        specifier: ^14.2.3
-        version: 14.2.3(@opentelemetry/api@1.8.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      next-auth:
-        specifier: 5.0.0-beta.18
-        version: 5.0.0-beta.18(next@14.2.3(@opentelemetry/api@1.8.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
-      react:
-        specifier: 18.3.1
-        version: 18.3.1
-      react-dom:
-        specifier: 18.3.1
-        version: 18.3.1(react@18.3.1)
       zod:
         specifier: ^3.23.8
         version: 3.23.8
@@ -441,7 +389,7 @@ importers:
         specifier: ^7.4.2
         version: 7.4.2
       drizzle-kit:
-        specifier: ^0.21.1
+        specifier: ^0.21.2
         version: 0.21.2
       eslint:
         specifier: ^9.2.0
@@ -604,9 +552,6 @@ packages:
         optional: true
       nodemailer:
         optional: true
-
-  '@auth/drizzle-adapter@1.1.0':
-    resolution: {integrity: sha512-ZC83ne3Ulkxh2II2T5qazgrqc1AmWbbPzs3oR+C93DMlIV8DPIgEaw4cmbV/kesO9xO+Gt7HpkctmOa2B26A1Q==}
 
   '@babel/code-frame@7.10.4':
     resolution: {integrity: sha512-vG6SvB6oYEhvgisZNFRmRCUkLz11c7rp+tbNTynGqc6mS1d5ATd/sGyV6W0KZZnXRKMTzZDRgQT3Ou9jhpAfUg==}
@@ -6296,22 +6241,6 @@ packages:
     resolution: {integrity: sha512-dBpDMdxv9Irdq66304OLfEmQ9tbNRFnFTuZiLo+bD+r332bBmMJ8GBLXklIXXgxd3+v9+KUnZaUR5PJMa75Gsg==}
     engines: {node: '>= 0.4.0'}
 
-  next-auth@5.0.0-beta.18:
-    resolution: {integrity: sha512-x55L8wZb8PcPGCYA3e/l9tdpd7YL3FDuhas4W8pxq3PjrWJ9OoDxNN0otK9axJamJBbBgjfzTJjVQB6hXoe0ZQ==}
-    peerDependencies:
-      '@simplewebauthn/browser': ^9.0.1
-      '@simplewebauthn/server': ^9.0.2
-      next: ^14
-      nodemailer: ^6.6.5
-      react: ^18.2.0
-    peerDependenciesMeta:
-      '@simplewebauthn/browser':
-        optional: true
-      '@simplewebauthn/server':
-        optional: true
-      nodemailer:
-        optional: true
-
   next-themes@0.3.0:
     resolution: {integrity: sha512-/QHIrsYpd6Kfk7xakK4svpDI5mmXP0gfvCoJdGpZQ2TOrQZmsW0QxjaiLn8wbIKjtm4BTSqLoix4lxYYOnLJ/w==}
     peerDependencies:
@@ -8512,14 +8441,6 @@ snapshots:
       oauth4webapi: 2.10.4
       preact: 10.11.3
       preact-render-to-string: 5.2.3(preact@10.11.3)
-
-  '@auth/drizzle-adapter@1.1.0':
-    dependencies:
-      '@auth/core': 0.31.0
-    transitivePeerDependencies:
-      - '@simplewebauthn/browser'
-      - '@simplewebauthn/server'
-      - nodemailer
 
   '@babel/code-frame@7.10.4':
     dependencies:
@@ -15143,12 +15064,6 @@ snapshots:
   nested-error-stacks@2.0.1: {}
 
   netmask@2.0.2: {}
-
-  next-auth@5.0.0-beta.18(next@14.2.3(@opentelemetry/api@1.8.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1):
-    dependencies:
-      '@auth/core': 0.31.0
-      next: 14.2.3(@opentelemetry/api@1.8.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      react: 18.3.1
 
   next-themes@0.3.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
