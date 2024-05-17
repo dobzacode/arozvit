@@ -219,3 +219,8 @@ div:has(.grecaptcha-badge) {
     opacity: 1;
   }
 }
+
+.cl-internal-180wb59,
+.cl-internal-11ttlho {
+  display: none;
+}

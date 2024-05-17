@@ -1,41 +1,38 @@
-import { Suspense } from "react";
-
-import { api } from "~/trpc/server";
-import { AuthShowcase } from "./_components/auth-showcase";
 import {
-  CreatePostForm,
-  PostCardSkeleton,
-  PostList,
-} from "./_components/posts";
-
-export const runtime = "edge";
+  ClerkLoaded,
+  ClerkLoading,
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+} from "@clerk/nextjs";
+import { Loader } from "lucide-react";
 
 export default function HomePage() {
   // You can await this here if you don't want to show Suspense fallback below
-  const posts = api.post.all();
 
   return (
     <main className="container h-screen py-16">
       <div className="flex flex-col items-center justify-center gap-4">
-        <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
+        <h1 className="sm:text-[5rem] text-5xl font-extrabold tracking-tight">
           Create <span className="text-primary">T3</span> Turbo
         </h1>
-        <AuthShowcase />
+        <ClerkLoading>
+          <Loader className="h-5 w-5 text-muted-foreground" />
+        </ClerkLoading>
 
-        <CreatePostForm />
-        <div className="w-full max-w-2xl overflow-y-scroll">
-          <Suspense
-            fallback={
-              <div className="flex w-full flex-col gap-4">
-                <PostCardSkeleton />
-                <PostCardSkeleton />
-                <PostCardSkeleton />
-              </div>
-            }
-          >
-            <PostList posts={posts} />
-          </Suspense>
-        </div>
+        <ClerkLoaded>
+          <SignedIn>
+            <UserButton afterSignOutUrl="/" />
+          </SignedIn>
+          <SignedOut>
+            <SignInButton mode="modal">
+              <button className="w-fit rounded-lg bg-blue-500 p-4 text-white">
+                Sign In
+              </button>
+            </SignInButton>
+          </SignedOut>
+        </ClerkLoaded>
       </div>
     </main>
   );

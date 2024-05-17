@@ -19,7 +19,6 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
-    "@planty/auth": "workspace:*",
     "@planty/db": "workspace:*",
     "@planty/validators": "workspace:*",
     "@trpc/server": "11.0.0-rc.364",

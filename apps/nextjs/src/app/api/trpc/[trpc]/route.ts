@@ -1,6 +1,10 @@
-import { appRouter, createTRPCContext } from "@planty/api";
-import { auth } from "@planty/auth";
+import { NextRequest } from "next/server";
+import { getAuth } from "@clerk/nextjs/server";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
+
+import { appRouter, createTRPCContext } from "@planty/api";
+
+import { env } from "~/env";
 
 export const runtime = "edge";
 
@@ -23,23 +27,27 @@ export const OPTIONS = () => {
   return response;
 };
 
-const handler = auth(async (req) => {
-  const response = await fetchRequestHandler({
-    endpoint: "/api/trpc",
-    router: appRouter,
-    req,
-    createContext: () =>
-      createTRPCContext({
-        session: req.auth,
-        headers: req.headers,
-      }),
-    onError({ error, path }) {
-      console.error(`>>> tRPC Error on '${path}'`, error);
-    },
+const createContext = (req: NextRequest) => {
+  return createTRPCContext({
+    headers: req.headers,
+    auth: getAuth(req),
   });
+};
 
-  setCorsHeaders(response);
-  return response;
-});
+const handler = (req: NextRequest) =>
+  fetchRequestHandler({
+    endpoint: "/api/trpc",
+    req,
+    router: appRouter,
+    createContext: () => createContext(req),
+    onError:
+      env.NODE_ENV === "development"
+        ? ({ path, error }) => {
+            console.error(
+              `❌ tRPC failed on ${path ?? "<no-path>"}: ${error.message}`,
+            );
+          }
+        : undefined,
+  });
 
 export { handler as GET, handler as POST };
