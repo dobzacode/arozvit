@@ -6,6 +6,7 @@ import { cn } from "@planty/utils";
 
 import "~/app/globals.css";
 
+import { frFR } from "@clerk/localizations";
 import { ClerkProvider } from "@clerk/nextjs";
 
 import { env } from "~/env";
@@ -44,7 +45,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout(props: { children: React.ReactNode }) {
   return (
-    <ClerkProvider>
+    <ClerkProvider localization={frFR}>
       <html lang="en" suppressHydrationWarning>
         <body
           className={cn(
