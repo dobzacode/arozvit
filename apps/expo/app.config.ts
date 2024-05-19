@@ -22,6 +22,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     bundleIdentifier: "your.bundle.identifier",
     supportsTablet: true,
   },
+  extra: {
+    CLERK_PUBLISHABLE_KEY: process.env.CLERK_PUBLISHABLE_KEY,
+  },
   android: {
     package: "your.bundle.identifier",
     adaptiveIcon: {

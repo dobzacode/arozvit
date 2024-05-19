@@ -1,10 +1,12 @@
-import type { AppRouter } from "@planty/api";
 import { useState } from "react";
 import Constants from "expo-constants";
+import { useAuth } from "@clerk/clerk-expo";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink, loggerLink } from "@trpc/client";
 import { createTRPCReact } from "@trpc/react-query";
 import superjson from "superjson";
+
+import type { AppRouter } from "@planty/api";
 
 /**
  * A set of typesafe hooks for consuming your API.
@@ -42,6 +44,8 @@ const getBaseUrl = () => {
  * Use only in _app.tsx
  */
 export function TRPCProvider(props: { children: React.ReactNode }) {
+  const { getToken } = useAuth();
+
   const [queryClient] = useState(() => new QueryClient());
   const [trpcClient] = useState(() =>
     api.createClient({
@@ -53,13 +57,15 @@ export function TRPCProvider(props: { children: React.ReactNode }) {
           colorMode: "ansi",
         }),
         httpBatchLink({
+          async headers() {
+            const authToken = await getToken();
+            return {
+              "x-trpc-source": "expo-react",
+              Authorization: authToken ?? undefined,
+            };
+          },
           transformer: superjson,
           url: `${getBaseUrl()}/api/trpc`,
-          headers() {
-            const headers = new Map<string, string>();
-            headers.set("x-trpc-source", "expo-react");
-            return Object.fromEntries(headers);
-          },
         }),
       ],
     }),

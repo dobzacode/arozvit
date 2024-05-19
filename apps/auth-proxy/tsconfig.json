@@ -1,4 +1,0 @@
-{
-  "extends": "@planty/tsconfig/base.json",
-  "include": ["routes"]
-}
