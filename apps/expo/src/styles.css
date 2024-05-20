@@ -1,50 +1,224 @@
 @tailwind base;
 @tailwind components;
-@tailwind utilities;
 
-:root {
-  --background: 0 0% 100%;
-  --foreground: 240 10% 3.9%;
-  --card: 0 0% 100%;
-  --card-foreground: 240 10% 3.9%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 240 10% 3.9%;
-  --primary: 327 66% 69%;
-  --primary-foreground: 337 65.5% 17.1%;
-  --secondary: 240 4.8% 95.9%;
-  --secondary-foreground: 240 5.9% 10%;
-  --muted: 240 4.8% 95.9%;
-  --muted-foreground: 240 3.8% 46.1%;
-  --accent: 240 4.8% 95.9%;
-  --accent-foreground: 240 5.9% 10%;
-  --destructive: 0 72.22% 50.59%;
-  --destructive-foreground: 0 0% 98%;
-  --border: 240 5.9% 90%;
-  --input: 240 5.9% 90%;
-  --ring: 240 5% 64.9%;
-  --radius: 0.5rem;
+@layer components {
+  .display-2xl {
+    @apply text-10xl font-bold leading-10xl;
+  }
+  .display-xl {
+    @apply text-9xl font-bold leading-9xl;
+  }
+  .display-lg {
+    @apply text-8xl font-bold leading-8xl;
+  }
+  .display-md {
+    @apply text-7xl font-bold leading-7xl;
+  }
+  .display-sm {
+    @apply text-6xl font-bold leading-6xl;
+  }
+  .display-xs {
+    @apply text-5xl font-bold leading-5xl;
+  }
+  .heading-h1 {
+    @apply font-['space-grotesk'] text-4xl  leading-4xl;
+  }
+  .heading-h2 {
+    @apply font-['space-grotesk'] text-3xl  leading-3xl;
+  }
+  .heading-h3 {
+    @apply font-['space-grotesk'] text-2xl  leading-2xl;
+  }
+  .heading-h4 {
+    @apply font-['space-grotesk'] text-xl leading-xl mobile:text-2xl;
+  }
+  .heading-h5 {
+    @apply font-['space-grotesk'] text-lg  leading-lg;
+  }
+  .body {
+    @apply font-['mustica-pro'] text-base  leading-base;
+  }
+  .body-sm {
+    @apply font-['mustica-pro'] text-sm  leading-sm;
+  }
+  .caption {
+    @apply font-['mustica-pro'] text-xs  leading-xs;
+  }
+
+  .button-txt {
+    @apply font-['mustica-pro-medium'] text-base leading-base;
+  }
+
+  .surface {
+    @apply bg-neutral-1 text-surface-fg dark:bg-neutral-950 dark:text-neutral-1;
+  }
+  .surface-container-lowest {
+    @apply bg-neutral-50 text-surface-fg dark:bg-neutral-900 dark:text-neutral-1;
+  }
+  .surface-container-low {
+    @apply bg-neutral-100 text-surface-fg dark:bg-neutral-800 dark:text-neutral-1;
+  }
+  .surface-container {
+    @apply bg-neutral-200 text-surface-fg dark:bg-neutral-700 dark:text-neutral-1;
+  }
+  .surface-container-high {
+    @apply bg-neutral-300 text-surface-fg dark:bg-neutral-600 dark:text-neutral-1;
+  }
+  .surface-container-highest {
+    @apply bg-neutral-400 text-surface-fg dark:bg-neutral-500 dark:text-neutral-1;
+  }
+  .primary {
+    @apply bg-primary text-primary-fg dark:bg-primary-200 dark:text-primary-800;
+  }
+  .primary-container {
+    @apply bg-primary-200 text-primary-container-fg dark:bg-primary-600 dark:text-primary-100;
+  }
+  .secondary {
+    @apply bg-secondary text-secondary-fg dark:bg-secondary-200 dark:text-secondary-800;
+  }
+  .secondary-container {
+    @apply bg-secondary-200 text-secondary-container-fg dark:bg-secondary-600 dark:text-secondary-100;
+  }
+  .error {
+    @apply bg-error text-error-fg dark:bg-error-200 dark:text-error-800;
+  }
+  .error-container {
+    @apply bg-error-200 text-error-container-fg dark:bg-error-600 dark:text-error-100;
+  }
+}
+@layer base {
+  :root {
+    --background: 98 20% 98%;
+    --foreground: 98 20% 5%;
+
+    --card: 98 20% 5%;
+    --card-foreground: 98 20% 98%;
+
+    --popover: 98 20% 5%;
+    --popover-foreground: 98 20% 98%;
+
+    --primary: 160 36% 55%;
+    --primary-foreground: 160 36% 98%;
+
+    --secondary: 109 36% 55%;
+    --secondary-foreground: 109 36% 98%;
+
+    --muted: 109 36% 55%;
+    --muted-foreground: 109 36% 98%;
+
+    --accent: 109 36% 55%;
+    --accent-foreground: 109 36% 98%;
+
+    --destructive: 352 95% 55%;
+    --destructive-foreground: 352 95% 98%;
+
+    --border: 160 36% 85%;
+    --input: 160 36% 85%;
+    --ring: 160 36% 55%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 98 20% 5%;
+    --foreground: 98 20% 98%;
+
+    --card: 98 20% 5%;
+    --card-foreground: 98 20% 98%;
+
+    --popover: 98 20% 5%;
+    --popover-foreground: 98 20% 98%;
+
+    --primary: 160 36% 98%;
+    --primary-foreground: 160 36% 9%;
+
+    --secondary: 109 36% 14.9%;
+    --secondary-foreground: 109 36% 98%;
+
+    --muted: 109 36% 14.9%;
+    --muted-foreground: 109 36% 63.9%;
+
+    --accent: 109 36% 14.9%;
+    --accent-foreground: 109 36% 98%;
+
+    --destructive: 352 95% 30.6%;
+    --destructive-foreground: 352 95% 98%;
+
+    --border: 160 36% 14.9%;
+    --input: 160 36% 14.9%;
+    --ring: 160 36% 83.1%;
+  }
+}
+@layer base {
+  * {
+    @apply min-w-0 border-border;
+  }
+  body {
+    @apply bg-white text-black;
+  }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 327 66% 69%;
-    --primary-foreground: 337 65.5% 17.1%;
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 85.7% 97.3%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
+@tailwind utilities;
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+.hamburger .line {
+  transition:
+    y 300ms ease-in 300ms,
+    rotate 300ms ease-in-out,
+    opacity 0ms 300ms;
+  transform-origin: center;
+}
+
+.hamburger[aria-expanded="true"] .line {
+  transition:
+    y 300ms ease-in-out,
+    rotate 300ms ease-in-out 300ms,
+    opacity 0ms 300ms;
+}
+
+.hamburger[aria-expanded="true"] :is(.top, .bottom) {
+  y: 45;
+}
+
+.hamburger[aria-expanded="true"] .top {
+  rotate: 45deg;
+}
+
+.hamburger[aria-expanded="true"] .middle {
+  opacity: 0;
+}
+
+.hamburger[aria-expanded="true"] .bottom {
+  rotate: -45deg;
+}
+
+.grecaptcha-badge {
+  visibility: hidden;
+}
+
+div:has(.grecaptcha-badge) {
+  display: none;
+}
+
+.fadeIn {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
   }
+  100% {
+    opacity: 1;
+  }
+}
+
+.cl-internal-180wb59,
+.cl-internal-11ttlho {
+  display: none;
 }

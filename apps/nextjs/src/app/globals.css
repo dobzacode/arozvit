@@ -69,13 +69,13 @@
     @apply bg-primary text-primary-fg dark:bg-primary-200 dark:text-primary-800;
   }
   .primary-container {
-    @apply bg-primary-200 text-primary-container-fg dark:bg-primary-600 dark:text-primary-100;
+    @apply bg-primary-100 text-primary-container-fg dark:bg-primary-600 dark:text-primary-100;
   }
   .secondary {
     @apply bg-secondary text-secondary-fg dark:bg-secondary-200 dark:text-secondary-800;
   }
   .secondary-container {
-    @apply bg-secondary-200 text-secondary-container-fg dark:bg-secondary-600 dark:text-secondary-100;
+    @apply bg-secondary-100 text-secondary-container-fg dark:bg-secondary-600 dark:text-secondary-100;
   }
   .error {
     @apply bg-error text-error-fg dark:bg-error-200 dark:text-error-800;

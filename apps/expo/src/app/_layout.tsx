@@ -1,21 +1,32 @@
 import "@bacons/text-decoder/install";
 
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
-import { ClerkProvider, SignedIn, SignedOut } from "@clerk/clerk-expo";
+import { ClerkProvider } from "@clerk/clerk-expo";
 import { useColorScheme } from "nativewind";
 
-import SignInWithOAuth from "~/components/sign-in-with-oauth";
-import { SignOut } from "~/components/sign-out";
 import { TRPCProvider } from "~/utils/api";
 import { tokenCache } from "~/utils/cache";
 
-import "../styles.css";
+import "./../styles.css";
 
 // This is the main layout of the app
 // It wraps your pages with the providers they need
 export default function RootLayout() {
   const { colorScheme } = useColorScheme();
+  const [isLoaded] = useFonts({
+    //eslint-disable-next-line
+    "space-grotesk": require("./../../assets/fonts/SpaceGrotesk-Bold.ttf"),
+    //eslint-disable-next-line
+    "mustica-pro": require("./../../assets/fonts/MusticaPro-Regular.ttf"),
+    //eslint-disable-next-line
+    "mustica-pro-medium": require("./../../assets/fonts/MusticaPro-Medium.ttf"),
+  });
+
+  if (!isLoaded) {
+    return null;
+  }
 
   return (
     <ClerkProvider
@@ -24,29 +35,16 @@ export default function RootLayout() {
       tokenCache={tokenCache}
     >
       <TRPCProvider>
-        {/*
-            The Stack component displays the current page.
-            It also allows you to configure your screens
-          */}
-        <Stack
-          screenOptions={{
-            headerStyle: {
-              backgroundColor: "#f472b6",
-            },
-            contentStyle: {
-              backgroundColor: colorScheme == "dark" ? "#09090B" : "#FFFFFF",
-            },
-          }}
-        />
-
         <TRPCProvider>
           <SafeAreaProvider>
-            <SignedIn>
-              <SignOut />
-            </SignedIn>
-            <SignedOut>
-              <SignInWithOAuth />
-            </SignedOut>
+            <Stack
+              screenOptions={{
+                contentStyle: {
+                  backgroundColor:
+                    colorScheme == "dark" ? "#09090B" : "#FFFFFF",
+                },
+              }}
+            />
           </SafeAreaProvider>
         </TRPCProvider>
       </TRPCProvider>

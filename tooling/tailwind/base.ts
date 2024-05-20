@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
 
-const primaryColor = "160, 36%,";
-const secondaryColor = "109, 36%,";
+const primaryColor = "100, 36%,";
+const secondaryColor = "145, 36%,";
 const errorColor = "352, 95%,";
 const neutralColor = "98, 20%,";
 
@@ -26,6 +26,11 @@ const config = {
       },
     },
     extend: {
+      fontFamily: {
+        "space-grotesk": ["SpaceGrotesk-Bold.ttf"],
+        "mustica-pro": ["MusticaPro-Regular.ttf"],
+        "mustica-pro-medium": ["MusticaPro-Medium.ttf"],
+      },
       borderRadius: {
         md: "16px",
         sm: "8px",
