@@ -1,5 +1,7 @@
-import { Image, Pressable, Text, View } from "react-native";
+import { Image, Text, View } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
+
+import SignInWithOAuth from "~/components/sign-in-with-oauth";
 
 export default function Page() {
   return (
@@ -21,24 +23,24 @@ export default function Page() {
           </Text>
         </View>
         <View className="grid w-full gap-md">
-          <Pressable className="surface-container-low flex w-full flex-row items-center justify-center gap-sm rounded-sm px-md py-sm">
+          <SignInWithOAuth strategy="apple">
             <AntDesign name="apple1" size={20} color="black" />
             <Text className="button-txt text-center text-surface-fg">
               Continuer avec Apple
             </Text>
-          </Pressable>
-          <Pressable className="surface-container-low flex w-full flex-row items-center justify-center gap-sm rounded-sm px-md py-sm">
+          </SignInWithOAuth>
+          <SignInWithOAuth strategy="facebook">
             <AntDesign name="facebook-square" size={20} color="black" />
             <Text className="button-txt text-center text-surface-fg">
               Continuer avec Facebook
             </Text>
-          </Pressable>
-          <Pressable className="surface-container-low flex w-full flex-row items-center justify-center gap-sm rounded-sm px-md py-sm">
+          </SignInWithOAuth>
+          <SignInWithOAuth strategy="google">
             <AntDesign name="google" size={20} color="black" />
             <Text className="button-txt text-center text-surface-fg">
               Continuer avec Google
             </Text>
-          </Pressable>
+          </SignInWithOAuth>
         </View>
       </View>
       <View className="surface xl absolute -bottom-2 left-1/2 z-10 h-3/4 w-[1100px] -translate-x-1/2 rounded-t-full"></View>
