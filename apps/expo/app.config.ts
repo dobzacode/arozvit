@@ -20,24 +20,21 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   assetBundlePatterns: ["**/*"],
   ios: {
-    bundleIdentifier: "your.bundle.identifier",
+    bundleIdentifier: "com.corentinkittel.planty",
     supportsTablet: true,
   },
   extra: {
     CLERK_PUBLISHABLE_KEY: process.env.CLERK_PUBLISHABLE_KEY,
+    projectId: "com.corentinkittel.planty",
   },
   android: {
-    package: "your.bundle.identifier",
+    package: "com.corentinkittel.planty",
     adaptiveIcon: {
       foregroundImage: "./assets/icon.png",
       backgroundColor: "#1F104A",
     },
   },
-  // extra: {
-  //   eas: {
-  //     projectId: "your-eas-project-id",
-  //   },
-  // },
+
   experiments: {
     tsconfigPaths: true,
     typedRoutes: true,

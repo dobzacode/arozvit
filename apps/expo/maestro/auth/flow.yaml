@@ -1,0 +1,17 @@
+appId: com.corentinkittel.planty
+---
+- openLink: exp://192.168.1.11:8081
+- tapOn: "Continuer avec Apple"
+- assertVisible:
+    id: "account_name_text_field"
+- tapOn:
+    id: "com.android.chrome:id/close_button"
+- tapOn: "Continuer avec Facebook"
+- assertVisible:
+    id: "m_login_email"
+- tapOn:
+    id: "com.android.chrome:id/close_button"
+- tapOn: "Continuer avec Google"
+- assertVisible: "Se connecter avec Google"
+- tapOn:
+    id: "com.android.chrome:id/close_button"
