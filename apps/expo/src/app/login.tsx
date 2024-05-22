@@ -1,9 +1,21 @@
 import { Image, Text, View } from "react-native";
+import { Redirect } from "expo-router";
+import { useAuth } from "@clerk/clerk-expo";
 import AntDesign from "@expo/vector-icons/AntDesign";
 
 import SignInWithOAuth from "~/components/sign-in-with-oauth";
 
 export default function Page() {
+  const auth = useAuth();
+
+  if (!auth.isLoaded) {
+    return null;
+  }
+
+  if (auth.isSignedIn) {
+    return <Redirect href="/" />;
+  }
+
   return (
     <>
       <View className="surface-container-low absolute left-0 top-0 z-0 h-full w-full to-transparent"></View>

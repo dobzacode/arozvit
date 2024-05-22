@@ -10,7 +10,7 @@
     { "pattern": "./apps/*/" },
     { "pattern": "./packages/*/" }
   ],
-  "eslint.trace.server": "verbose",
+  "eslint.trace.server": "verbose"
 
-  "eslint.runtime": "C:/Program Files/nodejs/node.exe"
+  // "eslint.runtime": "C:/Program Files/nodejs/node.exe"
 }
