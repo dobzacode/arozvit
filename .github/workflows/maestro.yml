@@ -45,7 +45,7 @@ jobs:
           path: ./android/app/build/outputs/apk/release/app-release.apk
 
   test-android:
-    if: contains(github.event.pull_request.files, 'apps/expo/'))
+    if: contains(github.event.pull_request.files, 'apps/expo/')
     name: Run Android E2E Tests (Maestro + Github Action)
     needs: generate-test-apk
     runs-on: macOS-latest
