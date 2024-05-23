@@ -15,9 +15,8 @@
 #         with:
 #           APP_ENV: 'staging'
 
-name: "Setup  JDK + GRADLE + Generate APK"
-
-description: "Setup  JDK + GRADLE + Generate APK"
+name: "Setup JDK + GRADLE + Generate APK"
+description: "Setup JDK + GRADLE + Generate APK"
 
 inputs:
   APP_ENV:
@@ -34,6 +33,7 @@ runs:
       with:
         distribution: "zulu"
         java-version: "11"
+
     - name: Setup Gradle
       working-directory: ./apps/expo
       uses: gradle/gradle-build-action@v2
@@ -42,7 +42,7 @@ runs:
       working-directory: ./apps/expo
       run: |
         pnpm prebuild:${{ inputs.APP_ENV }}
-        cd  android
+        cd android
         chmod +x ./gradlew
         ./gradlew assembleRelease --no-daemon
         cd ..
