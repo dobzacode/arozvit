@@ -13,13 +13,14 @@
 name: E2E Tests Android (Maestro + Github Action)
 
 on:
-  workflow_dispatch:
   pull_request:
-    branches: [main, master]
+    branches: ["*"]
+  push:
+    branches: ["main"]
 
 jobs:
   generate-test-apk:
-    if: contains(github.event.pull_request.files, 'apps/expo/'))
+    if: contains(github.event.pull_request.files, 'apps/expo/')
     name: Generate Test APK (Gradle)
     runs-on: ubuntu-latest
 
