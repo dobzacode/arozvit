@@ -52,8 +52,5 @@
       "prettier --write"
     ]
   },
-  "prettier": "@planty/prettier-config",
-  "dependencies": {
-    "@clerk/localizations": "^2.4.2"
-  }
+  "prettier": "@planty/prettier-config"
 }

@@ -1,15 +1,3 @@
-# 🔗 Links:
-# Source file: https://github.com/obytes/react-native-template-obytes/blob/master/.github/workflows/e2e-android.yml
-# End-to-end testing: https://starter.obytes.com/testing/end-to-end-testing/
-
-# ✍️ Description:
-# This workflow is used to run end-to-end tests on Android using Maestro.
-# As a first step, it will generate a test APK using the Gradle build and then upload it as an artifact.
-# A new job will be started to run the tests using the test APK generated in the previous job.
-# To test the app, we set up an Android emulator using the `reactivecircus/android-emulator-runner` action. This runner requires macOS as the operating system for the runner.
-# This workflow will be triggered on apps/expo modification.
-#
-
 name: E2E Tests Android (Maestro + Github Action)
 
 on:
@@ -21,7 +9,6 @@ on:
 
 jobs:
   generate-test-apk:
-    # if: contains(github.event.pull_request.files, 'apps/expo/')
     defaults:
       run:
         working-directory: apps/expo
@@ -47,7 +34,6 @@ jobs:
           path: ./android/app/build/outputs/apk/release/app-release.apk
 
   test-android:
-    # if: contains(github.event.pull_request.files, 'apps/expo/')
     name: Run Android E2E Tests (Maestro + Github Action)
     needs: generate-test-apk
     runs-on: macOS-latest
