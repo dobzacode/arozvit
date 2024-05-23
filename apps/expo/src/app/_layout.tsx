@@ -6,7 +6,7 @@ import { Stack } from "expo-router";
 import { ClerkProvider } from "@clerk/clerk-expo";
 
 import { TRPCProvider } from "~/utils/api";
-import { tokenCache } from "~/utils/cache";
+import { tokenCache } from "~/utils/utils";
 
 import "./../styles.css";
 

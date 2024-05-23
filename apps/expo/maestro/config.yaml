@@ -1,2 +1,7 @@
 flows:
   - auth/*
+executionOrder:
+  continueOnFailure: true
+  flowsOrder:
+    - providers
+    - login
