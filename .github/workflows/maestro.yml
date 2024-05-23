@@ -17,7 +17,8 @@ on:
     branches: ["*"]
   push:
     branches: ["main"]
-
+  workflow_dispatch:
+  
 jobs:
   generate-test-apk:
     if: contains(github.event.pull_request.files, 'apps/expo/')
