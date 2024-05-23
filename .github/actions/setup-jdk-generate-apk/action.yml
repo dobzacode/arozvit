@@ -28,14 +28,12 @@ runs:
   using: "composite"
   steps:
     - name: Set Up JDK
-      working-directory: ./apps/expo
       uses: actions/setup-java@v3
       with:
         distribution: "zulu"
         java-version: "11"
 
     - name: Setup Gradle
-      working-directory: ./apps/expo
       uses: gradle/gradle-build-action@v2
 
     - name: Generate Test APK
