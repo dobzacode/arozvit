@@ -1,6 +1,7 @@
 appId: com.corentinkittel.planty
 ---
-- openLink: exp://192.168.1.11:8081
+- launchApp: com.corentinkittel.planty
+# - openLink: exp://192.168.1.11:8081
 - tapOn: "Continuer avec Apple"
 - assertVisible:
     id: "account_name_text_field"
