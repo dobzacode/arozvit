@@ -50,9 +50,6 @@ jobs:
       - name: 📦 Install Maestro
         run: npm run install-maestro
 
-      - name: Debug APK generation
-        run: ls -alh ./android/app/build/outputs/apk/release
-
       - name: Download Test APK
         uses: actions/download-artifact@v3
         with:
@@ -97,7 +94,7 @@ jobs:
           profile: Nexus 6
           script: |
             adb install "${{ github.workspace }}/app-release.apk"
-            $HOME/.maestro/bin/maestro test .maestro/ --env=APP_ID=com.corentinkittel.planty  --format junit
+            $HOME/.maestro/bin/maestro test ./apps/expo/.maestro/ --env=APP_ID=com.corentinkittel.planty  --format junit
       - name: Upload artifacts
         if: always()
         uses: actions/upload-artifact@v3
