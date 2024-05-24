@@ -2,28 +2,45 @@ appId: com.corentinkittel.planty
 ---
 - launchApp
 # - openLink: exp://192.168.1.11:8081
-- waitForAnimationToEnd:
-    timeout: 10000
+
+- extendedWaitUntil:
+    visible:
+      id: "google-oauth-button"
 - tapOn:
+    retryTapIfNoChange: false
     id: "google-oauth-button"
 - runFlow:
     when:
-      visible: ${MAESTRO_EMAIL}
+      visible:
+        id: "com.android.chrome:id/terms_accept"
     commands:
-      - tapOn: ${MAESTRO_EMAIL}
+      - tapOn:
+          id: "com.android.chrome:id/terms_accept"
+      - tapOn: "No thanks"
+      - tapOn:
+          id: "identifierId"
+      - inputText: ${MAESTRO_EMAIL}
+      - pressKey: Enter
+      - inputText: ${MAESTRO_PASSWORD}
+      - pressKey: Enter
+      - tapOn: "Continue"
+- runFlow:
+    when:
+      visible: "Choose an account"
+    commands:
+      - tapOn:
+          point: "50%,44%"
       - tapOn: "Continue"
 - runFlow:
     when:
       notVisible: ${MAESTRO_EMAIL}
+      visible:
+        id: "identifierId"
     commands:
       - tapOn:
           id: "identifierId"
       - inputText: ${MAESTRO_EMAIL}
-      - tapOn:
-          id: "com.google.android.inputmethod.latin:id/0_resource_name_obfuscated"
-          index: 53
+      - pressKey: Enter
       - inputText: ${MAESTRO_PASSWORD}
-      - tapOn:
-          id: "com.google.android.inputmethod.latin:id/0_resource_name_obfuscated"
-          index: 37
+      - pressKey: Enter
       - tapOn: "Continue"
