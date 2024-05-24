@@ -35,19 +35,19 @@ export default function Page() {
           </Text>
         </View>
         <View className="grid w-full gap-md">
-          <SignInWithOAuth strategy="apple">
+          <SignInWithOAuth strategy="apple" testID="apple-oauth-button">
             <AntDesign name="apple1" size={20} color="black" />
             <Text className="button-txt text-center text-surface-fg">
               Continuer avec Apple
             </Text>
           </SignInWithOAuth>
-          <SignInWithOAuth strategy="facebook">
+          <SignInWithOAuth strategy="facebook" testID="facebook-oauth-button">
             <AntDesign name="facebook-square" size={20} color="black" />
             <Text className="button-txt text-center text-surface-fg">
               Continuer avec Facebook
             </Text>
           </SignInWithOAuth>
-          <SignInWithOAuth strategy="google">
+          <SignInWithOAuth strategy="google" testID="google-oauth-button">
             <AntDesign name="google" size={20} color="black" />
             <Text className="button-txt text-center text-surface-fg">
               Continuer avec Google

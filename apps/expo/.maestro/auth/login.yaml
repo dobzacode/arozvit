@@ -1,8 +1,9 @@
 appId: com.corentinkittel.planty
 ---
-- launchApp: com.corentinkittel.planty
-# - openLink: exp://192.168.1.11:8081
-- tapOn: "Continuer avec Google"
+# - launchApp: com.corentinkittel.planty
+- openLink: exp://192.168.1.11:8081
+- tapOn:
+    id: "google-oauth-button"
 - runFlow:
     when:
       visible: ${MAESTRO_EMAIL}
@@ -11,8 +12,7 @@ appId: com.corentinkittel.planty
       - tapOn: "Continue"
 - runFlow:
     when:
-      visible:
-        id: "com.google.android.inputmethod.latin:id/0_resource_name_obfuscated"
+      notVisible: ${MAESTRO_EMAIL}
     commands:
       - tapOn:
           id: "identifierId"
@@ -20,7 +20,6 @@ appId: com.corentinkittel.planty
       - tapOn:
           id: "com.google.android.inputmethod.latin:id/0_resource_name_obfuscated"
           index: 53
-      - tapOn: "Enter your password"
       - inputText: ${MAESTRO_PASSWORD}
       - tapOn:
           id: "com.google.android.inputmethod.latin:id/0_resource_name_obfuscated"
