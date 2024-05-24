@@ -38,9 +38,8 @@ runs:
       run: |
         sudo apt install snapd -y
         sudo snap install gradle --classic --channel=latest/stable
-
     - name: Generate Test APK
-
+      working-directory: "./apps/expo"
       run: |
         pnpm prebuild:${{ inputs.APP_ENV }}
         cd android
