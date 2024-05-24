@@ -23,7 +23,7 @@ runs:
       with:
         node-version: 20
         cache: "pnpm"
-        cache-dependy-path: "./pnpm-lock.yaml"
+        cache-dependency-path: "./pnpm-lock.yaml"
     - name: 📦 Install Project Dependencies
       run: pnpm install --frozen-lockfile
       shell: bash
