@@ -36,13 +36,14 @@ jobs:
   test-android:
     strategy:
       matrix:
-        api-level: [32, 33, 34]
+        api-level: [29, 30, 31]
+        arch: [x86_64, arm64-v8a]
     defaults:
       run:
         working-directory: ./apps/expo
     name: Run Android E2E Tests (Maestro + Github Action)
     needs: generate-test-apk
-    runs-on: macos-14
+    runs-on: macos-13
 
     steps:
       - name: 📦 Checkout project repo
@@ -79,7 +80,7 @@ jobs:
           disable-animations: false
           cores: 2
           ram-size: 4096M
-          arch: x86_64
+          arch: ${{matrix.arch}}
           profile: Nexus 6
           script: echo "Generated AVD snapshot for caching."
 
