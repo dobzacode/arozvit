@@ -57,8 +57,6 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: test-apk
-          path: ${{ github.workspace }}
-
       - name: Gradle cache
         uses: gradle/gradle-build-action@v2
 
@@ -85,6 +83,9 @@ jobs:
           script: echo "Generated AVD snapshot for caching."
 
       - name: Run tests with Maestro
+        env:
+          MAESTRO_EMAIL: ${{ secrets.MAESTRO_EMAIL }}
+          MAESTRO_PASSWORD: ${{ secrets.MAESTRO_PASSWORD }}
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 29

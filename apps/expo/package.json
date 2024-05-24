@@ -2,7 +2,7 @@
   "name": "@planty/expo",
   "version": "0.1.0",
   "private": true,
-  "main": "index.ts",
+  "main": "index.js",
   "scripts": {
     "clean": "git clean -xdf .expo .turbo node_modules",
     "prebuild": "cross-env EXPO_NO_DOTENV=1 pnpm expo prebuild",
