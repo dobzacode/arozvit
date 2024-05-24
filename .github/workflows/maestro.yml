@@ -31,7 +31,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: test-apk
-          path: ./android/app/build/outputs/apk/release/app-release.apk
+          path: ./apps/expo/android/app/build/outputs/apk/release/app-release.apk
 
   test-android:
     defaults:
