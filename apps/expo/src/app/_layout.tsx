@@ -33,15 +33,13 @@ export default function RootLayout() {
       tokenCache={tokenCache}
     >
       <TRPCProvider>
-        <TRPCProvider>
-          <SafeAreaProvider>
-            <Stack
-              screenOptions={{
-                headerShown: false,
-              }}
-            />
-          </SafeAreaProvider>
-        </TRPCProvider>
+        <SafeAreaProvider>
+          <Stack
+            screenOptions={{
+              headerShown: false,
+            }}
+          />
+        </SafeAreaProvider>
       </TRPCProvider>
     </ClerkProvider>
   );

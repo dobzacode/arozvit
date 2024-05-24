@@ -1,7 +1,9 @@
 appId: com.corentinkittel.planty
 ---
-- launchApp: com.corentinkittel.planty
+- launchApp
 # - openLink: exp://192.168.1.11:8081
+- waitForAnimationToEnd:
+    timeout: 10000
 - tapOn:
     id: "google-oauth-button"
 - runFlow:
