@@ -13,7 +13,7 @@ export default function RootLayout() {
   }
 
   if (!auth.isSignedIn) {
-    return <Redirect href="/login" />;
+    return <Redirect href="/" />;
   }
 
   return (

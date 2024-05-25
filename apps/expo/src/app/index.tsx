@@ -13,7 +13,7 @@ export default function Page() {
   }
 
   if (auth.isSignedIn) {
-    return <Redirect href="/" />;
+    return <Redirect href="/home" />;
   }
 
   return (
