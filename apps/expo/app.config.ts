@@ -8,7 +8,6 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   version: "0.1.0",
   orientation: "portrait",
   icon: "./assets/icon.png",
-  jsEngine: "hermes",
   userInterfaceStyle: "automatic",
   splash: {
     image: "./assets/icon.png",
@@ -25,7 +24,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   extra: {
     CLERK_PUBLISHABLE_KEY: process.env.CLERK_PUBLISHABLE_KEY,
-    projectId: "com.corentinkittel.planty",
+    eas: {
+      projectId: "986ce81f-fce0-48e9-8166-ca41c3d9a89d",
+    },
   },
   android: {
     package: "com.corentinkittel.planty",
@@ -39,5 +40,17 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     tsconfigPaths: true,
     typedRoutes: true,
   },
-  plugins: ["expo-router", "expo-font"],
+  plugins: [
+    "expo-router",
+    [
+      "expo-font",
+      {
+        fonts: [
+          "./assets/fonts/SpaceGrotesk-Bold.ttf",
+          "./assets/fonts/MusticaPro-Regular.ttf",
+          "./assets/fonts/MusticaPro-Medium.ttf",
+        ],
+      },
+    ],
+  ],
 });

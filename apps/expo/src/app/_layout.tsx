@@ -9,10 +9,14 @@ import { tokenCache } from "~/utils/utils";
 
 import "./../styles.css";
 
-// This is the main layout of the app
-// It wraps your pages with the providers they need
 export default function RootLayout() {
-  const [isLoaded] = useFonts({
+  const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
+
+  if (!publishableKey) {
+    throw new Error("Missing Clerk Publishable Key");
+  }
+
+  const [fontsLoaded, fontError] = useFonts({
     //eslint-disable-next-line
     "space-grotesk": require("./../../assets/fonts/SpaceGrotesk-Bold.ttf"),
     //eslint-disable-next-line
@@ -21,16 +25,12 @@ export default function RootLayout() {
     "mustica-pro-medium": require("./../../assets/fonts/MusticaPro-Medium.ttf"),
   });
 
-  if (!isLoaded) {
+  if (!fontsLoaded && !fontError) {
     return null;
   }
 
   return (
-    <ClerkProvider
-      //eslint-disable-next-line
-      publishableKey={process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY as string}
-      tokenCache={tokenCache}
-    >
+    <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
       {/* <TRPCProvider> */}
       <SafeAreaProvider>
         <Stack

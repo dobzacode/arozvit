@@ -4,9 +4,17 @@
   },
   "build": {
     "base": {
-      "node": "18.16.1",
+      "node": "18.20.2",
       "ios": {
         "resourceClass": "m-medium"
+      }
+    },
+    "preview-apk": {
+      "env": {
+        "EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY": "pk_test_YmVsb3ZlZC1yZWRmaXNoLTMzLmNsZXJrLmFjY291bnRzLmRldiQ"
+      },
+      "android": {
+        "buildType": "apk"
       }
     },
     "development": {
