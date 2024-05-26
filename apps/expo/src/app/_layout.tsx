@@ -1,6 +1,5 @@
 import "@bacons/text-decoder/install";
 
-import { StatusBar, useColorScheme } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
@@ -11,8 +10,6 @@ import { tokenCache } from "~/utils/utils";
 import "./../styles.css";
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-
   const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
 
   if (!publishableKey) {
@@ -42,10 +39,6 @@ export default function RootLayout() {
           }}
         ></Stack>
       </SafeAreaProvider>
-      <StatusBar
-        backgroundColor={colorScheme === "dark" ? "#000000" : "#ffffff"}
-        barStyle={colorScheme === "dark" ? "light-content" : "dark-content"}
-      ></StatusBar>
       {/* </TRPCProvider> */}
     </ClerkProvider>
   );
