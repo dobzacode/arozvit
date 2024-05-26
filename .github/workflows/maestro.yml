@@ -27,7 +27,7 @@ jobs:
         uses: ./.github/actions/setup-jdk-generate-apk
         with:
           APP_ENV: staging
-          CLERK_PUBLISHABLE_KEY: ${{ secrets.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY }}
+          EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY }}
 
       - name: Upload Test APK
         uses: actions/upload-artifact@v4

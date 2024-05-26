@@ -23,6 +23,9 @@ inputs:
     description: "APP_ENV (one of): development, staging, production"
     required: true
     default: "staging"
+  EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY:
+    description: "Clerk publishable key"
+    required: true
 
 runs:
   using: "composite"
