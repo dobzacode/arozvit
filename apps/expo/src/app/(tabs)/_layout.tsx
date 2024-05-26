@@ -70,12 +70,7 @@ export default function TabsLayout() {
             return (
               <View className="h-fit w-fit rounded-full bg-white p-0.5">
                 <View className="primary flex h-fit w-fit items-center justify-center rounded-full p-sm">
-                  <AntDesign
-                    className="w-[20px]"
-                    name="plus"
-                    size={size}
-                    color={"white"}
-                  />
+                  <AntDesign name="plus" size={size} color={"white"} />
                 </View>
               </View>
             );
