@@ -71,5 +71,5 @@ runs:
       env:
         EXPO_NO_DOTENV: "1"
         APP_ENV: ${{ inputs.APP_ENV }}
-
+        EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ inputs.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY }}
         CI: "true"
