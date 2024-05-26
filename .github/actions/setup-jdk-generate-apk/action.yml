@@ -56,7 +56,7 @@ runs:
 
     - name: Write environment variables
       run: |
-        echo "${{ inputs.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY }}" > ./apps/expo/.env
+        echo "EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY=${{ inputs.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY }}" > ./apps/expo/.env
       shell: bash
 
     - name: Generate Test APK
@@ -71,5 +71,5 @@ runs:
       env:
         EXPO_NO_DOTENV: "1"
         APP_ENV: ${{ inputs.APP_ENV }}
-        EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ inputs.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY }}
+
         CI: "true"
