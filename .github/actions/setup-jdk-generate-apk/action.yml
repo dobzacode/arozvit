@@ -62,6 +62,7 @@ runs:
     - name: Generate Test APK
       working-directory: "./apps/expo"
       run: |
+
         pnpm prebuild:${{ inputs.APP_ENV }}
         cd android
         chmod +x ./gradlew

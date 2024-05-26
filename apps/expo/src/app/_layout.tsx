@@ -37,7 +37,7 @@ export default function RootLayout() {
           screenOptions={{
             headerShown: false,
           }}
-        />
+        ></Stack>
       </SafeAreaProvider>
       {/* </TRPCProvider> */}
     </ClerkProvider>
