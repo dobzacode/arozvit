@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "clean": "git clean -xdf .expo .turbo node_modules",
-    "prebuild": "cross-env pnpm expo prebuild",
+    "prebuild": "cross-env EXPO_NO_DOTENV=1 pnpm expo prebuild",
     "dev": "REACT_NATIVE_PACKAGER_HOSTNAME=$(netsh.exe interface ip show address 'Wi-Fi 2' | grep -a '192.168.1.10' | grep -oP '\\d+\\.\\d+\\.\\d+\\.\\d+') expo start --no-dev --minify",
     "dev:android": "expo start --android",
     "dev:ios": "expo start --ios",

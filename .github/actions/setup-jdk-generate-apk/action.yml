@@ -51,6 +51,11 @@ runs:
         sudo apt install snapd -y
         sudo snap install gradle --classic --channel=latest/stable
 
+    - name: Write environment variables
+      run: |
+        echo "${{ secrets.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY }}" > .env
+      shell: bash
+
     - name: Generate Test APK
       working-directory: "./apps/expo"
       run: |
