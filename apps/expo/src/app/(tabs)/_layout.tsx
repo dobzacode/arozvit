@@ -68,7 +68,7 @@ export default function TabsLayout() {
           },
           tabBarIcon: ({ size }) => {
             return (
-              <View className="h-fit w-fit rounded-full bg-white p-0.5">
+              <View className="h-fit w-fit rounded-full bg-white p-0.5 shadow-sm shadow-black">
                 <View className="primary flex h-fit w-fit items-center justify-center rounded-full p-sm">
                   <AntDesign
                     className="w-[20px]"
