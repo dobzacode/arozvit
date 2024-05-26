@@ -53,7 +53,7 @@ runs:
 
     - name: Write environment variables
       run: |
-        echo "${{ inputs.CLERK_PUBLISHABLE_KEY }}" > .env
+        echo "${{ inputs.CLERK_PUBLISHABLE_KEY }}" > apps/expo/.env
       shell: bash
 
     - name: Generate Test APK
