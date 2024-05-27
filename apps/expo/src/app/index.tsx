@@ -26,7 +26,7 @@ export default function Page() {
             source={require("./../../assets/home-botanical.png")}
             alt="Home botanical"
           />
-          <Text className="heading-h1 text-surface-fg">
+          <Text className="heading-h1 text-center text-surface-fg">
             Bienvenue sur Planty
           </Text>
           <Text className="body-sm text-center text-surface-fg">
