@@ -21,6 +21,9 @@
     ARG ARG_POSTGRES_URL
     ENV POSTGRES_URL=$ARG_POSTGRES_URL
 
+    ARG ARG_NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+    ENV NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=$ARG_NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+
     COPY .gitignore .gitignore
     COPY --from=builder /app/out/json/ .
     COPY --from=builder /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
