@@ -4,7 +4,8 @@
   "version": "0.1.0",
   "dependencies": {
     "clsx": "^2.1.1",
-    "tailwind-merge": "^2.3.0"
+    "tailwind-merge": "^2.3.0",
+    "@aws-sdk/client-secrets-manager": "^3.583.0"
   },
   "exports": {
     "default": "./utils.ts"

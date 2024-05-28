@@ -5,17 +5,12 @@ import { Webhook } from "svix";
 import { eq } from "@planty/db";
 import { db } from "@planty/db/client";
 import { CreateUserSchema, User } from "@planty/db/schema";
+import { getSecretOrEnv } from "@planty/utils";
 
-import { env } from "~/env";
+export const dynamic = "force-dynamic";
 
 export async function POST(req: Request) {
-  const WEBHOOK_SECRET = env.WEBHOOK_SECRET;
-
-  if (!WEBHOOK_SECRET) {
-    throw new Error(
-      "Please add WEBHOOK_SECRET from Clerk Dashboard to .env or .env.local",
-    );
-  }
+  const WEBHOOK_SECRET = await getSecretOrEnv("WEBHOOK_SECRET");
 
   const headerPayload = headers();
   const svix_id = headerPayload.get("svix-id");

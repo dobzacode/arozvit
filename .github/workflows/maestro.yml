@@ -5,6 +5,9 @@ on:
     branches: ["*"]
   push:
     branches: ["main"]
+    paths:
+      - "apps/expo/**"
+      - "packages/**"
   workflow_dispatch:
 
 jobs:

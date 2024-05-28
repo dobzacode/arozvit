@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "pnpm with-env next build",
+    "build": "pnpm next build --debug",
     "clean": "git clean -xdf .next .turbo node_modules",
     "dev": "pnpm with-env next dev",
     "format": "prettier --debug-check . --ignore-path ../../.gitignore ",
@@ -19,7 +19,11 @@
     "@hookform/resolvers": "^3.4.0",
     "@planty/api": "workspace:*",
     "@planty/db": "workspace:*",
-    "@planty/validators": "workspace:*",
+    "@planty/utils": "workspace:*",
+    "@planty/tsconfig": "workspace:*",
+    "@planty/eslint-config": "workspace:*",
+    "@planty/prettier-config": "workspace:*",
+    "@planty/tailwind-config": "workspace:*",
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-toast": "^1.1.5",
@@ -43,11 +47,6 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@planty/eslint-config": "workspace:*",
-    "@planty/prettier-config": "workspace:*",
-    "@planty/tailwind-config": "workspace:*",
-    "@planty/tsconfig": "workspace:*",
-    "@planty/utils": "workspace:*",
     "@types/node": "^20.12.9",
     "@types/react": "^18.2.79",
     "@types/react-dom": "^18.3.0",

@@ -9,7 +9,8 @@ const config = {
   reactStrictMode: true,
 
   /** Enables hot reloading for local packages without a build step */
-  transpilePackages: ["@planty/api", "@planty/db", "@planty/validators"],
+  transpilePackages: ["@planty/api", "@planty/db"],
+  output: "standalone",
 
   /** We already do linting and typechecking as separate tasks in CI */
   eslint: { ignoreDuringBuilds: true },

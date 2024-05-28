@@ -11,7 +11,6 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "tsc",
     "dev": "tsc --watch",
     "clean": "rm -rf .turbo node_modules",
     "format": "prettier --debug-check . --ignore-path ../../.gitignore",
@@ -20,7 +19,6 @@
   },
   "dependencies": {
     "@planty/db": "workspace:*",
-    "@planty/validators": "workspace:*",
     "@trpc/server": "11.0.0-rc.364",
     "superjson": "2.2.1",
     "zod": "^3.23.8"

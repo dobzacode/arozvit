@@ -1,4 +1,4 @@
-import { NextRequest } from "next/server";
+import type { NextRequest } from "next/server";
 import { getAuth } from "@clerk/nextjs/server";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 
@@ -6,7 +6,7 @@ import { appRouter, createTRPCContext } from "@planty/api";
 
 import { env } from "~/env";
 
-export const runtime = "edge";
+export const dynamic = "force-dynamic";
 
 /**
  * Configure basic CORS headers
