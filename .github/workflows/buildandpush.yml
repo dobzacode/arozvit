@@ -7,7 +7,7 @@ on:
     paths:
       - "apps/nextjs/**"
       - "packages/**"
-      - ".github/workflows/docker-build-and-push.yml"
+      - ".github/workflows/buildandpush.yml"
 
 jobs:
   build-and-push:
