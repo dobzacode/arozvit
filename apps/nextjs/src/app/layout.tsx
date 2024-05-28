@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 
-import { cn, getSecretOrEnv } from "@planty/utils";
+import { cn } from "@planty/utils";
 
 import "~/app/globals.css";
 
@@ -43,13 +43,9 @@ export const viewport: Viewport = {
   ],
 };
 
-export default async function RootLayout(props: { children: React.ReactNode }) {
-  const PUBLISHABLE_KEY = await getSecretOrEnv(
-    "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY",
-  );
-
+export default function RootLayout(props: { children: React.ReactNode }) {
   return (
-    <ClerkProvider publishableKey={PUBLISHABLE_KEY} localization={frFR}>
+    <ClerkProvider localization={frFR}>
       <html lang="en" suppressHydrationWarning>
         <body
           className={cn(
