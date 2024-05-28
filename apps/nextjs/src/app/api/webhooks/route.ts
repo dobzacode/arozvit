@@ -7,8 +7,6 @@ import { db } from "@planty/db/client";
 import { CreateUserSchema, User } from "@planty/db/schema";
 import { getSecretOrEnv } from "@planty/utils";
 
-export const dynamic = "force-dynamic";
-
 export async function POST(req: Request) {
   const WEBHOOK_SECRET = await getSecretOrEnv("WEBHOOK_SECRET");
 

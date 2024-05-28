@@ -10,7 +10,7 @@
 
 
     FROM --platform=linux/amd64 node:20-alpine AS installer
-    RUN apk add --no-cache libc6-compat openssl wget && apk update && apk add jq
+    RUN apk add --no-cache libc6-compat openssl wget && apk update
 
     WORKDIR /app
 
@@ -18,6 +18,8 @@
     ENV CI         true
     ENV SKIP_ENV_VALIDATION true
 
+    ARG ARG_POSTGRES_URL
+    ENV POSTGRES_URL=$ARG_POSTGRES_URL
 
     COPY .gitignore .gitignore
     COPY --from=builder /app/out/json/ .
@@ -27,7 +29,7 @@
     COPY --from=builder /app/out/full/ .
     COPY turbo.json turbo.json
 
-    RUN POSTGRES_URL=$(aws secretsmanager get-secret-value --secret-id prod/planty/PGSQL --query SecretString --output text | jq -r '.POSTGRES_URL') pnpm turbo build --filter=@planty/nextjs
+    RUN pnpm turbo build --filter=@planty/nextjs
 
     FROM --platform=linux/amd64 node:20-alpine AS runner
     RUN apk add --no-cache libc6-compat openssl && apk update

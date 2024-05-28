@@ -6,8 +6,6 @@ import { appRouter, createTRPCContext } from "@planty/api";
 
 import { env } from "~/env";
 
-export const dynamic = "force-dynamic";
-
 /**
  * Configure basic CORS headers
  * You should extend this to match your needs
