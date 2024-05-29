@@ -51,37 +51,42 @@ jobs:
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
 
       - name: SSH into EC2 instance and deploy
-        run: |
-          echo "${{ secrets.AWS_EC2_SSH_PRIVATE_KEY }}" > private-key.pem
-          chmod 400 private-key.pem
+        uses: appleboy/ssh-action@master
+        with:
+          host: ec2-3-121-76-2.eu-central-1.compute.amazonaws.com
+          username: ec2-user
+          key: ${{ secrets.AWS_EC2_SSH_PRIVATE_KEY }}
+          envs: |
+            TAG=latest
+            AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            AWS_REGION=${{secrets.AWS_REGION}}
+          script: |
+            echo "AWS CLI version: $(aws --version)"
+            echo "Docker version: $(docker --version)"
 
-          ssh -i private-key.pem ${{secrets.AWS_EC2_USER}}@${{secrets.AWS_EC2_HOST}} << EOF
-          echo "AWS CLI version: \$(aws --version)"
-          echo "Docker version: \$(docker --version)"
+            echo "Stop the current running container if exist..."
+            docker stop container_name || true
 
-          echo "Stop the current running container if exist..."
-          docker stop container_name || true
+            echo "Remove the previous container..."
+            docker rm container_name || true
 
-          echo "Remove the previous container..."
-          docker rm container_name || true
+            echo "AWS credentials set...."
+            export AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+            export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+            export AWS_REGION=${AWS_REGION}
 
-          echo "AWS credentials set...."
-          export AWS_ACCESS_KEY_ID=${{secrets.AWS_ACCESS_KEY_ID}}
-          export AWS_SECRET_ACCESS_KEY=${{secrets.AWS_SECRET_ACCESS_KEY}}
-          export AWS_REGION=${{secrets.AWS_REGION}}
+            echo "Logging in to ECR...."
+            aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin ${{secrets.AWS_REGISTRY_URL}}
+            echo "Logged in successful..."
 
-          echo "Logging in to ECR...."
-          aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin ${{secrets.AWS_REGISTRY_URL}}
-          echo "Logged in successful..."
+            echo "Pulling  image from ECR..."
+            echo "Docker pull command: docker pull \"${{ secrets.AWS_REPO_URL }}/${{ secrets.REPOSITORY_NAME }}:latest\""
+            echo "Docker pull completed..."
 
-          echo "Pulling  image from ECR..."
-          echo "Docker pull command: docker pull \"${{ secrets.AWS_REPO_URL }}/${{ secrets.REPOSITORY_NAME }}:latest\""
-          echo "Docker pull completed..."
-
-          echo "Running the container..."
-          docker run -d \
-            -e CLERK_SECRET_KEY=\$(aws ssm get-parameter --name "CLERK_SECRET_KEY" --with-decryption --query "Parameter.Value" --output text)
-            --name bb_internal_api \
-            --env-file  /path/to/dot/env \
-            -p ${{ secrets.EXPOSED_PORT }}:${{ secrets.APPLICATION_PORT }} "${{ secrets.AWS_REGISTRY_URL }}/${{ secrets.REPOSITORY_NAME }}:latest"
-          EOF
+            echo "Running the container..."
+            docker run -d \
+              -e CLERK_SECRET_KEY=$(aws ssm get-parameter --name "CLERK_SECRET_KEY" --with-decryption --query "Parameter.Value" --output text)
+              --name bb_internal_api \
+              --env-file  /path/to/dot/env \
+              -p ${{ secrets.EXPOSED_PORT }}:${{ secrets.APPLICATION_PORT }} "${{ secrets.AWS_REGISTRY_URL }}/${{ secrets.REPOSITORY_NAME }}:latest"
