@@ -32,7 +32,7 @@
     COPY --from=builder /app/out/full/ .
     COPY turbo.json turbo.json
 
-    RUN pnpm turbo build --filter=@planty/nextjs
+    RUN NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=$ARG_NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY pnpm turbo build --filter=@planty/nextjs
 
     FROM --platform=linux/amd64 node:20-alpine AS runner
     RUN apk add --no-cache libc6-compat openssl && apk update

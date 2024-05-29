@@ -40,7 +40,7 @@ export async function getSecretOrEnv(
   secretName: keyof typeof env,
 ): Promise<string> {
   const value =
-    env.NODE_ENV === "development"
+    env.NODE_ENV !== "development"
       ? env[secretName]
       : await getSecret(secretName);
 
