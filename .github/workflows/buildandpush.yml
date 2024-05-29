@@ -57,6 +57,8 @@ jobs:
           username: ec2-user
           key: ${{ secrets.AWS_EC2_SSH_PRIVATE_KEY }}
           envs: |
+            ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+            ECR_REPOSITORY: ${{secrets.AWS_ECR_REPO}}
             TAG=latest
             AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}
             AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -81,7 +83,7 @@ jobs:
             echo "Logged in successful..."
 
             echo "Pulling  image from ECR..."
-            echo "Docker pull command: docker pull \"${{ secrets.AWS_REPO_URL }}/${{ secrets.REPOSITORY_NAME }}:latest\""
+            echo "Docker pull command: docker pull \"${ECR_REGISTRY}/${ECR_REPOSITORY}:latest\""
             echo "Docker pull completed..."
 
             echo "Running the container..."
@@ -89,4 +91,4 @@ jobs:
               -e CLERK_SECRET_KEY=$(aws ssm get-parameter --name "CLERK_SECRET_KEY" --with-decryption --query "Parameter.Value" --output text) \
               --name planty \
               --env-file  /path/to/dot/env \
-              -p ${{ secrets.EXPOSED_PORT }}:${{ secrets.APPLICATION_PORT }} "${{ secrets.AWS_REGISTRY_URL }}/${{ secrets.REPOSITORY_NAME }}:latest"
+              -p ${{ secrets.AWS_EXPOSED_PORT }}:${{ secrets.AWS_APPLICATION_PORT }} "${ECR_REGISTRY}/${ECR_REPOSITORY}:latest"
