@@ -3,7 +3,7 @@ import { Config, defineConfig } from "drizzle-kit";
 import { getSecretOrEnv } from "@planty/utils";
 
 async function loadConfig() {
-  const DATABASE_URL = await getSecretOrEnv("DATABASE_URL");
+  const DATABASE_URL = await getSecretOrEnv("POSTGRES_URL");
 
   const nonPoolingUrl = DATABASE_URL.replace(":6543", ":5432");
 

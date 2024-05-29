@@ -6,7 +6,7 @@ import { getSecretOrEnv } from "@planty/utils";
 import * as schema from "./schema";
 
 async function initializeDatabase() {
-  const url = await getSecretOrEnv("DATABASE_URL");
+  const url = await getSecretOrEnv("POSTGRES_URL");
 
   if (!url) {
     throw new Error("Missing DATABASE_URL");
