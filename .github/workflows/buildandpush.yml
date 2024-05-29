@@ -81,5 +81,7 @@ jobs:
             echo "Running the container..."
             docker run -d \
               -e CLERK_SECRET_KEY=$(aws ssm get-parameter --name "CLERK_SECRET_KEY" --with-decryption --query "Parameter.Value" --output text) \
+              -e WEBHOOK_SECRET=$(aws ssm get-parameter --name "WEBHOOK_SECRET" --with-decryption --query "Parameter.Value" --output text) \
+              -e POSTGRES_URL=$(aws ssm get-parameter --name "POSTGRES_URL" --with-decryption --query "Parameter.Value" --output text) \
               --name planty \
-              -p ${{ secrets.AWS_EXPOSED_PORT }}:${{ secrets.AWS_APPLICATION_PORT }}  ${{ steps.login-ecr.outputs.registry }}/${{secrets.AWS_ECR_REPO}}:latest
+              -p ${ secrets.AWS_EXPOSED_PORT }:${ secrets.AWS_APPLICATION_PORT }  ${ steps.login-ecr.outputs.registry }/${ secrets.AWS_ECR_REPO }:latest
