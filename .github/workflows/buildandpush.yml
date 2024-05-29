@@ -79,16 +79,15 @@ jobs:
             export AWS_REGION=${AWS_REGION}
 
             echo "Logging in to ECR...."
-            aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin ${ECR_REGISTRY}/${ECR_REPOSITORY}
+            aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_REGISTRY/$ECR_REPOSITORY
             echo "Logged in successful..."
 
             echo "Pulling  image from ECR..."
-            docker pull ${ECR_REGISTRY}/${ECR_REPOSITORY}:latest
+            docker pull $ECR_REGISTRY/$ECR_REPOSITORY:latest
             echo "Docker pull completed..."
 
             echo "Running the container..."
             docker run -d \
               -e CLERK_SECRET_KEY=$(aws ssm get-parameter --name "CLERK_SECRET_KEY" --with-decryption --query "Parameter.Value" --output text) \
               --name planty \
-              --env-file  /path/to/dot/env \
-              -p ${{ secrets.AWS_EXPOSED_PORT }}:${{ secrets.AWS_APPLICATION_PORT }} "${ECR_REGISTRY}/${ECR_REPOSITORY}:latest"
+              -p ${{ secrets.AWS_EXPOSED_PORT }}:${{ secrets.AWS_APPLICATION_PORT }} "$ECR_REGISTRY/$ECR_REPOSITORY:latest"
