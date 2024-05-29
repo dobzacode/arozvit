@@ -86,7 +86,7 @@ jobs:
 
             echo "Running the container..."
             docker run -d \
-              -e CLERK_SECRET_KEY=$(aws ssm get-parameter --name "CLERK_SECRET_KEY" --with-decryption --query "Parameter.Value" --output text)
+              -e CLERK_SECRET_KEY=$(aws ssm get-parameter --name "CLERK_SECRET_KEY" --with-decryption --query "Parameter.Value" --output text) \
               --name planty \
               --env-file  /path/to/dot/env \
               -p ${{ secrets.EXPOSED_PORT }}:${{ secrets.APPLICATION_PORT }} "${{ secrets.AWS_REGISTRY_URL }}/${{ secrets.REPOSITORY_NAME }}:latest"
