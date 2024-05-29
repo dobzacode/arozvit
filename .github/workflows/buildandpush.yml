@@ -53,8 +53,8 @@ jobs:
       - name: SSH into EC2 instance and deploy
         uses: appleboy/ssh-action@master
         with:
-          host: ec2-3-121-76-2.eu-central-1.compute.amazonaws.com
-          username: ec2-user
+          host: ${{secrets.AWS_EC2_HOST}}
+          username: ${{secrets.AWS_EC2_USER}}
           key: ${{ secrets.AWS_EC2_SSH_PRIVATE_KEY }}
           script: |
             echo "AWS CLI version: $(aws --version)"

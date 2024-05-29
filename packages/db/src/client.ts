@@ -1,14 +1,19 @@
 import { neon } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
 
+import { getSecretOrEnv } from "@planty/utils";
+
 import * as schema from "./schema";
 
-//eslint-disable-next-line
-const url = process.env.POSTGRES_URL;
+async function initializeDatabase() {
+  const url = await getSecretOrEnv("DATABASE_URL");
 
-if (!url) {
-  throw new Error("Missing POSTGRES_URL");
+  if (!url) {
+    throw new Error("Missing DATABASE_URL");
+  }
+
+  const sql = neon(url);
+  return drizzle(sql, { schema });
 }
 
-const sql = neon(url);
-export const db = drizzle(sql, { schema });
+export const db = await initializeDatabase();
