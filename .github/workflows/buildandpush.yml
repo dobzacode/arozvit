@@ -56,13 +56,6 @@ jobs:
           host: ec2-3-121-76-2.eu-central-1.compute.amazonaws.com
           username: ec2-user
           key: ${{ secrets.AWS_EC2_SSH_PRIVATE_KEY }}
-          envs: |
-            ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-            ECR_REPOSITORY: ${{secrets.AWS_ECR_REPO}}
-            TAG=latest
-            AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}
-            AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            AWS_REGION=${{secrets.AWS_REGION}}
           script: |
             echo "AWS CLI version: $(aws --version)"
             echo "Docker version: $(docker --version)"
@@ -74,20 +67,21 @@ jobs:
             docker rm planty || true
 
             echo "AWS credentials set...."
-            export AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
-            export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
-            export AWS_REGION=${AWS_REGION}
+            export AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}
+            export AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
 
             echo "Logging in to ECR...."
-            aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_REGISTRY/$ECR_REPOSITORY
+            aws ecr get-login-password --region ${{secrets.AWS_REGION}} | docker login --username AWS --password-stdin ${{ steps.login-ecr.outputs.registry }}/${{secrets.AWS_ECR_REPO}}
             echo "Logged in successful..."
 
             echo "Pulling  image from ECR..."
-            docker pull $ECR_REGISTRY/$ECR_REPOSITORY:latest
+            docker pull ${{ steps.login-ecr.outputs.registry }}/${{secrets.AWS_ECR_REPO}}:latest
+            :latest
             echo "Docker pull completed..."
 
             echo "Running the container..."
             docker run -d \
               -e CLERK_SECRET_KEY=$(aws ssm get-parameter --name "CLERK_SECRET_KEY" --with-decryption --query "Parameter.Value" --output text) \
               --name planty \
-              -p ${{ secrets.AWS_EXPOSED_PORT }}:${{ secrets.AWS_APPLICATION_PORT }} "$ECR_REGISTRY/$ECR_REPOSITORY:latest"
+              -p ${{ secrets.AWS_EXPOSED_PORT }}:${{ secrets.AWS_APPLICATION_PORT }}  ${{ steps.login-ecr.outputs.registry }}/${{secrets.AWS_ECR_REPO}}:latest
