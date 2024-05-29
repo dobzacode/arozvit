@@ -397,6 +397,9 @@ importers:
       '@aws-sdk/client-secrets-manager':
         specifier: ^3.583.0
         version: 3.583.0
+      '@t3-oss/env-nextjs':
+        specifier: ^0.10.1
+        version: 0.10.1(typescript@5.4.5)(zod@3.23.8)
       clsx:
         specifier: ^2.1.1
         version: 2.1.1

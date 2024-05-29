@@ -3,8 +3,7 @@ import { getAuth } from "@clerk/nextjs/server";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 
 import { appRouter, createTRPCContext } from "@planty/api";
-
-import { env } from "~/env";
+import { env } from "@planty/utils";
 
 /**
  * Configure basic CORS headers

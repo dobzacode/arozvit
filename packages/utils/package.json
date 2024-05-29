@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "dependencies": {
     "@aws-sdk/client-secrets-manager": "^3.583.0",
+    "@t3-oss/env-nextjs": "^0.10.1",
     "clsx": "^2.1.1",
     "tailwind-merge": "^2.3.0"
   },

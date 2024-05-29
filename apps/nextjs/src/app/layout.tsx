@@ -1,15 +1,14 @@
+import type { Metadata, Viewport } from "next";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
-import type { Metadata, Viewport } from "next";
 
-import { cn } from "@planty/utils";
+import { cn, env } from "@planty/utils";
 
 import "~/app/globals.css";
 
 import { frFR } from "@clerk/localizations";
 import { ClerkProvider } from "@clerk/nextjs";
 
-import { env } from "~/env";
 import { TRPCReactProvider } from "~/trpc/react";
 import DarkModeButton from "./_components/darkmode-button";
 import { ThemeProvider } from "./_components/theme-provider";
@@ -43,9 +42,7 @@ export const viewport: Viewport = {
   ],
 };
 
-export default  function RootLayout(props: { children: React.ReactNode }) {
-
-
+export default function RootLayout(props: { children: React.ReactNode }) {
   return (
     <ClerkProvider localization={frFR}>
       <html lang="en" suppressHydrationWarning>
