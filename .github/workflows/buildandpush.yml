@@ -83,7 +83,7 @@ jobs:
             echo "Logged in successful..."
 
             echo "Pulling  image from ECR..."
-            echo "Docker pull command: docker pull \"${ECR_REGISTRY}/${ECR_REPOSITORY}:latest\""
+            docker pull ${ECR_REGISTRY}/${ECR_REPOSITORY}:latest
             echo "Docker pull completed..."
 
             echo "Running the container..."
