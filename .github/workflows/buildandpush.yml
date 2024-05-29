@@ -8,6 +8,7 @@ on:
       - "apps/nextjs/**"
       - "packages/**"
       - ".github/workflows/buildandpush.yml"
+  workflow_dispatch:
 
 jobs:
   build-and-push:
