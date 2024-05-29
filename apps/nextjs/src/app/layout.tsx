@@ -1,6 +1,6 @@
-import type { Metadata, Viewport } from "next";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
+import type { Metadata, Viewport } from "next";
 
 import { cn } from "@planty/utils";
 
@@ -43,7 +43,9 @@ export const viewport: Viewport = {
   ],
 };
 
-export default function RootLayout(props: { children: React.ReactNode }) {
+export default  function RootLayout(props: { children: React.ReactNode }) {
+
+
   return (
     <ClerkProvider localization={frFR}>
       <html lang="en" suppressHydrationWarning>
