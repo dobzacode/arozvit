@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { Pressable, Text, TextInput, View } from "react-native";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { router } from "expo-router";
 import { useAuth } from "@clerk/clerk-expo";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
+import { router } from "expo-router";
+import { useState } from "react";
+import { Pressable, Text, TextInput, useColorScheme, View } from "react-native";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 import { api } from "~/utils/api";
 
@@ -18,6 +18,7 @@ export default function NewPlantForm() {
   const [lastWatering, setLastWatering] = useState<Date>(new Date());
   const [isDatePickerVisible, setDatePickerVisibility] =
     useState<boolean>(false);
+  const colorScheme = useColorScheme();
 
   const auth = useAuth();
 
@@ -83,7 +84,9 @@ export default function NewPlantForm() {
       </View>
       <View className="gap-lg">
         <View className="flex flex-row items-center gap-sm">
-          <Text className="body surface">Arrosage</Text>
+          <Text className="body text-surface-fg dark:text-surface">
+            Arrosage
+          </Text>
           <TextInput
             value={wateringFrequency.toString()}
             keyboardType="numeric"
@@ -91,7 +94,9 @@ export default function NewPlantForm() {
             selectionColor={"hsl(100, 36%, 40%)"}
             onChangeText={(text) => setWateringFrequency(parseInt(text))}
           ></TextInput>
-          <Text className="body surface">fois par</Text>
+          <Text className="body text-surface-fg dark:text-surface">
+            fois par
+          </Text>
           <View className="input-neutral flex h-[44px] flex-1 items-center justify-center rounded-xs text-sm shadow-sm">
             <Picker
               style={{
@@ -106,6 +111,7 @@ export default function NewPlantForm() {
                   fontSize: 14,
                   padding: 0,
                   height: 0,
+                  color: colorScheme === "dark" ? "white" : "black",
                 }}
                 label="Jours"
                 value="jours"
@@ -116,6 +122,7 @@ export default function NewPlantForm() {
                   fontSize: 14,
                   padding: 0,
                   height: 0,
+                  color: colorScheme === "dark" ? "white" : "black",
                 }}
                 label="Semaines"
                 value="semaines"
@@ -126,6 +133,7 @@ export default function NewPlantForm() {
                   fontSize: 14,
                   padding: 0,
                   height: 0,
+                  color: colorScheme === "dark" ? "white" : "black",
                 }}
                 label="Mois"
                 value="mois"
@@ -136,6 +144,7 @@ export default function NewPlantForm() {
                   fontSize: 14,
                   padding: 0,
                   height: 0,
+                  color: colorScheme === "dark" ? "white" : "black",
                   fontFamily: "space-grotesk",
                 }}
                 label="Années"
@@ -145,7 +154,9 @@ export default function NewPlantForm() {
           </View>
         </View>
         <View className="flex flex-row items-center gap-sm">
-          <Text className="surface">Dernier arrosage le</Text>
+          <Text className="text-surface-fg dark:text-surface">
+            Dernier arrosage le
+          </Text>
           <Pressable
             className="input-neutral flex h-[44px] flex-row items-center justify-center gap-md rounded-xs p-sm px-md shadow-sm"
             onPress={() => setDatePickerVisibility(true)}
@@ -157,7 +168,7 @@ export default function NewPlantForm() {
                 year: "numeric",
               })}
             </Text>
-            <FontAwesome5 name="calendar-alt" size={20} color="black" />
+            <FontAwesome5 name="calendar-alt" size={20} color={colorScheme === "dark" ? "white" : "black"} />
           </Pressable>
           <DateTimePickerModal
             textColor="green"

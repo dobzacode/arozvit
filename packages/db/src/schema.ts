@@ -13,9 +13,9 @@ import { z } from "zod";
 
 export const User = pgTable("user", {
   id: text("id").primaryKey(),
-  firstName: varchar("first_name", { length: 255 }).notNull(),
-  lastName: varchar("last_name", { length: 255 }).notNull(),
-  username: varchar("username", { length: 255 }).notNull(),
+  firstName: varchar("first_name", { length: 255 }),
+  lastName: varchar("last_name", { length: 255 }),
+  username: varchar("username", { length: 255 }),
   imageUrl: text("image_url"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at")
@@ -26,9 +26,9 @@ export const User = pgTable("user", {
 
 export const CreateUserSchema = createInsertSchema(User, {
   id: z.string(),
-  firstName: z.string().min(1).max(255),
-  lastName: z.string().min(1).max(255),
-  username: z.string().min(1).max(255),
+  firstName: z.string().min(1).max(255).optional(),
+  lastName: z.string().min(1).max(255).optional(),
+  username: z.string().min(1).max(255).optional(),
   imageUrl: z.string().url().optional(),
 }).omit({
   createdAt: true,
