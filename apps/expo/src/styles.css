@@ -49,6 +49,10 @@
     @apply font-['mustica-pro-medium'] text-base leading-base;
   }
 
+  .background {
+    @apply bg-neutral-50 dark:bg-neutral-950;
+  }
+
   .surface {
     @apply bg-neutral-1 text-surface-fg dark:bg-neutral-950 dark:text-neutral-1;
   }
@@ -87,7 +91,7 @@
   }
 
   .input-neutral {
-    @apply surface body  placeholder:text-neutral-900/[0.4] dark:placeholder:text-white;
+    @apply surface body  placeholder:text-neutral-900/[0.4] dark:border dark:border-neutral-400/[0.2] dark:bg-neutral-900;
   }
 }
 @layer base {

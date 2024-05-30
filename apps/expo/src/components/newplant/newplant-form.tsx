@@ -1,10 +1,10 @@
-import { useAuth } from "@clerk/clerk-expo";
-import { FontAwesome5 } from "@expo/vector-icons";
-import { Picker } from "@react-native-picker/picker";
-import { router } from "expo-router";
 import { useState } from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { router } from "expo-router";
+import { useAuth } from "@clerk/clerk-expo";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { Picker } from "@react-native-picker/picker";
 
 import { api } from "~/utils/api";
 
@@ -21,9 +21,10 @@ export default function NewPlantForm() {
 
   const auth = useAuth();
 
- if (!auth.userId) {
-  return router.push("/login")
- }
+  if (!auth.userId) {
+    router.push("/login");
+    return <></>;
+  }
 
   const { mutate, error } = api.plant.create.useMutation({
     onSuccess: () => {
@@ -35,7 +36,6 @@ export default function NewPlantForm() {
   });
 
   const handleSubmit = () => {
-
     const formData = {
       userId: auth.userId,
       name,
@@ -55,7 +55,9 @@ export default function NewPlantForm() {
     <View className="gap-lg">
       <View className="gap-md">
         <View className=" gap-xs">
-          <Text className="body surface-container-lowest">Nom</Text>
+          <Text className="body surface-container-lowest bg-transparent">
+            Nom
+          </Text>
           <TextInput
             className="input-neutral  rounded-xs p-sm shadow-sm"
             placeholder="Monstera"
@@ -65,11 +67,13 @@ export default function NewPlantForm() {
           ></TextInput>
         </View>
         <View className=" gap-xs">
-          <Text className="body surface-container-lowest">Description</Text>
+          <Text className="body surface-container-lowest bg-transparent">
+            Description
+          </Text>
           <TextInput
             multiline
             numberOfLines={4}
-            className="input-neutral  rounded-xs p-sm align-top shadow-sm"
+            className="input-neutral rounded-xs  p-sm align-top shadow-sm "
             placeholder="Plante sur la terrasse"
             value={description}
             selectionColor={"hsl(100, 36%, 40%)"}
@@ -79,7 +83,7 @@ export default function NewPlantForm() {
       </View>
       <View className="gap-lg">
         <View className="flex flex-row items-center gap-sm">
-          <Text className="body">Arrosage</Text>
+          <Text className="body surface">Arrosage</Text>
           <TextInput
             value={wateringFrequency.toString()}
             keyboardType="numeric"
@@ -87,7 +91,7 @@ export default function NewPlantForm() {
             selectionColor={"hsl(100, 36%, 40%)"}
             onChangeText={(text) => setWateringFrequency(parseInt(text))}
           ></TextInput>
-          <Text className="body">fois par</Text>
+          <Text className="body surface">fois par</Text>
           <View className="input-neutral flex h-[44px] flex-1 items-center justify-center rounded-xs text-sm shadow-sm">
             <Picker
               style={{
@@ -141,12 +145,12 @@ export default function NewPlantForm() {
           </View>
         </View>
         <View className="flex flex-row items-center gap-sm">
-          <Text className="">Dernier arrosage le</Text>
+          <Text className="surface">Dernier arrosage le</Text>
           <Pressable
             className="input-neutral flex h-[44px] flex-row items-center justify-center gap-md rounded-xs p-sm px-md shadow-sm"
             onPress={() => setDatePickerVisibility(true)}
           >
-            <Text>
+            <Text className="text-surface-fg dark:text-surface">
               {lastWatering.toLocaleDateString("fr-FR", {
                 day: "2-digit",
                 month: "long",

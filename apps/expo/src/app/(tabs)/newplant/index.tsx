@@ -7,10 +7,10 @@ import TopMenu from "~/components/top-menu";
 export default function Page() {
   return (
     <SafeAreaView>
-      <View className="surface-container-lowest flex h-full w-full  ">
+      <View className="background  flex h-full w-full  ">
         <TopMenu className={"relative"}></TopMenu>
         <View className="flex gap-md px-md pb-md pt-sm">
-          <Text className="heading-h1 surface-container-lowest">
+          <Text className="heading-h1 surface-container-lowest bg-transparent">
             Nouvelle plante
           </Text>
           <NewPlantForm></NewPlantForm>

@@ -27,7 +27,7 @@
     COPY .gitignore .gitignore
     COPY --from=builder /app/out/json/ .
     COPY --from=builder /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
-    RUN yarn global add pnpm && pnpm install --frozen-lockfile
+    RUN yarn global add pnpm@9.1.3 && pnpm install --frozen-lockfile
 
     COPY --from=builder /app/out/full/ .
     COPY turbo.json turbo.json
