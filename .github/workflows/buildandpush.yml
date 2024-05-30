@@ -9,6 +9,9 @@ on:
       - "packages/**"
       - ".github/workflows/buildandpush.yml"
   workflow_dispatch:
+  workflow_run:
+    workflows: ["CI"]
+    types: completed
 
 jobs:
   build-and-push:
