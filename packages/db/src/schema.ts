@@ -32,10 +32,11 @@ export const CreateUserSchema = createInsertSchema(User, {
 export const Plant = pgTable("plant", {
   id: uuid("id").primaryKey(),
   userId: text("user_id").references(() => User.id),
+  name: text("name"),
   description: text("description"),
   imageUrl: text("image_url"),
   wateringFrequency: integer("watering_frequency"),
-  lastWatering: timestamp("last_watering"),
+  lastWatering: timestamp("last_watering").defaultNow(),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at")
     .defaultNow()
@@ -45,7 +46,16 @@ export const Plant = pgTable("plant", {
 export const CreatePlantSchema = createInsertSchema(Plant, {
   id: z.string().uuid(),
   userId: z.string().uuid(),
-  description: z.string().min(1).optional(),
+  name: z.string().min(1).max(90, {
+    message: "Le nom de la plante ne doit pas dépasser 90 caractères",
+  }),
+  description: z
+    .string()
+    .min(1)
+    .max(255, {
+      message: "La description ne doit pas dépasser 255 caractères",
+    })
+    .optional(),
   imageUrl: z.string().url().optional(),
   wateringFrequency: z.number().int().min(1),
   lastWatering: z.date().optional(),
