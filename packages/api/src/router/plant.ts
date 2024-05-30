@@ -14,7 +14,7 @@ export const plantRouter = {
     }),
 
   update: protectedProcedure
-    .input(CreatePlantSchema)
+    .input(CreatePlantSchema.extend({ id: z.string() }))
     .mutation(({ ctx, input }) => {
       return ctx.db.update(Plant).set(input).where(eq(Plant.id, input.id));
     }),
