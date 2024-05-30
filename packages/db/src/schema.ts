@@ -30,7 +30,7 @@ export const CreateUserSchema = createInsertSchema(User, {
 });
 
 export const Plant = pgTable("plant", {
-  id: uuid("id").primaryKey().default("gen_random_uuid()"),
+  id: uuid("id").primaryKey(),
   userId: text("user_id").references(() => User.id),
   description: text("description"),
   imageUrl: text("image_url"),
