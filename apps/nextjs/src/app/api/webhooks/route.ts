@@ -1,6 +1,7 @@
 import type { WebhookEvent } from "@clerk/nextjs/server";
 import { headers } from "next/headers";
 import { Webhook } from "svix";
+import { z } from "zod";
 
 import { eq } from "@planty/db";
 import { db } from "@planty/db/client";
@@ -44,7 +45,7 @@ export async function POST(req: Request) {
 
   if (evt.type === "user.created" || evt.type === "user.updated") {
     try {
-      await CreateUserSchema.parseAsync(evt.data);
+      await CreateUserSchema.extend({ id: z.string() }).parseAsync(evt.data);
     } catch (error) {
       console.error("Invalid data for user creation/update:", error);
       return new Response("Invalid data provided", {
@@ -57,7 +58,14 @@ export async function POST(req: Request) {
 
   if (type === "user.created") {
     try {
-      await db.insert(User).values(data);
+      await db.insert(User).values({
+        //@ts-expect-error -- data.id was already checked in the above try/catch
+        id: data.id,
+        firstName: data.first_name,
+        lastName: data.last_name,
+        username: data.username,
+        imageUrl: data.image_url,
+      });
       console.log(`User has been created`);
     } catch (error) {
       console.error("Error creating user in DB:", error);
@@ -75,6 +83,7 @@ export async function POST(req: Request) {
 
   if (type === "user.updated") {
     try {
+      //@ts-expect-error -- data.id was already checked in the above try/catch
       await db.update(User).set(data).where(eq(User.id, data.id));
     } catch (error) {
       console.error("Error updating user in DB:", error);

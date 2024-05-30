@@ -12,7 +12,7 @@ import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
 export const User = pgTable("user", {
-  id: text("id").primaryKey().notNull(),
+  id: text("id").primaryKey(),
   firstName: varchar("first_name", { length: 255 }).notNull(),
   lastName: varchar("last_name", { length: 255 }).notNull(),
   username: varchar("username", { length: 255 }).notNull(),
@@ -25,7 +25,6 @@ export const User = pgTable("user", {
 });
 
 export const CreateUserSchema = createInsertSchema(User, {
-  id: z.string(),
   firstName: z.string().min(1).max(255),
   lastName: z.string().min(1).max(255),
   username: z.string().min(1).max(255),
