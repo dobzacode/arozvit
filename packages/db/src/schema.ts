@@ -1,13 +1,52 @@
-import { pgTable, text, varchar } from "drizzle-orm/pg-core";
+import {
+  integer,
+  pgTable,
+  text,
+  timestamp,
+  uuid,
+  varchar,
+} from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
+import { z } from "zod";
 
 export const User = pgTable("user", {
   id: text("id").primaryKey(),
-  first_name: varchar("first_name", { length: 255 }),
-  last_name: varchar("last_name", { length: 255 }),
+  firstName: varchar("first_name", { length: 255 }),
+  lastName: varchar("last_name", { length: 255 }),
   username: varchar("username", { length: 255 }),
-  image_url: text("image_url"),
-  profile_image_url: text("profile_image_url"),
+  imageUrl: text("image_url"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at")
+    .defaultNow()
+    .$onUpdate(() => new Date()),
 });
 
-export const CreateUserSchema = createInsertSchema(User);
+export const CreateUserSchema = createInsertSchema(User, {
+  id: z.string().uuid(),
+  firstName: z.string().min(1).max(255),
+  lastName: z.string().min(1).max(255),
+  username: z.string().min(1).max(255),
+  imageUrl: z.string().url().optional(),
+});
+
+export const Plant = pgTable("plant", {
+  id: uuid("id").primaryKey().default("gen_random_uuid()"),
+  userId: text("user_id").references(() => User.id),
+  description: text("description"),
+  imageUrl: text("image_url"),
+  wateringFrequency: integer("watering_frequency"),
+  lastWatering: timestamp("last_watering"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at")
+    .defaultNow()
+    .$onUpdate(() => new Date()),
+});
+
+export const CreatePlantSchema = createInsertSchema(Plant, {
+  id: z.string().uuid(),
+  userId: z.string().uuid(),
+  description: z.string().min(1).optional(),
+  imageUrl: z.string().url().optional(),
+  wateringFrequency: z.number().int().min(1),
+  lastWatering: z.date().optional(),
+});
