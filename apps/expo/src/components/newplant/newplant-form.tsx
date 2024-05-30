@@ -1,19 +1,55 @@
+import { useAuth } from "@clerk/clerk-expo";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { Picker } from "@react-native-picker/picker";
+import { router } from "expo-router";
 import { useState } from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { FontAwesome5 } from "@expo/vector-icons";
-import { Picker } from "@react-native-picker/picker";
+
+import { api } from "~/utils/api";
 
 export default function NewPlantForm() {
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  const [frequence, setFrequence] = useState<number>(1);
+  const [wateringFrequency, setWateringFrequency] = useState<number>(1);
   const [interval, setInterval] = useState<
     "jours" | "semaines" | "mois" | "années"
   >("jours");
-  const [dernierArrosage, setDernierArrosage] = useState<Date>(new Date());
+  const [lastWatering, setLastWatering] = useState<Date>(new Date());
   const [isDatePickerVisible, setDatePickerVisibility] =
     useState<boolean>(false);
+
+  const auth = useAuth();
+
+ if (!auth.userId) {
+  return router.push("/login")
+ }
+
+  const { mutate, error } = api.plant.create.useMutation({
+    onSuccess: () => {
+      console.log("Plant created");
+    },
+    onError: (e) => {
+      console.log(e);
+    },
+  });
+
+  const handleSubmit = () => {
+
+    const formData = {
+      userId: auth.userId,
+      name,
+      description,
+      wateringFrequency,
+      interval,
+      lastWatering,
+    };
+    try {
+      mutate(formData);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return (
     <View className="gap-lg">
@@ -45,11 +81,11 @@ export default function NewPlantForm() {
         <View className="flex flex-row items-center gap-sm">
           <Text className="body">Arrosage</Text>
           <TextInput
-            value={frequence.toString()}
+            value={wateringFrequency.toString()}
             keyboardType="numeric"
             className="input-neutral h-2xl w-2xl self-start rounded-xs p-sm text-center shadow-sm"
             selectionColor={"hsl(100, 36%, 40%)"}
-            onChangeText={(text) => setFrequence(parseInt(text))}
+            onChangeText={(text) => setWateringFrequency(parseInt(text))}
           ></TextInput>
           <Text className="body">fois par</Text>
           <View className="input-neutral flex h-[44px] flex-1 items-center justify-center rounded-xs text-sm shadow-sm">
@@ -111,7 +147,7 @@ export default function NewPlantForm() {
             onPress={() => setDatePickerVisibility(true)}
           >
             <Text>
-              {dernierArrosage.toLocaleDateString("fr-FR", {
+              {lastWatering.toLocaleDateString("fr-FR", {
                 day: "2-digit",
                 month: "long",
                 year: "numeric",
@@ -126,18 +162,19 @@ export default function NewPlantForm() {
             mode="date"
             maximumDate={new Date()}
             onConfirm={(date) => {
-              setDernierArrosage(date);
+              setLastWatering(date);
               setDatePickerVisibility(false);
             }}
             onCancel={() => setDatePickerVisibility(false)}
           />
         </View>
         <Pressable
-          onPress={() => console.log("submit")}
+          onPress={handleSubmit}
           className="primary flex items-center justify-center rounded-xs px-md py-2 shadow-sm shadow-black"
         >
           <Text className="button-txt text-primary-fg">Ajouter ma plante</Text>
         </Pressable>
+        {error && <Text className="text-sm text-red-500">{error.message}</Text>}
       </View>
     </View>
   );

@@ -1,6 +1,7 @@
 {
   "extends": "@planty/tsconfig/internal-package.json",
   "compilerOptions": {
+    "strict": true,
     "outDir": "dist",
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
   },

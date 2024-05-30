@@ -5,6 +5,7 @@ import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import { ClerkProvider } from "@clerk/clerk-expo";
 
+import { TRPCProvider } from "~/utils/api";
 import { tokenCache } from "~/utils/utils";
 
 import "./../styles.css";
@@ -31,15 +32,15 @@ export default function RootLayout() {
 
   return (
     <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
-      {/* <TRPCProvider> */}
-      <SafeAreaProvider>
-        <Stack
-          screenOptions={{
-            headerShown: false,
-          }}
-        ></Stack>
-      </SafeAreaProvider>
-      {/* </TRPCProvider> */}
+      <TRPCProvider>
+        <SafeAreaProvider>
+          <Stack
+            screenOptions={{
+              headerShown: false,
+            }}
+          ></Stack>
+        </SafeAreaProvider>
+      </TRPCProvider>
     </ClerkProvider>
   );
 }
