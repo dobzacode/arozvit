@@ -1,11 +1,21 @@
-import { View } from "react-native";
+import { Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-import { SignOut } from "~/components/sign-out";
+import NewPlantForm from "~/components/newplant/newplant-form";
+import TopMenu from "~/components/top-menu";
 
 export default function Page() {
   return (
-    <View className="surface-container-low h-full w-full ">
-      <SignOut></SignOut>
-    </View>
+    <SafeAreaView>
+      <View className="surface-container-lowest flex h-full w-full  ">
+        <TopMenu className={"relative"}></TopMenu>
+        <View className="flex gap-md px-md pb-md pt-sm">
+          <Text className="heading-h1 surface-container-lowest">
+            Nouvelle plante
+          </Text>
+          <NewPlantForm></NewPlantForm>
+        </View>
+      </View>
+    </SafeAreaView>
   );
 }

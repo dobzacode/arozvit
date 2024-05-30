@@ -3,22 +3,22 @@
 
 @layer components {
   .display-2xl {
-    @apply text-10xl font-bold leading-10xl;
+    @apply font-['space-grotesk']  text-10xl font-bold leading-10xl;
   }
   .display-xl {
-    @apply text-9xl font-bold leading-9xl;
+    @apply font-['space-grotesk']  text-9xl font-bold leading-9xl;
   }
   .display-lg {
-    @apply text-8xl font-bold leading-8xl;
+    @apply font-['space-grotesk']  text-8xl font-bold leading-8xl;
   }
   .display-md {
-    @apply text-7xl font-bold leading-7xl;
+    @apply font-['space-grotesk']  text-7xl font-bold leading-7xl;
   }
   .display-sm {
-    @apply text-6xl font-bold leading-6xl;
+    @apply font-['space-grotesk']  text-6xl font-bold leading-6xl;
   }
   .display-xs {
-    @apply text-5xl font-bold leading-5xl;
+    @apply font-['space-grotesk']  text-5xl font-bold leading-5xl;
   }
   .heading-h1 {
     @apply font-['space-grotesk'] text-4xl  leading-4xl;
@@ -84,6 +84,10 @@
   }
   .error-container {
     @apply bg-error-200 text-error-container-fg dark:bg-error-600 dark:text-error-100;
+  }
+
+  .input-neutral {
+    @apply surface body  placeholder:text-neutral-900/[0.4] dark:placeholder:text-white;
   }
 }
 @layer base {

@@ -3,7 +3,7 @@ import { useUser } from "@clerk/clerk-expo";
 import { Feather } from "@expo/vector-icons";
 import { useColorScheme } from "nativewind";
 
-export default function TopMenu() {
+export default function TopMenu({ className }: { className?: string }) {
   const { user, isLoaded } = useUser();
   const { colorScheme } = useColorScheme();
 
@@ -12,7 +12,9 @@ export default function TopMenu() {
   }
 
   return (
-    <View className="absolute top-0 flex w-full flex-row items-center justify-between bg-transparent p-md">
+    <View
+      className={`absolute top-0 flex w-full flex-row items-center justify-between bg-transparent p-md ${className}`}
+    >
       <Image
         className="rounded-full"
         style={{ width: 24, height: 24 }}
