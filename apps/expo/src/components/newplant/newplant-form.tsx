@@ -1,10 +1,10 @@
-import { useAuth } from "@clerk/clerk-expo";
-import { FontAwesome5 } from "@expo/vector-icons";
-import { Picker } from "@react-native-picker/picker";
-import { router } from "expo-router";
 import { useState } from "react";
 import { Pressable, Text, TextInput, useColorScheme, View } from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { router } from "expo-router";
+import { useAuth } from "@clerk/clerk-expo";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { Picker } from "@react-native-picker/picker";
 
 import { api } from "~/utils/api";
 
@@ -168,7 +168,11 @@ export default function NewPlantForm() {
                 year: "numeric",
               })}
             </Text>
-            <FontAwesome5 name="calendar-alt" size={20} color={colorScheme === "dark" ? "white" : "black"} />
+            <FontAwesome5
+              name="calendar-alt"
+              size={20}
+              color={colorScheme === "dark" ? "white" : "black"}
+            />
           </Pressable>
           <DateTimePickerModal
             textColor="green"

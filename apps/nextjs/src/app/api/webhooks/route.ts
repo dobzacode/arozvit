@@ -59,7 +59,6 @@ export async function POST(req: Request) {
   if (type === "user.created") {
     try {
       await db.insert(User).values({
-        //@ts-expect-error -- data.id was already checked in the above try/catch
         id: data.id,
         firstName: data.first_name,
         lastName: data.last_name,
@@ -83,7 +82,6 @@ export async function POST(req: Request) {
 
   if (type === "user.updated") {
     try {
-      //@ts-expect-error -- data.id was already checked in the above try/catch
       await db.update(User).set(data).where(eq(User.id, data.id));
     } catch (error) {
       console.error("Error updating user in DB:", error);

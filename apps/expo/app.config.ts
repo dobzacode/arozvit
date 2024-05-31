@@ -24,6 +24,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   extra: {
     CLERK_PUBLISHABLE_KEY: process.env.CLERK_PUBLISHABLE_KEY,
+
     eas: {
       projectId: "986ce81f-fce0-48e9-8166-ca41c3d9a89d",
     },
@@ -40,6 +41,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     tsconfigPaths: true,
     typedRoutes: true,
   },
+
   plugins: [
     "expo-router",
     [

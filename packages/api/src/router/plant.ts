@@ -7,6 +7,14 @@ import { CreatePlantSchema, Plant } from "@planty/db/schema";
 import { protectedProcedure } from "../trpc";
 
 export const plantRouter = {
+  list: protectedProcedure.query(({ ctx }) => {
+    return ctx.db.select().from(Plant).where(eq(Plant.userId, ctx.auth.userId));
+  }),
+
+  get: protectedProcedure.input(z.string()).query(({ ctx, input }) => {
+    return ctx.db.select().from(Plant).where(eq(Plant.id, input));
+  }),
+
   create: protectedProcedure
     .input(CreatePlantSchema)
     .mutation(({ ctx, input }) => {

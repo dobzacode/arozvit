@@ -35,7 +35,7 @@ export const CreateUserSchema = createInsertSchema(User, {
   updatedAt: true,
 });
 
-const intervalEnum = pgEnum("interval", [
+export const intervalEnum = pgEnum("interval", [
   "jours",
   "semaines",
   "mois",
