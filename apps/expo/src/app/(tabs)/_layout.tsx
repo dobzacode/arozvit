@@ -1,25 +1,32 @@
-import { View } from "react-native";
+import { useColorScheme, View } from "react-native";
 import { Tabs } from "expo-router";
+import { useRouteInfo } from "expo-router/build/hooks";
 import { Feather, FontAwesome5 } from "@expo/vector-icons";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 export default function TabsLayout() {
+  const route = useRouteInfo();
+  const colorScheme = useColorScheme();
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
+
         tabBarStyle: {
           paddingTop: 10,
           paddingRight: 15,
           paddingLeft: 15,
           height: 60,
           display: "flex",
+          backgroundColor:
+            colorScheme === "dark" ? "hsl(98, 20%, 5%)" : "white",
           flexDirection: "row",
           justifyContent: "space-around",
         },
 
-        tabBarActiveTintColor: "#67aa3b",
+        tabBarActiveTintColor:
+          colorScheme === "dark" ? "hsl(100, 36%, 75%)" : "#67aa3b",
 
         tabBarLabelStyle: {
           fontFamily: "mustica-pro",
@@ -66,15 +73,20 @@ export default function TabsLayout() {
           tabBarLabelStyle: {
             display: "none",
           },
+
           tabBarIcon: ({ size }) => {
             return (
-              <View className="h-fit w-fit rounded-full bg-white p-0.5 shadow-sm shadow-black">
-                <View className="primary flex h-fit w-fit items-center justify-center rounded-full p-sm">
+              <View
+                className={`h-fit w-fit rounded-full bg-white p-0.5  ${route.pathname === "/newplant" ? " " : "shadow-sm shadow-black "}`}
+              >
+                <View
+                  className={`primary flex h-fit w-fit items-center justify-center rounded-full p-sm ${route.pathname === "/newplant" ? "bg-black/[.10] bg-white" : ""}`}
+                >
                   <AntDesign
                     className="w-[20px]"
                     name="plus"
                     size={size}
-                    color={"white"}
+                    color={route.pathname === "/newplant" ? "white" : "white"}
                   />
                 </View>
               </View>

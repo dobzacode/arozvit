@@ -62,12 +62,16 @@ export const Plant = pgTable("plant", {
 
 export const CreatePlantSchema = createInsertSchema(Plant, {
   userId: z.string(),
-  name: z.string().min(1).max(90, {
+  name: z.string().min(1,
+    {
+      message: "Le nom de la plante est obligatoire"
+    }
+  ).max(90, {
     message: "Le nom de la plante ne doit pas dépasser 90 caractères",
   }),
   description: z
     .string()
-    .min(1)
+    
     .max(255, {
       message: "La description ne doit pas dépasser 255 caractères",
     })

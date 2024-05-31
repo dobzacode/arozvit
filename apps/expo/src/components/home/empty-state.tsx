@@ -21,9 +21,7 @@ export default function EmptyState() {
         onPress={() => router.push("/newplant")}
         className="primary flex items-center justify-center rounded-xs px-md py-2 shadow-sm shadow-black"
       >
-        <Text className="button-txt text-surface-fg dark:text-surface">
-          Ajouter une plante
-        </Text>
+        <Text className="button-txt  text-surface">Ajouter une plante</Text>
       </Pressable>
     </View>
   );
