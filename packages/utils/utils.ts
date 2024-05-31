@@ -38,9 +38,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export async function getSecretOrEnv(
-  secretName: keyof typeof env,
-): Promise<string> {
+export function getSecretOrEnv(secretName: keyof typeof env): string {
   const value = env[secretName];
 
   if (!value) {

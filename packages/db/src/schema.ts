@@ -77,14 +77,9 @@ export const CreatePlantSchema = createInsertSchema(Plant, {
   lastWatering: z.date().optional(),
   wateringInterval: z.enum(wateringIntervalEnum.enumValues),
 }).omit({
-  id: true,
   createdAt: true,
   updatedAt: true,
 });
-
-export const UserRelations = relations(User, ({ many }) => ({
-  plants: many(Plant),
-}));
 
 export const PlantRelations = relations(Plant, ({ one }) => ({
   user: one(User, { fields: [Plant.userId], references: [User.id] }),
