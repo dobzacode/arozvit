@@ -35,7 +35,7 @@ export const CreateUserSchema = createInsertSchema(User, {
   updatedAt: true,
 });
 
-export const intervalEnum = pgEnum("interval", [
+export const wateringIntervalEnum = pgEnum("watering_interval", [
   "jours",
   "semaines",
   "mois",
@@ -52,7 +52,7 @@ export const Plant = pgTable("plant", {
   imageUrl: text("image_url"),
   wateringFrequency: integer("watering_frequency").notNull(),
   lastWatering: timestamp("last_watering").defaultNow().notNull(),
-  interval: intervalEnum("interval").notNull(),
+  wateringInterval: wateringIntervalEnum("watering_interval").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at")
     .defaultNow()
@@ -75,7 +75,7 @@ export const CreatePlantSchema = createInsertSchema(Plant, {
   imageUrl: z.string().url().optional(),
   wateringFrequency: z.number().int().min(1),
   lastWatering: z.date().optional(),
-  interval: z.enum(intervalEnum.enumValues),
+  wateringInterval: z.enum(wateringIntervalEnum.enumValues),
 }).omit({
   id: true,
   createdAt: true,

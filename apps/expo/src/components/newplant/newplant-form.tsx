@@ -12,7 +12,7 @@ export default function NewPlantForm() {
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [wateringFrequency, setWateringFrequency] = useState<number>(1);
-  const [interval, setInterval] = useState<
+  const [wateringInterval, setWateringInterval] = useState<
     "jours" | "semaines" | "mois" | "années"
   >("jours");
   const [lastWatering, setLastWatering] = useState<Date>(new Date());
@@ -42,7 +42,7 @@ export default function NewPlantForm() {
       name,
       description,
       wateringFrequency,
-      interval,
+      wateringInterval,
       lastWatering,
     };
     try {
@@ -102,8 +102,8 @@ export default function NewPlantForm() {
               style={{
                 width: 160,
               }}
-              selectedValue={interval}
-              onValueChange={(itemValue) => setInterval(itemValue)}
+              selectedValue={wateringInterval}
+              onValueChange={(itemValue) => setWateringInterval(itemValue)}
             >
               <Picker.Item
                 fontFamily="mustica-pro"
