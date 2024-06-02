@@ -9,7 +9,7 @@ import { CreateUserSchema, User } from "@planty/db/schema";
 import { getSecretOrEnv } from "@planty/utils";
 
 export async function POST(req: Request) {
-  const WEBHOOK_SECRET = getSecretOrEnv("WEBHOOK_SECRET");
+  const WEBHOOK_SECRET = await getSecretOrEnv("WEBHOOK_SECRET");
 
   const headerPayload = headers();
   const svix_id = headerPayload.get("svix-id");

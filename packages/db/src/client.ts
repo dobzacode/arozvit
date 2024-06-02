@@ -5,8 +5,8 @@ import { getSecretOrEnv } from "@planty/utils";
 
 import * as schema from "./schema";
 
-function initializeDatabase() {
-  const url = getSecretOrEnv("POSTGRES_URL");
+async function initializeDatabase() {
+  const url = await getSecretOrEnv("POSTGRES_URL");
 
   if (!url) {
     throw new Error("Missing DATABASE_URL");
@@ -16,4 +16,4 @@ function initializeDatabase() {
   return drizzle(sql, { schema });
 }
 
-export const db = initializeDatabase();
+export const db = await initializeDatabase();
