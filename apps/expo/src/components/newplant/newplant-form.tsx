@@ -1,10 +1,17 @@
 import { useState } from "react";
-import { Pressable, Text, TextInput, useColorScheme, View } from "react-native";
+import {
+  ActivityIndicator,
+  Pressable,
+  Text,
+  TextInput,
+  useColorScheme,
+  View,
+} from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import SelectDropdown from "react-native-select-dropdown";
 import { router } from "expo-router";
 import { useAuth } from "@clerk/clerk-expo";
-import { FontAwesome5 } from "@expo/vector-icons";
-import { Picker } from "@react-native-picker/picker";
+import { Entypo, FontAwesome5 } from "@expo/vector-icons";
 
 import { api } from "~/utils/api";
 
@@ -27,9 +34,13 @@ export default function NewPlantForm() {
     return <></>;
   }
 
-  const { mutate, error } = api.plant.create.useMutation({
+  const { mutate, error, isPending } = api.plant.create.useMutation({
     onSuccess: () => {
-      console.log("Plant created");
+      setName("");
+      setDescription("");
+      setWateringFrequency(1);
+      setWateringInterval("jours");
+      setLastWatering(new Date());
     },
     onError: (e) => {
       console.log(e);
@@ -66,6 +77,11 @@ export default function NewPlantForm() {
             selectionColor={"hsl(100, 36%, 40%)"}
             onChangeText={setName}
           ></TextInput>
+          {error?.data?.zodError?.fieldErrors.name && (
+            <Text className="mb-2 text-error-400 dark:text-error-200">
+              {error.data.zodError.fieldErrors.name[0]}
+            </Text>
+          )}
         </View>
         <View className=" gap-xs">
           <Text className="body surface-container-lowest bg-transparent">
@@ -90,67 +106,74 @@ export default function NewPlantForm() {
           <TextInput
             value={wateringFrequency.toString()}
             keyboardType="numeric"
-            className="input-neutral h-2xl w-2xl self-start rounded-xs p-sm text-center shadow-sm"
+            className="input-neutral h-[44px] w-[44px] self-start rounded-xs p-sm text-center shadow-sm"
             selectionColor={"hsl(100, 36%, 40%)"}
             onChangeText={(text) => setWateringFrequency(parseInt(text))}
           ></TextInput>
           <Text className="body text-surface-fg dark:text-surface">
             fois par
           </Text>
-          <View className="input-neutral flex h-[44px] flex-1 items-center justify-center rounded-xs text-sm shadow-sm">
-            <Picker
-              style={{
-                width: 160,
+          <View className="input-neutral flex h-[44px] flex-1 rounded-xs text-sm shadow-sm">
+            <SelectDropdown
+              data={["jours", "semaines", "mois", "années"]}
+              onSelect={(selectedItem) => {
+                setWateringInterval(selectedItem as typeof wateringInterval);
               }}
-              selectedValue={wateringInterval}
-              onValueChange={(itemValue) => setWateringInterval(itemValue)}
-            >
-              <Picker.Item
-                fontFamily="mustica-pro"
-                style={{
-                  fontSize: 14,
-                  padding: 0,
-                  height: 0,
-                  color: colorScheme === "dark" ? "white" : "black",
-                }}
-                label="Jours"
-                value="jours"
-              />
-              <Picker.Item
-                fontFamily="mustica-pro"
-                style={{
-                  fontSize: 14,
-                  padding: 0,
-                  height: 0,
-                  color: colorScheme === "dark" ? "white" : "black",
-                }}
-                label="Semaines"
-                value="semaines"
-              />
-              <Picker.Item
-                fontFamily="mustica-pro"
-                style={{
-                  fontSize: 14,
-                  padding: 0,
-                  height: 0,
-                  color: colorScheme === "dark" ? "white" : "black",
-                }}
-                label="Mois"
-                value="mois"
-              />
-              <Picker.Item
-                fontFamily="mustica-pro"
-                style={{
-                  fontSize: 14,
-                  padding: 0,
-                  height: 0,
-                  color: colorScheme === "dark" ? "white" : "black",
-                  fontFamily: "space-grotesk",
-                }}
-                label="Années"
-                value="années"
-              />
-            </Picker>
+              renderButton={(selectedItem, isOpened) => {
+                return (
+                  <View
+                    style={{
+                      height: 40,
+                      flexDirection: "row",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      paddingHorizontal: 12,
+                    }}
+                  >
+                    <Text
+                      className="flex-1 dark:text-white"
+                      style={{
+                        fontFamily: "mustica-pro",
+                      }}
+                    >
+                      {wateringInterval}
+                    </Text>
+                    <Entypo
+                      name={isOpened ? "chevron-thin-up" : "chevron-thin-down"}
+                      color={colorScheme === "dark" ? "white" : "black"}
+                    />
+                  </View>
+                );
+              }}
+              dropdownStyle={{
+                borderRadius: 4,
+                borderColor: "hsl(98, 20%, 20%)",
+                borderWidth: colorScheme === "dark" ? 1 : 0,
+                borderTopWidth: colorScheme === "dark" ? 2 : 0,
+              }}
+              renderItem={(item) => {
+                return (
+                  <View
+                    className="bg-white"
+                    style={{
+                      backgroundColor:
+                        colorScheme === "dark" ? "hsl(98, 20%, 5%)" : "white",
+                      padding: 10,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        color: colorScheme === "dark" ? "white" : "black",
+
+                        fontFamily: "mustica-pro",
+                      }}
+                    >
+                      {item}
+                    </Text>
+                  </View>
+                );
+              }}
+            />
           </View>
         </View>
         <View className="flex flex-row items-center gap-sm">
@@ -188,12 +211,15 @@ export default function NewPlantForm() {
           />
         </View>
         <Pressable
+          disabled={isPending}
           onPress={handleSubmit}
-          className="primary flex items-center justify-center rounded-xs px-md py-2 shadow-sm shadow-black"
+          className="primary flex flex-row items-center justify-center gap-md rounded-xs px-md py-2 shadow-sm shadow-black"
         >
           <Text className="button-txt text-primary-fg">Ajouter ma plante</Text>
+          {isPending && (
+            <ActivityIndicator size="small" color="white"></ActivityIndicator>
+          )}
         </Pressable>
-        {error && <Text className="text-sm text-red-500">{error.message}</Text>}
       </View>
     </View>
   );
