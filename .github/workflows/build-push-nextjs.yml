@@ -1,17 +1,10 @@
 name: Docker Build and Push NextJS App
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - "apps/nextjs/**"
-      - "packages/**"
-      - ".github/workflows/buildandpush.yml"
-
   workflow_run:
     workflows: ["Format Linting Typecheck and Unit Test"]
     types: completed
+    branches: ["main"]
 
 jobs:
   verify-changes:
