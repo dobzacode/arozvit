@@ -1,22 +1,27 @@
 name: E2E Tests Android (Maestro + Github Action)
 
 on:
-  pull_request:
-    branches: ["*"]
-  push:
-    branches: ["main"]
-    paths:
-      - "apps/expo/**"
-      - "packages/**"
-      - ".github/workflows/maestro.yml"
-
-  workflow_dispatch:
-
   workflow_run:
-    workflows: ["CI"]
+    workflows: ["Format Linting Typecheck and Unit Test"]
     types: completed
+    branches: ["main"]
 
 jobs:
+  verify-changes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: tj-actions/verify-changed-files@v20
+        id: verify-changed-files
+        with:
+          files: |
+            apps/expo/**
+            packages/**
+            .github/workflows/maestro.yml
+      - name: Cancel Workflow if no changes
+        uses: styfle/cancel-workflow-action@0.9.1
+        if:
+        with: ${{ steps.verify-changed-files.outputs.files_changed != 'true' }}
+
   generate-test-apk:
     defaults:
       run:

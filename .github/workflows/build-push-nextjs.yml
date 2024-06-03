@@ -1,4 +1,4 @@
-name: Docker Build and Push
+name: Docker Build and Push NextJS App
 
 on:
   push:
@@ -8,12 +8,27 @@ on:
       - "apps/nextjs/**"
       - "packages/**"
       - ".github/workflows/buildandpush.yml"
-  workflow_dispatch:
+
   workflow_run:
-    workflows: ["CI"]
+    workflows: ["Format Linting Typecheck and Unit Test"]
     types: completed
 
 jobs:
+  verify-changes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: tj-actions/verify-changed-files@v20
+        id: verify-changed-files
+        with:
+          files: |
+            apps/nextjs/**
+            packages/**
+            .github/workflows/buildandpush.yml
+      - name: Cancel Workflow if no changes
+        uses: styfle/cancel-workflow-action@0.9.1
+        if:
+        with: ${{ steps.verify-changed-files.outputs.files_changed != 'true' }}
+
   build-and-push:
     runs-on: ubuntu-latest
 
