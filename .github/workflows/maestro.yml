@@ -10,20 +10,17 @@ jobs:
   verify-changes:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Verify Changed Files
-        uses: tj-actions/verify-changed-files@v20
-        id: verify-changed-files
+      - name: Verify File and Content Changes
+        id: verify-file_changes
+        uses: ./verify-changes.yml@main
         with:
-          files: |
-            apps/expo/**
-            packages/**
-            .github/workflows/maestro.yml
+          files: "apps/expo/** packages/** .github/workflows/maestro.yml"
+
       - name: Cancel Workflow if no changes
         uses: styfle/cancel-workflow-action@0.9.1
-        if: ${{ steps.verify-changed-files.outputs.files_changed != 'true' }}
+        if: steps.verify-file_changes.outputs.files_changed == 'false' && steps.verify-content-changes.outputs.content_changed != 'true'
 
   generate-test-apk:
     defaults:

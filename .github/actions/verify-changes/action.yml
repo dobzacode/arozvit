@@ -1,0 +1,51 @@
+name: Verify File and Content Changes
+description: Verify whether structural file changes were detected and check for content changes.
+
+inputs:
+  files:
+    description: "A space-separated list of glob patterns defining files to check."
+    required: true
+
+outputs:
+  files_changed:
+    description: "Whether structural file changes were detected (true/false)."
+    value: ${{ steps.verify_file_changes.outputs.files_changed }}
+  content_changed:
+    description: "Whether content changes were detected (true/false)."
+    value: ${{ steps.check_content_changes.outputs.content_changed || 'false' }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Verify File Changes
+      id: verify_file_changes
+      uses: tj-actions/verify-changed-files@v20
+      with:
+        files: ${{ inputs.files }}
+
+    - name: Check for Content Changes (Optional)
+      id: check_content_changes
+      uses: actions/github-script@v7
+
+      with:
+        script: |
+          const changedFiles = github.context.payload.pull_request.changed_files;
+          const filesToCheck = ${{ inputs.files }}.split(' ');
+          let contentChanged = false;
+          for (const file of changedFiles) {
+            if (filesToCheck.includes(file)) {
+              contentChanged = true;
+              break;
+            }
+          }
+          console.log(`Content changes detected: ${contentChanged}`);
+          core.setOutput('content_changed', contentChanged);
+
+    - name: Set Outputs
+      shell: bash
+      run: |
+        echo "::set-output name=files_changed::${{ steps.verify_file_changes.outputs.files_changed }}"
+        echo "::set-output name=content_changed::${{ steps.check_content_changes.outputs.content_changed || 'false' }}"
