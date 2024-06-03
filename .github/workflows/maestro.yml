@@ -19,8 +19,13 @@ jobs:
           files: apps/expo/** packages/** .github/workflows/maestro.yml
 
       - name: Cancel Workflow if no changes
-        uses: styfle/cancel-workflow-action@0.9.1
+        uses: andymckay/cancel-action@0.4
         if: steps.changed-files.outputs.any_changed == 'false'
+
+      - name: Wait for run cancellation
+        if: steps.changed-files.outputs.any_changed != 'true'
+        shell: bash
+        run: while true; do echo "Waiting for job to be cancelled"; sleep 5; done
 
   generate-test-apk:
     defaults:
