@@ -2,7 +2,7 @@ import { Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import NewPlantForm from "~/components/newplant/newplant-form";
-import TopMenu from "~/components/top-menu";
+import TopMenu from "~/components/ui/top-menu";
 
 export default function Page() {
   return (

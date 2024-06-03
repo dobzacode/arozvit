@@ -71,6 +71,7 @@ export default function NewPlantForm() {
             Nom
           </Text>
           <TextInput
+            testID="nameInput"
             className="input-neutral  rounded-xs p-sm shadow-sm"
             placeholder="Monstera"
             value={name}
@@ -88,6 +89,7 @@ export default function NewPlantForm() {
             Description
           </Text>
           <TextInput
+            testID="descriptionInput"
             multiline
             numberOfLines={4}
             className="input-neutral rounded-xs  p-sm align-top shadow-sm "
@@ -104,6 +106,7 @@ export default function NewPlantForm() {
             Arrosage
           </Text>
           <TextInput
+            testID="wateringFrequencyInput"
             value={wateringFrequency.toString()}
             keyboardType="numeric"
             className="input-neutral h-[44px] w-[44px] self-start rounded-xs p-sm text-center shadow-sm"
@@ -122,6 +125,7 @@ export default function NewPlantForm() {
               renderButton={(selectedItem, isOpened) => {
                 return (
                   <View
+                    testID="wateringIntervalDropdown"
                     style={{
                       height: 40,
                       flexDirection: "row",
@@ -181,6 +185,7 @@ export default function NewPlantForm() {
             Dernier arrosage le
           </Text>
           <Pressable
+            testID="datePickerButton"
             className="input-neutral flex h-[44px] flex-row items-center justify-center gap-md rounded-xs p-sm px-md shadow-sm"
             onPress={() => setDatePickerVisibility(true)}
           >
@@ -198,6 +203,7 @@ export default function NewPlantForm() {
             />
           </Pressable>
           <DateTimePickerModal
+            testID="dateTimePicker"
             textColor="green"
             accentColor="green"
             isVisible={isDatePickerVisible}

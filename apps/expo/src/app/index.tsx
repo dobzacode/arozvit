@@ -1,13 +1,11 @@
-import { Image, Text, useColorScheme, View } from "react-native";
+import { Image, Text, View } from "react-native";
 import { Redirect } from "expo-router";
 import { useAuth } from "@clerk/clerk-expo";
-import AntDesign from "@expo/vector-icons/AntDesign";
 
-import SignInWithOAuth from "~/components/sign-in-with-oauth";
+import SignInSection from "~/components/auth/sign-in-section";
 
 export default function Page() {
   const auth = useAuth();
-  const colorScheme = useColorScheme();
 
   if (!auth.isLoaded) {
     return null;
@@ -27,7 +25,7 @@ export default function Page() {
             source={require("./../../assets/home-botanical.png")}
             alt="Home botanical"
           />
-          <Text className="heading-h1 surface text-center">
+          <Text role="heading" className="heading-h1 surface text-center">
             Bienvenue sur Planty
           </Text>
           <Text className="body-sm surface text-center">
@@ -35,38 +33,7 @@ export default function Page() {
             aujourd’hui en prenant soin de vos plantes
           </Text>
         </View>
-        <View className="grid w-full gap-md">
-          <SignInWithOAuth strategy="apple" testID="apple-oauth-button">
-            <AntDesign
-              name="apple1"
-              size={20}
-              color={colorScheme === "dark" ? "white" : "black"}
-            />
-            <Text className="button-txt text-center text-surface-fg dark:text-surface">
-              Continuer avec Apple
-            </Text>
-          </SignInWithOAuth>
-          <SignInWithOAuth strategy="facebook" testID="facebook-oauth-button">
-            <AntDesign
-              name="facebook-square"
-              size={20}
-              color={colorScheme === "dark" ? "white" : "black"}
-            />
-            <Text className="button-txt text-center text-surface-fg dark:text-surface">
-              Continuer avec Facebook
-            </Text>
-          </SignInWithOAuth>
-          <SignInWithOAuth strategy="google" testID="google-oauth-button">
-            <AntDesign
-              name="google"
-              size={20}
-              color={colorScheme === "dark" ? "white" : "black"}
-            />
-            <Text className="button-txt text-center text-surface-fg dark:text-surface">
-              Continuer avec Google
-            </Text>
-          </SignInWithOAuth>
-        </View>
+        <SignInSection></SignInSection>
       </View>
       <View className="surface xl absolute -bottom-2 left-1/2 z-10 h-3/4 w-[1100px] -translate-x-1/2 rounded-t-full"></View>
     </>

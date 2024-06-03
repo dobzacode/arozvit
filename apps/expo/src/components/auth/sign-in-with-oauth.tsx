@@ -1,9 +1,9 @@
 import React from "react";
-import { Pressable } from "react-native";
+import { Pressable, Role } from "react-native";
 import * as WebBrowser from "expo-web-browser";
 import { useOAuth } from "@clerk/clerk-expo";
 
-import { useWarmUpBrowser } from "../hooks/useWarmUpBrowser";
+import { useWarmUpBrowser } from "~/hooks/useWarmUpBrowser";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -11,10 +11,12 @@ const SignInWithOAuth = ({
   children,
   strategy,
   testID,
+  role,
 }: {
   children: React.ReactNode;
   strategy: "google" | "facebook" | "apple";
   testID: string;
+  role: Role;
 }) => {
   // Warm up the android browser to improve UX
   // https://docs.expo.dev/guides/authentication/#improving-user-experience
@@ -28,8 +30,6 @@ const SignInWithOAuth = ({
 
       if (createdSessionId && setActive) {
         await setActive({ session: createdSessionId });
-      } else {
-        // Use signIn or signUp for next steps such as MFA
       }
     } catch (err) {
       console.error("OAuth error", err);
@@ -38,6 +38,7 @@ const SignInWithOAuth = ({
 
   return (
     <Pressable
+      role={role}
       testID={testID}
       className="surface-container-low flex w-full flex-row items-center justify-center gap-sm rounded-sm px-md py-sm"
       onPress={onPress}

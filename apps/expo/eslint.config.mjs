@@ -4,7 +4,14 @@ import reactConfig from "@planty/eslint-config/react";
 /** @type {import('typescript-eslint').Config} */
 export default [
   {
-    ignores: [".expo/**", "expo-plugins/**", "android/**", "ios/**"],
+    ignores: [
+      ".expo/**",
+      "expo-plugins/**",
+      "android/**",
+      "ios/**",
+      "jsdom-env.js",
+      "index.js",
+    ],
   },
   ...baseConfig,
   ...reactConfig,
