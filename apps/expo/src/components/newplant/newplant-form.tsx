@@ -8,6 +8,7 @@ import {
   View,
 } from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import Toast from "react-native-root-toast";
 import SelectDropdown from "react-native-select-dropdown";
 import { router } from "expo-router";
 import { useAuth } from "@clerk/clerk-expo";
@@ -15,10 +16,17 @@ import { Entypo, FontAwesome5 } from "@expo/vector-icons";
 
 import { api } from "~/utils/api";
 
+const maxWateringFrequencyPerInterval = {
+  jours: 1,
+  semaines: 7,
+  mois: 31,
+  années: 365,
+};
+
 export default function NewPlantForm() {
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  const [wateringFrequency, setWateringFrequency] = useState<number>(1);
+  const [wateringFrequency, setWateringFrequency] = useState<number | null>(1);
   const [wateringInterval, setWateringInterval] = useState<
     "jours" | "semaines" | "mois" | "années"
   >("jours");
@@ -28,6 +36,10 @@ export default function NewPlantForm() {
   const colorScheme = useColorScheme();
 
   const auth = useAuth();
+
+  if (!auth.isLoaded) {
+    return <ActivityIndicator size="large" color="green"></ActivityIndicator>;
+  }
 
   if (!auth.userId) {
     router.push("/login");
@@ -41,6 +53,13 @@ export default function NewPlantForm() {
       setWateringFrequency(1);
       setWateringInterval("jours");
       setLastWatering(new Date());
+      router.push("/myplants");
+      Toast.show("Votre plante a été ajouté avec succès", {
+        duration: 400,
+        textStyle: {
+          fontFamily: "mustica-pro",
+        },
+      });
     },
     onError: (e) => {
       console.log(e);
@@ -52,7 +71,7 @@ export default function NewPlantForm() {
       userId: auth.userId,
       name,
       description,
-      wateringFrequency,
+      wateringFrequency: wateringFrequency ?? 1,
       wateringInterval,
       lastWatering,
     };
@@ -72,10 +91,11 @@ export default function NewPlantForm() {
           </Text>
           <TextInput
             testID="nameInput"
-            className="input-neutral  rounded-xs p-sm shadow-sm"
+            className={`input-neutral  rounded-xs p-sm shadow-sm ${error?.data?.zodError?.fieldErrors.name && "border border-error-500"}`}
             placeholder="Monstera"
             value={name}
             selectionColor={"hsl(100, 36%, 40%)"}
+            editable={!isPending}
             onChangeText={setName}
           ></TextInput>
           {error?.data?.zodError?.fieldErrors.name && (
@@ -90,14 +110,20 @@ export default function NewPlantForm() {
           </Text>
           <TextInput
             testID="descriptionInput"
+            editable={!isPending}
             multiline
             numberOfLines={4}
-            className="input-neutral rounded-xs  p-sm align-top shadow-sm "
+            className={`input-neutral rounded-xs  p-sm align-top shadow-sm ${error?.data?.zodError?.fieldErrors.description && "border border-error-500"}`}
             placeholder="Plante sur la terrasse"
             value={description}
             selectionColor={"hsl(100, 36%, 40%)"}
             onChangeText={setDescription}
           ></TextInput>
+          {error?.data?.zodError?.fieldErrors.description && (
+            <Text className="mb-2 text-error-400 dark:text-error-200">
+              {error.data.zodError.fieldErrors.description[0]}
+            </Text>
+          )}
         </View>
       </View>
       <View className="gap-lg">
@@ -106,21 +132,50 @@ export default function NewPlantForm() {
             Arrosage
           </Text>
           <TextInput
+            onBlur={() => {
+              if (!wateringFrequency) {
+                setWateringFrequency(1);
+              } else if (
+                wateringFrequency >
+                maxWateringFrequencyPerInterval[wateringInterval]
+              ) {
+                setWateringFrequency(
+                  maxWateringFrequencyPerInterval[wateringInterval],
+                );
+              }
+            }}
             testID="wateringFrequencyInput"
-            value={wateringFrequency.toString()}
+            value={wateringFrequency ? wateringFrequency.toString() : ""}
             keyboardType="numeric"
             className="input-neutral h-[44px] w-[44px] self-start rounded-xs p-sm text-center shadow-sm"
             selectionColor={"hsl(100, 36%, 40%)"}
-            onChangeText={(text) => setWateringFrequency(parseInt(text))}
+            editable={!isPending}
+            maxLength={3}
+            onChangeText={(text) => {
+              const parsedValue = parseInt(text, 10);
+              if (text === "") {
+                setWateringFrequency(null);
+              } else if (!isNaN(parsedValue)) {
+                setWateringFrequency(parsedValue);
+              }
+            }}
           ></TextInput>
           <Text className="body text-surface-fg dark:text-surface">
             fois par
           </Text>
           <View className="input-neutral flex h-[44px] flex-1 rounded-xs text-sm shadow-sm">
             <SelectDropdown
+              disabled={isPending}
               data={["jours", "semaines", "mois", "années"]}
               onSelect={(selectedItem) => {
                 setWateringInterval(selectedItem as typeof wateringInterval);
+                const newMaxFrequency =
+                  maxWateringFrequencyPerInterval[
+                    selectedItem as typeof wateringInterval
+                  ];
+                if (wateringFrequency && wateringFrequency > newMaxFrequency) {
+                  setWateringFrequency(newMaxFrequency);
+                }
               }}
               renderButton={(selectedItem, isOpened) => {
                 return (
@@ -180,11 +235,18 @@ export default function NewPlantForm() {
             />
           </View>
         </View>
+        {error?.data?.zodError?.fieldErrors.wateringFrequency && (
+          <Text className="mb-2 text-error-400 dark:text-error-200">
+            {error.data.zodError.fieldErrors.wateringFrequency[0]}
+          </Text>
+        )}
+
         <View className="flex flex-row items-center gap-sm">
-          <Text className="text-surface-fg dark:text-surface">
+          <Text className="body text-surface-fg dark:text-surface">
             Dernier arrosage le
           </Text>
           <Pressable
+            disabled={isPending}
             testID="datePickerButton"
             className="input-neutral flex h-[44px] flex-row items-center justify-center gap-md rounded-xs p-sm px-md shadow-sm"
             onPress={() => setDatePickerVisibility(true)}

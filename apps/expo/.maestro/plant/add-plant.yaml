@@ -1,0 +1,31 @@
+appId: com.corentinkittel.planty
+---
+# - launchApp
+- openLink: exp://192.168.1.11:8081
+- runFlow:
+    file: ../auth/login.yaml
+    when:
+      visible:
+        id: "google-oauth-button"
+- tapOn:
+    id: newplant-tabs
+- tapOn:
+    id: nameInput
+- inputRandomPersonName
+- tapOn:
+    id: descriptionInput
+- inputRandomText
+- tapOn:
+    id: wateringIntervalDropdown
+- tapOn: semaines
+- tapOn:
+    id: wateringFrequencyInput
+- eraseText
+- inputText: 5
+- hideKeyboard
+- tapOn:
+    id: datePickerButton
+- tapOn: "1"
+- tapOn: Ajouter ma plante
+- tapOn: "OK"
+- assertVisible: "Mes plantes"

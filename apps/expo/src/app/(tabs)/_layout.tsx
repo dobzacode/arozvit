@@ -1,6 +1,7 @@
 import { useColorScheme, View } from "react-native";
-import { Tabs } from "expo-router";
+import { Redirect, Tabs } from "expo-router";
 import { useRouteInfo } from "expo-router/build/hooks";
+import { useAuth } from "@clerk/clerk-expo";
 import { Feather, FontAwesome5 } from "@expo/vector-icons";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
@@ -8,6 +9,17 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 export default function TabsLayout() {
   const route = useRouteInfo();
   const colorScheme = useColorScheme();
+
+  const auth = useAuth();
+
+  if (!auth.isLoaded) {
+    return null;
+  }
+
+  if (!auth.isSignedIn) {
+    return <Redirect href="/" />;
+  }
+
   return (
     <Tabs
       screenOptions={{
@@ -53,6 +65,7 @@ export default function TabsLayout() {
           tabBarIcon: ({ color, size }) => {
             return (
               <MaterialCommunityIcons
+                testID="myplants-tabs"
                 name="flower-tulip-outline"
                 size={size}
                 color={color}
@@ -77,16 +90,17 @@ export default function TabsLayout() {
           tabBarIcon: ({ size }) => {
             return (
               <View
-                className={`h-fit w-fit rounded-full bg-white p-0.5  ${route.pathname === "/newplant" ? " " : "shadow-sm shadow-black "}`}
+                className={`h-fit w-fit rounded-full bg-white p-0.5  ${route.pathname === "/newplant" ? " shadow-sm" : "shadow-sm shadow-black "}`}
               >
                 <View
+                  testID="newplant-tabs"
                   className={`primary flex h-fit w-fit items-center justify-center rounded-full p-sm ${route.pathname === "/newplant" ? "bg-black/[.10] bg-white" : ""}`}
                 >
                   <AntDesign
                     className="w-[20px]"
                     name="plus"
                     size={size}
-                    color={route.pathname === "/newplant" ? "white" : "white"}
+                    color={route.pathname === "/newplant" ? "gray" : "white"}
                   />
                 </View>
               </View>

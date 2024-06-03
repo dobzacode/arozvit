@@ -1,7 +1,7 @@
 appId: com.corentinkittel.planty
 ---
-- launchApp
-# - openLink: exp://192.168.1.11:8081
+# - launchApp
+- openLink: exp://192.168.1.11:8081
 
 - extendedWaitUntil:
     visible:

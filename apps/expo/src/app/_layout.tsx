@@ -1,5 +1,6 @@
 import "@bacons/text-decoder/install";
 
+import { RootSiblingParent } from "react-native-root-siblings";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
@@ -33,13 +34,15 @@ export default function RootLayout() {
   return (
     <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
       <TRPCProvider>
-        <SafeAreaProvider>
-          <Stack
-            screenOptions={{
-              headerShown: false,
-            }}
-          ></Stack>
-        </SafeAreaProvider>
+        <RootSiblingParent>
+          <SafeAreaProvider>
+            <Stack
+              screenOptions={{
+                headerShown: false,
+              }}
+            ></Stack>
+          </SafeAreaProvider>
+        </RootSiblingParent>
       </TRPCProvider>
     </ClerkProvider>
   );

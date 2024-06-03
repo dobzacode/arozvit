@@ -4,7 +4,7 @@ import { act, fireEvent, render, screen } from "@testing-library/react-native";
 import NewPlantForm from "./newplant-form";
 
 jest.mock("@clerk/clerk-expo", () => ({
-  useAuth: jest.fn(() => ({ userId: "mock-user-id" })),
+  useAuth: jest.fn(() => ({ userId: "mock-user-id", isLoaded: true })),
 }));
 
 jest.mock("~/utils/api", () => ({

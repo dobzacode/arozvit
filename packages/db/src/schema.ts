@@ -62,22 +62,31 @@ export const Plant = pgTable("plant", {
 
 export const CreatePlantSchema = createInsertSchema(Plant, {
   userId: z.string(),
-  name: z.string().min(1,
-    {
-      message: "Le nom de la plante est obligatoire"
-    }
-  ).max(90, {
-    message: "Le nom de la plante ne doit pas dépasser 90 caractères",
-  }),
+  name: z
+    .string()
+    .min(1, {
+      message: "Le nom de la plante est obligatoire",
+    })
+    .max(90, {
+      message: "Le nom de la plante ne doit pas dépasser 90 caractères",
+    }),
   description: z
     .string()
-    
+
     .max(255, {
       message: "La description ne doit pas dépasser 255 caractères",
     })
     .optional(),
   imageUrl: z.string().url().optional(),
-  wateringFrequency: z.number().int().min(1),
+  wateringFrequency: z
+    .number()
+    .int()
+    .min(1, {
+      message: "La fréquence d'arrosage ne peut pas être nulle",
+    })
+    .max(365, {
+      message: "La fréquence d'arrosage ne peut pas dépasser 365",
+    }),
   lastWatering: z.date().optional(),
   wateringInterval: z.enum(wateringIntervalEnum.enumValues),
 }).omit({
