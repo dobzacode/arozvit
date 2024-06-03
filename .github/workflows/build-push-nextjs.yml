@@ -24,8 +24,7 @@ jobs:
 
       - name: Cancel Workflow if no changes
         uses: styfle/cancel-workflow-action@0.9.1
-        if:
-        with: ${{ steps.verify-changed-files.outputs.files_changed != 'true' }}
+        if: ${{ steps.verify-changed-files.outputs.files_changed != 'true' }}
 
   build-and-push:
     runs-on: ubuntu-latest

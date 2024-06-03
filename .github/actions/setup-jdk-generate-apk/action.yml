@@ -66,6 +66,7 @@ runs:
         pnpm prebuild:${{ inputs.APP_ENV }}
         cd android
         chmod +x ./gradlew
+        export ORG_GRADLE_JVMARGS=-Xmx4096m -Xms2048m
         ./gradlew assembleRelease 
         cd ..
       shell: bash
