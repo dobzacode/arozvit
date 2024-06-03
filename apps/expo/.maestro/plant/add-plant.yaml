@@ -1,6 +1,5 @@
 appId: com.corentinkittel.planty
 ---
-- launchApp
 # - openLink: exp://192.168.1.11:8081
 - runFlow:
     file: ../auth/login.yaml
@@ -26,6 +25,6 @@ appId: com.corentinkittel.planty
 - tapOn:
     id: datePickerButton
 - tapOn: "1"
-- tapOn: Ajouter ma plante
 - tapOn: "OK"
+- tapOn: Ajouter ma plante
 - assertVisible: "Mes plantes"
