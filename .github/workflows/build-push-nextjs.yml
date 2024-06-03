@@ -12,15 +12,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Verify File and Content Changes
-        id: verify-file_changes
-        uses: ./.github/actions/verify-changes
+      - name: Get changed files in the docs folder
+        id: changed-files
+        uses: tj-actions/changed-files@v44
         with:
-          files: "apps/nextjs/** packages/** .github/workflows/build-push-nextjs.yml"
+          files: apps/nextjs/** packages/** .github/workflows/build-push-nextjs.ymlx
 
       - name: Cancel Workflow if no changes
         uses: styfle/cancel-workflow-action@0.9.1
-        if: steps.verify-file_changes.outputs.files_changed == 'false' && steps.verify-content-changes.outputs.content_changed != 'true'
+        if: steps.changed-files.outputs.any_changed == 'false'
 
   build-and-push:
     runs-on: ubuntu-latest
