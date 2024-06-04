@@ -37,7 +37,7 @@ jobs:
         run: |
           docker build \
             -t $ECR_REGISTRY/$ECR_REPOSITORY:latest \
-            -f apps/nextjs/Dockerfile .
+            -f apps/lambda/Dockerfile .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
 
       - name: Update lambda function code
