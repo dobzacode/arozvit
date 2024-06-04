@@ -29,7 +29,9 @@
       "dependsOn": ["^topo", "^build"],
       "outputs": ["node_modules/.cache/.eslintcache"]
     },
-    "test": {},
+    "test": {
+      "cache": false
+    },
     "typecheck": {
       "dependsOn": ["^topo", "^build"],
       "outputs": ["node_modules/.cache/tsbuildinfo.json"]

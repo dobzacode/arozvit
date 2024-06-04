@@ -1,0 +1,11 @@
+{
+  "extends": "@planty/tsconfig/base.json",
+  "compilerOptions": {
+    "lib": ["es2022"],
+    "baseUrl": ".",
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
+    "module": "esnext"
+  },
+  "include": [".", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
+}
