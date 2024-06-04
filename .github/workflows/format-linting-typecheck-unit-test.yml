@@ -92,7 +92,7 @@ jobs:
             -d '{"ref":"main"}'
 
       - name: Trigger Maestro e2e Testing
-        if: steps.changed-files-yaml.outputs.lambda_any_changed == 'true'
+        if: steps.changed-files-yaml.outputs.expo_any_changed == 'true'
         run: |
           curl -L \
             -X POST \
@@ -102,8 +102,8 @@ jobs:
             https://api.github.com/repos/dobzacode/planty-turbo/actions/workflows/maestro.yml/dispatches \
             -d '{"ref":"main"}'
 
-      - name: Trigger Maestro e2e Testing
-        if: steps.changed-files-yaml.outputs.expo_any_changed == 'true'
+      - name: Trigger Lambda Build and Push Workflow
+        if: steps.changed-files-yaml.outputs.lambda_any_changed == 'true'
         run: |
           curl -L \
             -X POST \
