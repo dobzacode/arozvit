@@ -33,7 +33,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{secrets.AWS_ECR_REPO}}-lambda
-          IMAGE_TAG: latest
+
         run: |
           docker build \
             -t $ECR_REGISTRY/$ECR_REPOSITORY:latest \
@@ -41,5 +41,8 @@ jobs:
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
 
       - name: Update lambda function code
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: ${{secrets.AWS_ECR_REPO}}-lambda
         run: |
           aws lambda update-function-code --function-name needwatering-update --image-uri $ECR_REGISTRY/$ECR_REPOSITORY:latest
