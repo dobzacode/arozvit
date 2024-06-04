@@ -15,6 +15,7 @@ import { useAuth } from "@clerk/clerk-expo";
 import { Entypo, FontAwesome5 } from "@expo/vector-icons";
 
 import { api } from "~/utils/api";
+import { isPlantNeedingWatering } from "~/utils/utils";
 
 const maxWateringFrequencyPerInterval = {
   jours: 1,
@@ -68,6 +69,11 @@ export default function NewPlantForm() {
 
   const handleSubmit = () => {
     const formData = {
+      needWatering: isPlantNeedingWatering(
+        lastWatering,
+        wateringFrequency ?? 1,
+        wateringInterval,
+      ),
       userId: auth.userId,
       name,
       description,

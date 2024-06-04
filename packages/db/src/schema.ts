@@ -1,5 +1,6 @@
 import { relations } from "drizzle-orm";
 import {
+  boolean,
   integer,
   pgEnum,
   pgTable,
@@ -53,6 +54,7 @@ export const Plant = pgTable("plant", {
   wateringFrequency: integer("watering_frequency").notNull(),
   lastWatering: timestamp("last_watering").defaultNow().notNull(),
   wateringInterval: wateringIntervalEnum("watering_interval").notNull(),
+  needWatering: boolean("need_watering").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at")
     .defaultNow()
@@ -78,6 +80,7 @@ export const CreatePlantSchema = createInsertSchema(Plant, {
     })
     .optional(),
   imageUrl: z.string().url().optional(),
+  needWatering: z.boolean(),
   wateringFrequency: z
     .number()
     .int()
