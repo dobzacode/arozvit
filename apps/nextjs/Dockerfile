@@ -19,10 +19,7 @@
     ENV SKIP_ENV_VALIDATION true
 
     ARG ARG_POSTGRES_URL
-    ENV POSTGRES_URL=$ARG_POSTGRES_URL
-
     ARG ARG_NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
-    ENV NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=$ARG_NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
 
     COPY .gitignore .gitignore
     COPY --from=builder /app/out/json/ .
@@ -32,7 +29,7 @@
     COPY --from=builder /app/out/full/ .
     COPY turbo.json turbo.json
 
-    RUN NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=$ARG_NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY pnpm turbo build --filter=@planty/nextjs
+    RUN NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=$ARG_NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY POSTGRES_URL=$ARG_POSTGRES_URL pnpm turbo build --filter=@planty/nextjs
 
     FROM --platform=linux/amd64 node:20-alpine AS runner
     RUN apk add --no-cache libc6-compat openssl && apk update
