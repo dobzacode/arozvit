@@ -20,7 +20,7 @@ export default function Notifications() {
         <View>
           <Text>
             {firstLetterCapitalize(data[0].name)} nécessite un arrosage depuis
-            le
+            le {data[0].nextWatering.toLocaleDateString()}
           </Text>
         </View>
       ) : null}

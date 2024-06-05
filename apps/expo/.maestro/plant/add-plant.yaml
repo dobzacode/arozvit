@@ -19,7 +19,7 @@ appId: com.corentinkittel.planty
     id: wateringIntervalDropdown
 - tapOn: semaines
 - tapOn:
-    id: wateringFrequencyInput
+    id: dayBetweenWateringInput
 - eraseText
 - inputText: 5
 - hideKeyboard

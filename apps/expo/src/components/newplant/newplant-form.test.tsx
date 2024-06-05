@@ -37,9 +37,11 @@ describe("NewPlantForm", () => {
     );
     expect(screen.getByDisplayValue("Beautiful plant")).toBeTruthy();
 
-    const wateringFrequencyInput = screen.getByTestId("wateringFrequencyInput");
-    expect(wateringFrequencyInput).toBeTruthy();
-    await act(async () => fireEvent.changeText(wateringFrequencyInput, "2"));
+    const dayBetweenWateringInput = screen.getByTestId(
+      "dayBetweenWateringInput",
+    );
+    expect(dayBetweenWateringInput).toBeTruthy();
+    await act(async () => fireEvent.changeText(dayBetweenWateringInput, "2"));
     expect(screen.getByDisplayValue("2")).toBeTruthy();
 
     const wateringIntervalDropdown = screen.getByTestId(

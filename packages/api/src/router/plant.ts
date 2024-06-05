@@ -1,7 +1,7 @@
 import type { TRPCRouterRecord } from "@trpc/server";
 import { z } from "zod";
 
-import { and, eq, isNotNull } from "@planty/db";
+import { and, eq, lte } from "@planty/db";
 import { CreatePlantSchema, Plant } from "@planty/db/schema";
 
 import { protectedProcedure } from "../trpc";
@@ -25,7 +25,7 @@ export const plantRouter = {
       .where(
         and(
           eq(Plant.userId, ctx.auth.userId),
-          isNotNull(Plant.needWateringSince),
+          lte(Plant.nextWatering, new Date()),
         ),
       );
   }),

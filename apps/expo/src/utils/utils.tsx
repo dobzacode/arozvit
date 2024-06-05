@@ -17,30 +17,26 @@ export const tokenCache = {
   },
 };
 
-export function isPlantNeedingWatering(
+export function calcNextWatering(
   lastWatering: Date,
   wateringFrequency: number,
   interval: "jours" | "semaines" | "mois" | "années",
-): null | Date {
-  const now = new Date();
-
-  const daysSinceLastWatering = Math.floor(
-    (now.getTime() - lastWatering.getTime()) / (1000 * 60 * 60 * 24),
-  );
-
+): Date {
   switch (interval) {
     case "jours":
-      return daysSinceLastWatering >= wateringFrequency ? new Date() : null;
+      return new Date(lastWatering.setDate(lastWatering.getDate() + 1));
     case "semaines":
-      return daysSinceLastWatering >= wateringFrequency * 7 ? new Date() : null;
+      return new Date(
+        lastWatering.setDate(lastWatering.getDate() + wateringFrequency / 7),
+      );
     case "mois":
-      return daysSinceLastWatering >= wateringFrequency * 30
-        ? new Date()
-        : null;
+      return new Date(
+        lastWatering.setDate(lastWatering.getDate() + wateringFrequency / 31),
+      );
     case "années":
-      return daysSinceLastWatering >= wateringFrequency * 365
-        ? new Date()
-        : null;
+      return new Date(
+        lastWatering.setDate(lastWatering.getDate() + wateringFrequency / 365),
+      );
   }
 }
 

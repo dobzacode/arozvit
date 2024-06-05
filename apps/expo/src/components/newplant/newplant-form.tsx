@@ -15,19 +15,13 @@ import { useAuth } from "@clerk/clerk-expo";
 import { Entypo, FontAwesome5 } from "@expo/vector-icons";
 
 import { api } from "~/utils/api";
-import { isPlantNeedingWatering } from "~/utils/utils";
-
-const maxWateringFrequencyPerInterval = {
-  jours: 1,
-  semaines: 7,
-  mois: 31,
-  années: 365,
-};
 
 export default function NewPlantForm() {
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  const [wateringFrequency, setWateringFrequency] = useState<number | null>(1);
+  const [dayBetweenWatering, setDayBetweenWatering] = useState<number | null>(
+    1,
+  );
   const [wateringInterval, setWateringInterval] = useState<
     "jours" | "semaines" | "mois" | "années"
   >("jours");
@@ -51,7 +45,7 @@ export default function NewPlantForm() {
     onSuccess: () => {
       setName("");
       setDescription("");
-      setWateringFrequency(1);
+      setDayBetweenWatering(1);
       setWateringInterval("jours");
       setLastWatering(new Date());
       router.push("/myplants");
@@ -69,17 +63,15 @@ export default function NewPlantForm() {
 
   const handleSubmit = () => {
     const formData = {
-      needWateringSince: isPlantNeedingWatering(
-        lastWatering,
-        wateringFrequency ?? 1,
-        wateringInterval,
-      ),
       userId: auth.userId,
       name,
       description,
-      wateringFrequency: wateringFrequency ?? 1,
+      dayBetweenWatering: dayBetweenWatering ?? 1,
       wateringInterval,
       lastWatering,
+      nextWatering: new Date(
+        lastWatering.getDate() + (dayBetweenWatering ?? 1),
+      ),
     };
     try {
       mutate(formData);
@@ -135,53 +127,37 @@ export default function NewPlantForm() {
       <View className="gap-lg">
         <View className="flex flex-row items-center gap-sm">
           <Text className="body text-surface-fg dark:text-surface">
-            Arrosage
+            Arrosage tous les
           </Text>
           <TextInput
-            onBlur={() => {
-              if (!wateringFrequency) {
-                setWateringFrequency(1);
-              } else if (
-                wateringFrequency >
-                maxWateringFrequencyPerInterval[wateringInterval]
-              ) {
-                setWateringFrequency(
-                  maxWateringFrequencyPerInterval[wateringInterval],
-                );
-              }
-            }}
-            testID="wateringFrequencyInput"
-            value={wateringFrequency ? wateringFrequency.toString() : ""}
+            testID="dayBetweenWateringInput"
+            value={dayBetweenWatering ? dayBetweenWatering.toString() : ""}
             keyboardType="numeric"
             className="input-neutral h-[44px] w-[44px] self-start rounded-xs p-sm text-center shadow-sm"
             selectionColor={"hsl(100, 36%, 40%)"}
             editable={!isPending}
             maxLength={3}
+            onBlur={() => {
+              if (!dayBetweenWatering) {
+                setDayBetweenWatering(1);
+              }
+            }}
             onChangeText={(text) => {
               const parsedValue = parseInt(text, 10);
               if (text === "") {
-                setWateringFrequency(null);
+                setDayBetweenWatering(null);
               } else if (!isNaN(parsedValue)) {
-                setWateringFrequency(parsedValue);
+                setDayBetweenWatering(parsedValue);
               }
             }}
           ></TextInput>
-          <Text className="body text-surface-fg dark:text-surface">
-            fois par
-          </Text>
+
           <View className="input-neutral flex h-[44px] flex-1 rounded-xs text-sm shadow-sm">
             <SelectDropdown
               disabled={isPending}
               data={["jours", "semaines", "mois", "années"]}
               onSelect={(selectedItem) => {
                 setWateringInterval(selectedItem as typeof wateringInterval);
-                const newMaxFrequency =
-                  maxWateringFrequencyPerInterval[
-                    selectedItem as typeof wateringInterval
-                  ];
-                if (wateringFrequency && wateringFrequency > newMaxFrequency) {
-                  setWateringFrequency(newMaxFrequency);
-                }
               }}
               renderButton={(selectedItem, isOpened) => {
                 return (

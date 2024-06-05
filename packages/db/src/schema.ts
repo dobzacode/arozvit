@@ -1,4 +1,4 @@
-import { relations, sql } from "drizzle-orm";
+import { relations } from "drizzle-orm";
 import {
   date,
   integer,
@@ -51,12 +51,11 @@ export const Plant = pgTable("plant", {
   name: text("name").notNull(),
   description: text("description"),
   imageUrl: text("image_url"),
-  wateringFrequency: integer("watering_frequency").notNull(),
-  lastWatering: timestamp("last_watering").defaultNow().notNull(),
+  dayBetweenWatering: integer("watering_frequency").notNull(),
+  lastWatering: date("last_watering", { mode: "date" }).defaultNow().notNull(),
+  nextWatering: date("next_watering", { mode: "date" }).notNull(),
   wateringInterval: wateringIntervalEnum("watering_interval").notNull(),
-  needWateringSince: date("need_watering_since")
-    .default(sql`null`)
-    .$type<Date | null>(),
+
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at")
     .defaultNow()
@@ -82,16 +81,8 @@ export const CreatePlantSchema = createInsertSchema(Plant, {
     })
     .optional(),
   imageUrl: z.string().url().optional(),
-  needWateringSince: z.date().optional(),
-  wateringFrequency: z
-    .number()
-    .int()
-    .min(1, {
-      message: "La fréquence d'arrosage ne peut pas être nulle",
-    })
-    .max(365, {
-      message: "La fréquence d'arrosage ne peut pas dépasser 365",
-    }),
+  nextWatering: z.date(),
+  dayBetweenWatering: z.number().int(),
   lastWatering: z.date().optional(),
   wateringInterval: z.enum(wateringIntervalEnum.enumValues),
 }).omit({

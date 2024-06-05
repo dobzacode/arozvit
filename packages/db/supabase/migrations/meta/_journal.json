@@ -15,6 +15,13 @@
       "when": 1717573948885,
       "tag": "0001_slow_aqueduct",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1717591325602,
+      "tag": "0002_white_wonder_man",
+      "breakpoints": true
     }
   ]
 }
