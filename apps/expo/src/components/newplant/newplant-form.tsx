@@ -69,7 +69,7 @@ export default function NewPlantForm() {
 
   const handleSubmit = () => {
     const formData = {
-      needWatering: isPlantNeedingWatering(
+      needWateringSince: isPlantNeedingWatering(
         lastWatering,
         wateringFrequency ?? 1,
         wateringInterval,

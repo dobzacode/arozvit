@@ -21,7 +21,7 @@ export function isPlantNeedingWatering(
   lastWatering: Date,
   wateringFrequency: number,
   interval: "jours" | "semaines" | "mois" | "années",
-) {
+): null | Date {
   const now = new Date();
 
   const daysSinceLastWatering = Math.floor(
@@ -30,12 +30,20 @@ export function isPlantNeedingWatering(
 
   switch (interval) {
     case "jours":
-      return daysSinceLastWatering >= wateringFrequency;
+      return daysSinceLastWatering >= wateringFrequency ? new Date() : null;
     case "semaines":
-      return daysSinceLastWatering >= wateringFrequency * 7;
+      return daysSinceLastWatering >= wateringFrequency * 7 ? new Date() : null;
     case "mois":
-      return daysSinceLastWatering >= wateringFrequency * 30;
+      return daysSinceLastWatering >= wateringFrequency * 30
+        ? new Date()
+        : null;
     case "années":
-      return daysSinceLastWatering >= wateringFrequency * 365;
+      return daysSinceLastWatering >= wateringFrequency * 365
+        ? new Date()
+        : null;
   }
+}
+
+export function firstLetterCapitalize(str: string) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
 }

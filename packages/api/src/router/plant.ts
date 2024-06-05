@@ -1,7 +1,7 @@
 import type { TRPCRouterRecord } from "@trpc/server";
 import { z } from "zod";
 
-import { eq } from "@planty/db";
+import { and, eq, isNotNull } from "@planty/db";
 import { CreatePlantSchema, Plant } from "@planty/db/schema";
 
 import { protectedProcedure } from "../trpc";
@@ -18,27 +18,16 @@ export const plantRouter = {
       .where(eq(Plant.userId, ctx.auth.userId));
   }),
 
-  plantWithWateringNeed: protectedProcedure.query(async ({ ctx }) => {
-    const now = new Date();
-
-    const plants = await ctx.db
+  getPlantsWithWateringNeed: protectedProcedure.query(({ ctx }) => {
+    return ctx.db
       .select()
       .from(Plant)
-      .where(eq(Plant.userId, ctx.auth.userId));
-
-    return plants.map((plant) => {
-      const daysSinceLastWatering = Math.floor(
-        (now.getTime() - plant.lastWatering.getTime()) / (1000 * 60 * 60 * 24),
+      .where(
+        and(
+          eq(Plant.userId, ctx.auth.userId),
+          isNotNull(Plant.needWateringSince),
+        ),
       );
-
-      const needsWatering = daysSinceLastWatering >= plant.wateringFrequency;
-
-      return { ...plant, needsWatering };
-    });
-  }),
-
-  get: protectedProcedure.input(z.string()).query(({ ctx, input }) => {
-    return ctx.db.select().from(Plant).where(eq(Plant.id, input));
   }),
 
   create: protectedProcedure

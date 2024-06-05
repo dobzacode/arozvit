@@ -8,20 +8,24 @@ function isPlantNeedingWatering(
   lastWatering: Date,
   wateringFrequency: number,
   interval: "jours" | "semaines" | "mois" | "années",
-) {
+): Date | null {
   const now = new Date();
   const daysSinceLastWatering = Math.floor(
     (now.getTime() - lastWatering.getTime()) / (1000 * 60 * 60 * 24),
   );
   switch (interval) {
     case "jours":
-      return daysSinceLastWatering >= wateringFrequency;
+      return daysSinceLastWatering >= wateringFrequency ? new Date() : null;
     case "semaines":
-      return daysSinceLastWatering >= wateringFrequency * 7;
+      return daysSinceLastWatering >= wateringFrequency * 7 ? new Date() : null;
     case "mois":
-      return daysSinceLastWatering >= wateringFrequency * 30;
+      return daysSinceLastWatering >= wateringFrequency * 30
+        ? new Date()
+        : null;
     case "années":
-      return daysSinceLastWatering >= wateringFrequency * 365;
+      return daysSinceLastWatering >= wateringFrequency * 365
+        ? new Date()
+        : null;
   }
 }
 
@@ -43,7 +47,7 @@ const checkWateringNeeds = async () => {
       if (isNeedingWatering) {
         await db
           .update(Plant)
-          .set({ needWatering: true })
+          .set({ needWateringSince: new Date() })
           .where(eq(Plant.id, plant.id));
         console.log(`Plant ${plant.name} needs watering.`);
       }
