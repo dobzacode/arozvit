@@ -1,5 +1,5 @@
 {
-  "id": "2f609428-933d-4185-b66a-b01828bf74f2",
+  "id": "f361b160-3a52-4e67-a5cc-cc9d528449ec",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -47,7 +47,14 @@
         },
         "last_watering": {
           "name": "last_watering",
-          "type": "timestamp",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "next_watering": {
+          "name": "next_watering",
+          "type": "date",
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
@@ -58,12 +65,6 @@
           "typeSchema": "public",
           "primaryKey": false,
           "notNull": true
-        },
-        "need_watering_since": {
-          "name": "need_watering_since",
-          "type": "date",
-          "primaryKey": false,
-          "notNull": false
         },
         "created_at": {
           "name": "created_at",

@@ -1,1 +1,0 @@
-ALTER TABLE "plant" ALTER COLUMN "need_watering_since" SET DEFAULT null;

@@ -13,6 +13,7 @@ import SelectDropdown from "react-native-select-dropdown";
 import { router } from "expo-router";
 import { useAuth } from "@clerk/clerk-expo";
 import { Entypo, FontAwesome5 } from "@expo/vector-icons";
+import moment from "moment-timezone";
 
 import { api } from "~/utils/api";
 
@@ -25,7 +26,9 @@ export default function NewPlantForm() {
   const [wateringInterval, setWateringInterval] = useState<
     "jours" | "semaines" | "mois" | "années"
   >("jours");
-  const [lastWatering, setLastWatering] = useState<Date>(new Date());
+  const [lastWatering, setLastWatering] = useState<Date>(
+    moment().tz("Europe/Paris").toDate(),
+  );
   const [isDatePickerVisible, setDatePickerVisibility] =
     useState<boolean>(false);
   const colorScheme = useColorScheme();
@@ -47,7 +50,7 @@ export default function NewPlantForm() {
       setDescription("");
       setDayBetweenWatering(1);
       setWateringInterval("jours");
-      setLastWatering(new Date());
+      setLastWatering(moment().tz("Europe/Paris").toDate());
       router.push("/myplants");
       Toast.show("Votre plante a été ajouté avec succès", {
         duration: 400,
@@ -62,16 +65,20 @@ export default function NewPlantForm() {
   });
 
   const handleSubmit = () => {
+    console.log(lastWatering);
     const formData = {
       userId: auth.userId,
       name,
       description,
       dayBetweenWatering: dayBetweenWatering ?? 1,
       wateringInterval,
-      lastWatering,
-      nextWatering: new Date(
-        lastWatering.getDate() + (dayBetweenWatering ?? 1),
-      ),
+      lastWatering: moment(lastWatering).tz("Europe/Paris").toDate(),
+      nextWatering: moment(
+        moment(lastWatering).tz("Europe/Paris").toDate().getTime() +
+          (dayBetweenWatering ?? 1) * 24 * 60 * 60 * 1000,
+      )
+        .tz("Europe/Paris")
+        .toDate(),
     };
     try {
       mutate(formData);
@@ -252,9 +259,11 @@ export default function NewPlantForm() {
             accentColor="green"
             isVisible={isDatePickerVisible}
             mode="date"
-            maximumDate={new Date()}
+            date={moment().tz("Europe/Paris").toDate()}
+            timeZoneName="Europe/Paris"
+            maximumDate={moment().tz("Europe/Paris").toDate()}
             onConfirm={(date) => {
-              setLastWatering(date);
+              setLastWatering(moment(date).tz("Europe/Paris").toDate());
               setDatePickerVisibility(false);
             }}
             onCancel={() => setDatePickerVisibility(false)}

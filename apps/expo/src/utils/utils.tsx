@@ -43,3 +43,4 @@ export function calcNextWatering(
 export function firstLetterCapitalize(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
+

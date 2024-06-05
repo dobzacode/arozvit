@@ -18,6 +18,7 @@
     "db:studio": "pnpm -F db studio",
     "db:generate": "pnpm -F db generate",
     "db:migrate": "pnpm -F db migrate",
+    "db:drop": "pnpm -F db drop",
     "dev": "turbo dev --parallel",
     "test": "turbo run test",
     "format": "turbo format --continue -- --cache --cache-location node_modules/.cache/.prettiercache",

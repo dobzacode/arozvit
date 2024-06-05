@@ -51,11 +51,10 @@ export const Plant = pgTable("plant", {
   name: text("name").notNull(),
   description: text("description"),
   imageUrl: text("image_url"),
-  dayBetweenWatering: integer("watering_frequency").notNull(),
+  dayBetweenWatering: integer("day_between_watering").notNull(),
   lastWatering: date("last_watering", { mode: "date" }).defaultNow().notNull(),
-  nextWatering: date("next_watering", { mode: "date" }).notNull(),
+  nextWatering: date("next_watering", { mode: "date" }).defaultNow().notNull(),
   wateringInterval: wateringIntervalEnum("watering_interval").notNull(),
-
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at")
     .defaultNow()
@@ -81,9 +80,9 @@ export const CreatePlantSchema = createInsertSchema(Plant, {
     })
     .optional(),
   imageUrl: z.string().url().optional(),
-  nextWatering: z.date(),
   dayBetweenWatering: z.number().int(),
-  lastWatering: z.date().optional(),
+  lastWatering: z.date(),
+  nextWatering: z.date().optional(),
   wateringInterval: z.enum(wateringIntervalEnum.enumValues),
 }).omit({
   createdAt: true,

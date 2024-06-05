@@ -11,9 +11,9 @@ CREATE TABLE IF NOT EXISTS "plant" (
 	"description" text,
 	"image_url" text,
 	"watering_frequency" integer NOT NULL,
-	"last_watering" timestamp DEFAULT now() NOT NULL,
+	"last_watering" date DEFAULT now() NOT NULL,
+	"next_watering" date DEFAULT now() NOT NULL,
 	"watering_interval" "watering_interval" NOT NULL,
-	"need_watering_since" date NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );
