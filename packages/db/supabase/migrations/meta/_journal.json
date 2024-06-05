@@ -1,12 +1,19 @@
 {
-  "version": "6",
+  "version": "7",
   "dialect": "postgresql",
   "entries": [
     {
       "idx": 0,
-      "version": "6",
-      "when": 1717148180148,
-      "tag": "0000_puzzling_warpath",
+      "version": "7",
+      "when": 1717573490266,
+      "tag": "0000_wandering_living_mummy",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1717573948885,
+      "tag": "0001_slow_aqueduct",
       "breakpoints": true
     }
   ]

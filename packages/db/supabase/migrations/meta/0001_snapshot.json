@@ -1,6 +1,6 @@
 {
-  "id": "2f609428-933d-4185-b66a-b01828bf74f2",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "8c096cd3-abbf-40e6-ae61-e9be269a21cb",
+  "prevId": "2f609428-933d-4185-b66a-b01828bf74f2",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -63,7 +63,8 @@
           "name": "need_watering_since",
           "type": "date",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "default": "null"
         },
         "created_at": {
           "name": "created_at",

@@ -1,4 +1,4 @@
-import { relations } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm";
 import {
   date,
   integer,
@@ -54,7 +54,9 @@ export const Plant = pgTable("plant", {
   wateringFrequency: integer("watering_frequency").notNull(),
   lastWatering: timestamp("last_watering").defaultNow().notNull(),
   wateringInterval: wateringIntervalEnum("watering_interval").notNull(),
-  needWateringSince: date("need_watering_since"),
+  needWateringSince: date("need_watering_since")
+    .default(sql`null`)
+    .$type<Date | null>(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at")
     .defaultNow()
