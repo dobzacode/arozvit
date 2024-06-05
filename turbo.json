@@ -1,6 +1,6 @@
 {
   "$schema": "https://turborepo.org/schema.json",
-  "globalDependencies": ["**/.env"],
+  "globalDependencies": ["./.env"],
   "globalEnv": [
     "POSTGRES_URL",
     "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY",
@@ -14,6 +14,8 @@
     },
     "build": {
       "dependsOn": ["^build"],
+      "inputs": ["./.env"],
+
       "env": [
         "POSTGRES_URL",
         "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY",
