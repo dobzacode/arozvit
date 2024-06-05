@@ -3,7 +3,7 @@
     RUN npm install --global turbo
     WORKDIR /app
     COPY . .
-    RUN turbo prune --scope=@planty/lambda --docker
+    RUN turbo prune --filter=@planty/lambda --docker
 
     ##### INSTALLER
     FROM public.ecr.aws/lambda/nodejs:20 as installer
