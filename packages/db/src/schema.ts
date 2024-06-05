@@ -82,7 +82,7 @@ export const CreatePlantSchema = createInsertSchema(Plant, {
     })
     .optional(),
   imageUrl: z.string().url().optional(),
-  needWateringSince: z.date().nullable(),
+  needWateringSince: z.date().optional(),
   wateringFrequency: z
     .number()
     .int()
