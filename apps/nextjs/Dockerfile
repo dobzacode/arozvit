@@ -6,7 +6,7 @@
     WORKDIR /app
     RUN yarn global add turbo
     COPY . . 
-    RUN turbo prune --filter=@planty/nextjs --docker
+    RUN turbo prune @planty/nextjs --docker
 
 
     FROM --platform=linux/amd64 node:20-alpine AS installer
