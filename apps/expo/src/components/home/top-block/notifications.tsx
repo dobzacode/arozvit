@@ -12,8 +12,11 @@ export default function Notifications({ plants }: { plants: Plant[] }) {
     return plante.nextWatering > planteMax.nextWatering ? plante : planteMax;
   });
 
+  const utils = api.useUtils();
+
   const { mutate, isPending } = api.plant.waterPlant.useMutation({
-    onSuccess: () => {
+    onSuccess: async () => {
+      await utils.plant.getPlantsWithWateringNeed.invalidate();
       Toast.show(`${plantToWater.name} a été arrosée avec succès`, {
         duration: 400,
         textStyle: {

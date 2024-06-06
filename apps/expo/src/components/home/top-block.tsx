@@ -24,10 +24,14 @@ export default function TopBlock() {
     (plant) => moment(plant.nextWatering).startOf("days").toDate() < today,
   );
 
+  if (!todayWatering && !passedWateringDay) {
+    return null;
+  }
+
   return (
     <View>
       <ScrollView
-        contentContainerClassName="flex gap-md pt-4xl pl-md py-sm"
+        contentContainerClassName="flex gap-md pl-md py-sm"
         horizontal={true}
       >
         {passedWateringDay && passedWateringDay.length > 0 && (

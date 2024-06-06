@@ -9,8 +9,22 @@ import { translateTimeUnit } from "@planty/utils";
 import { protectedProcedure } from "../trpc";
 
 export const plantRouter = {
+  get: protectedProcedure.input(z.string()).query(({ ctx, input }) => {
+    return ctx.db
+      .select()
+      .from(Plant)
+      .where(and(eq(Plant.id, input), eq(Plant.userId, ctx.auth.userId)));
+  }),
+
   list: protectedProcedure.query(({ ctx }) => {
     return ctx.db.select().from(Plant).where(eq(Plant.userId, ctx.auth.userId));
+  }),
+
+  listID: protectedProcedure.query(({ ctx }) => {
+    return ctx.db
+      .select({ id: Plant.id })
+      .from(Plant)
+      .where(eq(Plant.userId, ctx.auth.userId));
   }),
 
   isAnyPlant: protectedProcedure.query(({ ctx }) => {
@@ -62,7 +76,7 @@ export const plantRouter = {
         })
         .where(and(eq(Plant.id, input.id), eq(Plant.userId, ctx.auth.userId)));
     }),
-    
+
   create: protectedProcedure
     .input(CreatePlantSchema)
     .mutation(({ ctx, input }) => {

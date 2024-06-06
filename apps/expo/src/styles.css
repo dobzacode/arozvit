@@ -21,7 +21,7 @@
     @apply font-['space-grotesk']  text-5xl font-bold leading-5xl;
   }
   .heading-h1 {
-    @apply font-['space-grotesk'] text-4xl  leading-4xl;
+    @apply font-['space-grotesk'] text-4xl  leading-3xl;
   }
   .heading-h2 {
     @apply font-['space-grotesk'] text-3xl  leading-3xl;
@@ -96,6 +96,10 @@
 
   .input-neutral {
     @apply surface body  placeholder:text-neutral-900/[0.4] dark:border dark:border-neutral-400/[0.2] dark:bg-neutral-900;
+  }
+
+  .link {
+    @apply text-primary-500 dark:text-primary-300;
   }
 }
 @layer base {
