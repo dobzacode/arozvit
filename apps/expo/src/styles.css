@@ -54,7 +54,7 @@
   }
 
   .card-neutral {
-    @apply surface rounded-sm shadow-sm shadow-black dark:border dark:border-neutral-400/[0.2] dark:bg-neutral-900;
+    @apply rounded-sm bg-neutral-1 shadow-sm shadow-black dark:border dark:border-neutral-400/[0.2] dark:bg-neutral-900;
   }
 
   .surface {
@@ -98,7 +98,7 @@
     @apply surface body  placeholder:text-neutral-900/[0.4] dark:border dark:border-neutral-400/[0.2] dark:bg-neutral-900;
   }
 
-  .link {
+  .text-link {
     @apply text-primary-500 dark:text-primary-300;
   }
 }

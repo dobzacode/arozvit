@@ -2,7 +2,7 @@ import type { TRPCRouterRecord } from "@trpc/server";
 import moment from "moment-timezone";
 import { z } from "zod";
 
-import { and, eq, lte } from "@planty/db";
+import { and, eq, gte, lt, lte } from "@planty/db";
 import { CreatePlantSchema, Plant } from "@planty/db/schema";
 import { translateTimeUnit } from "@planty/utils";
 
@@ -15,6 +15,21 @@ export const plantRouter = {
       .from(Plant)
       .where(and(eq(Plant.id, input), eq(Plant.userId, ctx.auth.userId)));
   }),
+
+  getPlantByWateringDay: protectedProcedure
+    .input(z.date())
+    .query(({ ctx, input }) => {
+      return ctx.db
+        .select()
+        .from(Plant)
+        .where(
+          and(
+            eq(Plant.userId, ctx.auth.userId),
+            gte(Plant.nextWatering, input),
+            lt(Plant.nextWatering, moment(input).add(1, "day").toDate()),
+          ),
+        );
+    }),
 
   list: protectedProcedure.query(({ ctx }) => {
     return ctx.db.select().from(Plant).where(eq(Plant.userId, ctx.auth.userId));
@@ -68,10 +83,10 @@ export const plantRouter = {
             input.lastWatering ?? moment().tz("Europe/Paris").toDate(),
           nextWatering: moment()
             .tz("Europe/Paris")
-            .add({
-              [translateTimeUnit(actualPlant.wateringInterval)]:
-                actualPlant.dayBetweenWatering,
-            })
+            .add(
+              actualPlant.dayBetweenWatering,
+              translateTimeUnit(actualPlant.wateringInterval),
+            )
             .toDate(),
         })
         .where(and(eq(Plant.id, input.id), eq(Plant.userId, ctx.auth.userId)));

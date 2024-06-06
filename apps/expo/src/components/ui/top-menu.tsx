@@ -13,10 +13,10 @@ export default function TopMenu({ className }: { className?: string }) {
 
   return (
     <View
-      className={`absolute top-0 flex w-full flex-row items-center justify-between bg-transparent p-md ${className}`}
+      className={`absolute top-0 z-30 flex w-full flex-row items-center justify-between bg-transparent p-md ${className}`}
     >
       <Image
-        className="rounded-full p-xs"
+        className="rounded-full p-md"
         style={{ width: 24, height: 24 }}
         source={
           //eslint-disable-next-line
@@ -29,10 +29,11 @@ export default function TopMenu({ className }: { className?: string }) {
       ></Image>
 
       <Feather
-        className="p-xs"
-        onPress={() =>
-          Appearance.setColorScheme(colorScheme === "light" ? "dark" : "light")
-        }
+        className="relative z-30 p-md"
+        onPress={() => {
+          console.log("xd");
+          Appearance.setColorScheme(colorScheme === "light" ? "dark" : "light");
+        }}
         style={{
           color: colorScheme === "light" ? "black" : "white",
         }}

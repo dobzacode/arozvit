@@ -50,7 +50,9 @@ export function getSecretOrEnv(secretName: keyof typeof env): string {
   return value;
 }
 
-export function translateTimeUnit(frenchUnit: string): string {
+export function translateTimeUnit(
+  frenchUnit: string,
+): "days" | "weeks" | "months" | "years" {
   switch (frenchUnit.toLowerCase()) {
     case "jour":
       return "days";
@@ -61,6 +63,6 @@ export function translateTimeUnit(frenchUnit: string): string {
     case "année":
       return "years";
     default:
-      return frenchUnit;
+      return "days";
   }
 }

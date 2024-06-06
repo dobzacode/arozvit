@@ -1,4 +1,4 @@
-import { ActivityIndicator, View } from "react-native";
+import { ActivityIndicator, ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import EmptyState from "~/components/home/empty-state";
@@ -18,10 +18,10 @@ export default function Page() {
       <View className="background h-full w-full ">
         <TopMenu></TopMenu>
         {data?.length ? (
-          <View className="pt-4xl">
+          <ScrollView className=" pt-2xl">
             <TopBlock></TopBlock>
             <MyPlants></MyPlants>
-          </View>
+          </ScrollView>
         ) : (
           <EmptyState></EmptyState>
         )}
