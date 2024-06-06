@@ -49,3 +49,18 @@ export function getSecretOrEnv(secretName: keyof typeof env): string {
 
   return value;
 }
+
+export function translateTimeUnit(frenchUnit: string): string {
+  switch (frenchUnit.toLowerCase()) {
+    case "jour":
+      return "days";
+    case "semaine":
+      return "weeks";
+    case "mois":
+      return "months";
+    case "année":
+      return "years";
+    default:
+      return frenchUnit;
+  }
+}

@@ -13,10 +13,16 @@ export default function TopBlock() {
     return null;
   }
 
-  const today = moment().tz("Europe/Paris").toDate();
+  const today = moment().tz("Europe/Paris").startOf("day").toDate();
 
-  const todayWatering = data?.filter((plant) => plant.nextWatering < today);
-  const passedWateringDay = data?.filter((plant) => plant.nextWatering < today);
+  console.log(today);
+
+  const todayWatering = data?.filter(
+    (plant) => moment(plant.nextWatering).startOf("days").toDate() === today,
+  );
+  const passedWateringDay = data?.filter(
+    (plant) => moment(plant.nextWatering).startOf("days").toDate() < today,
+  );
 
   return (
     <View>

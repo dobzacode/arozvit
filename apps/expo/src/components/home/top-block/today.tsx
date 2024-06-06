@@ -4,12 +4,12 @@ import type { Plant } from "@planty/validators";
 
 export default function Today({ plants }: { plants: Plant[] }) {
   return (
-    <View className="surface max-h-fit w-7xl gap-sm self-start rounded-sm p-sm shadow-md">
+    <View className="card-neutral w-7xl gap-sm self-start rounded-sm p-sm shadow-md">
       <Text className="heading-h4 text-surface-fg dark:text-surface">
         Aujourd'hui
       </Text>
 
-      <Text className="body">
+      <Text className="body text-surface-fg dark:text-surface">
         {plants.length} {plants.length > 1 ? "plantes" : "plante"} ont un
         arrosage prévu pour aujourd'hui
       </Text>

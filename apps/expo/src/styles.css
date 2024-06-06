@@ -53,6 +53,10 @@
     @apply bg-neutral-50 dark:bg-neutral-950;
   }
 
+  .card-neutral {
+    @apply surface rounded-sm shadow-sm shadow-black dark:border dark:border-neutral-400/[0.2] dark:bg-neutral-900;
+  }
+
   .surface {
     @apply bg-neutral-1 text-surface-fg dark:bg-neutral-950 dark:text-neutral-1;
   }
