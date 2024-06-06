@@ -30,7 +30,7 @@
     @apply font-['space-grotesk'] text-2xl  leading-2xl;
   }
   .heading-h4 {
-    @apply font-['space-grotesk'] text-xl leading-xl mobile:text-2xl;
+    @apply font-['space-grotesk'] text-xl leading-xl;
   }
   .heading-h5 {
     @apply font-['space-grotesk'] text-lg  leading-lg;

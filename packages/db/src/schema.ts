@@ -1,4 +1,4 @@
-import { relations } from "drizzle-orm";
+import { InferSelectModel, relations } from "drizzle-orm";
 import {
   date,
   integer,
@@ -61,6 +61,8 @@ export const Plant = pgTable("plant", {
     .$onUpdate(() => new Date())
     .notNull(),
 });
+
+export type Plant = InferSelectModel<typeof Plant>;
 
 export const CreatePlantSchema = createInsertSchema(Plant, {
   userId: z.string(),

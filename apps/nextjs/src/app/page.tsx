@@ -8,6 +8,7 @@ import {
 } from "@clerk/nextjs";
 import { Loader } from "lucide-react";
 
+
 export default function HomePage() {
   return (
     <main className="container h-screen py-16">

@@ -4,6 +4,7 @@ const primaryColor = "100, 36%,";
 const secondaryColor = "145, 36%,";
 const errorColor = "352, 95%,";
 const neutralColor = "98, 20%,";
+const infoColor = "190, 76%,";
 
 const config = {
   darkMode: ["class"],
@@ -195,6 +196,24 @@ const config = {
           fg: `hsl(${errorColor} 98%)`,
           container: `hsl(${errorColor} 85%)`,
           "container-fg": `hsl(${errorColor} 5%)`,
+        },
+        info: {
+          1: `hsl(${infoColor} 98%)`,
+          50: `hsl(${infoColor} 95%)`,
+          100: `hsl(${infoColor} 85%)`,
+          200: `hsl(${infoColor} 75%)`,
+          300: `hsl(${infoColor} 65%)`,
+          400: `hsl(${infoColor} 55%)`,
+          500: `hsl(${infoColor} 45%)`,
+          600: `hsl(${infoColor} 35%)`,
+          700: `hsl(${infoColor} 25%)`,
+          800: `hsl(${infoColor} 15%)`,
+          900: `hsl(${infoColor} 5%)`,
+          DEFAULT: `hsl(${infoColor} 55%)`,
+          foreground: `hsl(${infoColor} 98%)`,
+          fg: `hsl(${infoColor} 98%)`,
+          container: `hsl(${infoColor} 85%)`,
+          "container-fg": `hsl(${infoColor} 5%)`,
         },
         surface: {
           DEFAULT: `hsl(${neutralColor} 98%)`,

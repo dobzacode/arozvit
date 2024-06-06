@@ -2,7 +2,7 @@ import { ActivityIndicator, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import EmptyState from "~/components/home/empty-state";
-import Today from "~/components/home/today";
+import TopBlock from "~/components/home/top-block";
 import TopMenu from "~/components/ui/top-menu";
 import { api } from "~/utils/api";
 
@@ -16,7 +16,7 @@ export default function Page() {
     <SafeAreaView>
       <View className="background h-full w-full ">
         <TopMenu></TopMenu>
-        {data?.length ? <Today></Today> : <EmptyState></EmptyState>}
+        {data?.length ? <TopBlock></TopBlock> : <EmptyState></EmptyState>}
       </View>
     </SafeAreaView>
   );
