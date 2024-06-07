@@ -16,6 +16,7 @@ import { Entypo, FontAwesome5 } from "@expo/vector-icons";
 import moment from "moment-timezone";
 
 import { api } from "~/utils/api";
+import { translateTimeUnit } from "~/utils/utils";
 
 export default function NewPlantForm() {
   const [name, setName] = useState<string>("");
@@ -26,13 +27,11 @@ export default function NewPlantForm() {
   const [wateringInterval, setWateringInterval] = useState<
     "jours" | "semaines" | "mois" | "années"
   >("jours");
-  const [lastWatering, setLastWatering] = useState<Date>(
-    moment().tz("Europe/Paris").toDate(),
-  );
+  const [lastWatering, setLastWatering] = useState<Date>(moment().toDate());
   const [isDatePickerVisible, setDatePickerVisibility] =
     useState<boolean>(false);
   const colorScheme = useColorScheme();
-
+  const utils = api.useUtils();
   const auth = useAuth();
 
   if (!auth.isLoaded) {
@@ -45,12 +44,14 @@ export default function NewPlantForm() {
   }
 
   const { mutate, error, isPending } = api.plant.create.useMutation({
-    onSuccess: () => {
+    onSuccess: async () => {
       setName("");
       setDescription("");
       setDayBetweenWatering(1);
       setWateringInterval("jours");
       setLastWatering(moment().tz("Europe/Paris").toDate());
+      await utils.plant.isAnyPlant.invalidate();
+      await utils.plant.getPlantsWithWateringNeed.invalidate();
       router.push("/myplants");
       Toast.show("Votre plante a été ajouté avec succès", {
         duration: 400,
@@ -65,21 +66,19 @@ export default function NewPlantForm() {
   });
 
   const handleSubmit = () => {
-    console.log(lastWatering);
     const formData = {
       userId: auth.userId,
       name,
       description,
       dayBetweenWatering: dayBetweenWatering ?? 1,
       wateringInterval,
-      lastWatering: moment(lastWatering).tz("Europe/Paris").toDate(),
-      nextWatering: moment(
-        moment(lastWatering).tz("Europe/Paris").toDate().getTime() +
-          (dayBetweenWatering ?? 1) * 24 * 60 * 60 * 1000,
-      )
+      lastWatering,
+      nextWatering: moment(lastWatering)
         .tz("Europe/Paris")
+        .add(dayBetweenWatering, translateTimeUnit(wateringInterval))
         .toDate(),
     };
+    console.log(lastWatering);
     try {
       mutate(formData);
     } catch (e) {
@@ -259,11 +258,11 @@ export default function NewPlantForm() {
             accentColor="green"
             isVisible={isDatePickerVisible}
             mode="date"
-            date={moment().tz("Europe/Paris").toDate()}
+            date={lastWatering}
             timeZoneName="Europe/Paris"
-            maximumDate={moment().tz("Europe/Paris").toDate()}
+            maximumDate={moment().utcOffset(0).toDate()}
             onConfirm={(date) => {
-              setLastWatering(moment(date).tz("Europe/Paris").toDate());
+              setLastWatering(date);
               setDatePickerVisibility(false);
             }}
             onCancel={() => setDatePickerVisibility(false)}

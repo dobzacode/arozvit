@@ -9,19 +9,22 @@ export default function TopBlock() {
   const { data, isLoading, isError } =
     api.plant.getPlantsWithWateringNeed.useQuery();
 
-  if (!isLoading && !isError && data?.length === 0) {
+  if (isLoading || (isError && !data?.length)) {
     return null;
   }
 
-  const today = moment().tz("Europe/Paris").startOf("day").toDate();
+  const today = moment().utcOffset(0).startOf("day").toDate();
 
-  console.log(today);
+  const todayWatering = data?.filter((plant) => {
+    return (
+      moment(plant.nextWatering).tz("Europe/Paris").toDate() > today &&
+      moment(plant.nextWatering).tz("Europe/Paris").toDate() <
+        moment(today).add(1, "day").toDate()
+    );
+  });
 
-  const todayWatering = data?.filter(
-    (plant) => moment(plant.nextWatering).startOf("days").toDate() === today,
-  );
   const passedWateringDay = data?.filter(
-    (plant) => moment(plant.nextWatering).startOf("days").toDate() < today,
+    (plant) => moment(plant.nextWatering).toDate() < today,
   );
 
   if (!todayWatering && !passedWateringDay) {

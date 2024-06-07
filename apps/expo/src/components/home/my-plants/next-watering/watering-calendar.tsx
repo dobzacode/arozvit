@@ -56,14 +56,14 @@ export default function WateringCalendar({
 }) {
   const colorScheme = useColorScheme();
 
-  console.log(colorScheme);
+  console.log(pickedDate);
 
   return (
     <View className="card-neutral">
       <Calendar
         key={colorScheme}
         className=" rounded-sm"
-        minDate={moment().tz("Europe/Paris").toLocaleString()}
+        minDate={moment().tz("Europe/Paris").format()}
         style={{
           borderRadius: 8,
           borderColor: "hsl(98, 20%, 10%)",
@@ -86,8 +86,13 @@ export default function WateringCalendar({
           textMonthFontFamily: "mustica-pro",
         }}
         current={pickedDate}
-        markedDates={pickedDate ? { [pickedDate]: { selected: true } } : {}}
+        markedDates={
+          pickedDate
+            ? { [moment(pickedDate).format("YYYY-MM-DD")]: { selected: true } }
+            : {}
+        }
         onDayPress={(day) => {
+          console.log(day.dateString);
           setPickedDate(day.dateString);
         }}
       ></Calendar>

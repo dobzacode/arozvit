@@ -14,24 +14,25 @@ export default function MyPlants() {
   if (!data) return null;
 
   return (
-    <View className="pb-4xl">
-      <View className="w-full flex-row items-center justify-between px-md align-middle">
-        <Text className="heading-h1   text-surface-fg dark:text-surface">
-          Mes plantes
-        </Text>
-
-        <Link href="myplants" className="text-link body-sm">
-          Voir mes plantes
-        </Link>
+    <View className="gap-md pb-4xl">
+      <View className="gap-sm">
+        <View className="w-full flex-row items-end justify-between px-md align-middle">
+          <Text className="heading-h1 -mb-2  text-surface-fg dark:text-surface">
+            Mes plantes
+          </Text>
+          <Link href="myplants">
+            <Text className="text-link body-sm ">Voir mes plantes</Text>
+          </Link>
+        </View>
+        <ScrollView
+          contentContainerClassName="flex gap-sm pl-md py-sm"
+          horizontal={true}
+        >
+          {data.map(({ id }) => (
+            <PlantCard key={id} plant={id} />
+          ))}
+        </ScrollView>
       </View>
-      <ScrollView
-        contentContainerClassName="flex gap-md pl-md py-sm"
-        horizontal={true}
-      >
-        {data.map(({ id }) => (
-          <PlantCard key={id} plant={id} />
-        ))}
-      </ScrollView>
 
       <NextWatering></NextWatering>
     </View>

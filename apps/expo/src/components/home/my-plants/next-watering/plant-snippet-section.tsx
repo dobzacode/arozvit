@@ -6,6 +6,7 @@ import PlantCardSnippet from "./plant-card-snippet";
 export default function PlantSnippetSection({ date }: { date: string }) {
   const { data, isLoading, isError } = api.plant.getPlantByWateringDay.useQuery(
     new Date(Date.parse(date)),
+    { refetchOnMount: true },
   );
 
   if (isLoading)

@@ -16,9 +16,9 @@ export default function Page() {
   return (
     <SafeAreaView>
       <View className="background h-full w-full ">
-        <TopMenu></TopMenu>
+        <TopMenu className={`${data?.length && "relative"}`}></TopMenu>
         {data?.length ? (
-          <ScrollView className=" pt-2xl">
+          <ScrollView className=" " contentContainerClassName="gap-md">
             <TopBlock></TopBlock>
             <MyPlants></MyPlants>
           </ScrollView>

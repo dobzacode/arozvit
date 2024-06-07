@@ -1,34 +1,17 @@
-import { Image, Pressable, Text, View } from "react-native";
-import Toast from "react-native-root-toast";
-import { FontAwesome6 } from "@expo/vector-icons";
+import { useState } from "react";
+import { Image, Text, View } from "react-native";
 import moment from "moment";
 
 import type { Plant } from "@planty/validators";
 
-import { api } from "~/utils/api";
+import WateringButton from "~/components/ui/watering-button";
 
 export default function PlantCardSnippet({ plant }: { plant: Plant }) {
-  const utils = api.useUtils();
-  const { mutate, isPending } = api.plant.waterPlant.useMutation({
-    onSuccess: async () => {
-      await utils.plant.getPlantByWateringDay.invalidate(
-        moment().tz("Europe/Paris").toDate(),
-      );
-      Toast.show(`${plant.name} a été arrosée avec succès`, {
-        duration: 400,
-        textStyle: {
-          fontFamily: "mustica-pro",
-        },
-      });
-    },
-    onError: (e) => {
-      console.log(e);
-    },
-  });
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   return (
     <View
-      className={`card-neutral item-center flex-row justify-between p-sm ${isPending && "opacity-40"}`}
+      className={`card-neutral item-center flex-row justify-between p-sm ${isLoading && "disable-opacity"}`}
     >
       <View className="flex-row gap-sm">
         <Image
@@ -51,18 +34,11 @@ export default function PlantCardSnippet({ plant }: { plant: Plant }) {
         </View>
       </View>
       <View className="shadow-sm shadow-black">
-        <Pressable
-          disabled={isPending}
-          onPress={() =>
-            mutate({
-              id: plant.id,
-              lastWatering: moment().tz("Europe/Paris").toDate(),
-            })
-          }
-          className="relative z-20   items-center rounded-xs p-md"
-        >
-          <FontAwesome6 name="droplet" size={24} color="hsl(190 40% 50%)" />
-        </Pressable>
+        <WateringButton
+          isIcon={true}
+          plant={plant}
+          setIsLoading={setIsLoading}
+        />
       </View>
     </View>
   );

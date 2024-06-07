@@ -9,6 +9,7 @@ jest.mock("@clerk/clerk-expo", () => ({
 
 jest.mock("~/utils/api", () => ({
   api: {
+    useUtils: jest.fn(() => ({})),
     plant: {
       create: {
         useMutation: jest.fn(() => ({

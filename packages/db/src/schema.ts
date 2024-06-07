@@ -1,6 +1,5 @@
 import { InferSelectModel, relations } from "drizzle-orm";
 import {
-  date,
   integer,
   pgEnum,
   pgTable,
@@ -52,8 +51,18 @@ export const Plant = pgTable("plant", {
   description: text("description"),
   imageUrl: text("image_url"),
   dayBetweenWatering: integer("day_between_watering").notNull(),
-  lastWatering: date("last_watering", { mode: "date" }).defaultNow().notNull(),
-  nextWatering: date("next_watering", { mode: "date" }).defaultNow().notNull(),
+  lastWatering: timestamp("last_watering", {
+    mode: "date",
+    withTimezone: true,
+  })
+    .defaultNow()
+    .notNull(),
+  nextWatering: timestamp("next_watering", {
+    mode: "date",
+    withTimezone: true,
+  })
+    .defaultNow()
+    .notNull(),
   wateringInterval: wateringIntervalEnum("watering_interval").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at")

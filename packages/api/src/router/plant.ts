@@ -19,13 +19,21 @@ export const plantRouter = {
   getPlantByWateringDay: protectedProcedure
     .input(z.date())
     .query(({ ctx, input }) => {
+      console.log(
+        moment(input).utcOffset(0).startOf("day").toDate(),
+        moment(input).utcOffset(0).add(1, "day").startOf("day").toDate(),
+      );
+
       return ctx.db
         .select()
         .from(Plant)
         .where(
           and(
             eq(Plant.userId, ctx.auth.userId),
-            gte(Plant.nextWatering, input),
+            gte(
+              Plant.nextWatering,
+              moment(input).utcOffset(0).startOf("day").toDate(),
+            ),
             lt(Plant.nextWatering, moment(input).add(1, "day").toDate()),
           ),
         );

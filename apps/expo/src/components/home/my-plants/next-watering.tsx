@@ -7,11 +7,11 @@ import WateringCalendar from "./next-watering/watering-calendar";
 
 export default function NextWatering() {
   const [pickedDate, setPickedDate] = useState<string>(
-    moment().tz("Europe/Paris").toLocaleString(),
+    moment().tz("Europe/Paris").format(),
   );
 
   return (
-    <View className="gap-md px-md pt-md">
+    <View className="gap-sm px-md ">
       <Text className="heading-h2   text-surface-fg dark:text-surface">
         Arrosages à venir
       </Text>

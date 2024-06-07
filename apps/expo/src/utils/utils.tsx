@@ -43,3 +43,20 @@ export function calcNextWatering(
 export function firstLetterCapitalize(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
+
+export function translateTimeUnit(
+  frenchUnit: string,
+): "days" | "weeks" | "months" | "years" {
+  switch (frenchUnit.toLowerCase()) {
+    case "jour":
+      return "days";
+    case "semaine":
+      return "weeks";
+    case "mois":
+      return "months";
+    case "année":
+      return "years";
+    default:
+      return "days";
+  }
+}

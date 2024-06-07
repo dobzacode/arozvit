@@ -31,7 +31,8 @@ const getBaseUrl = () => {
   if (process.env.NODE_ENV === "production") {
     return "http://3.121.76.2:3000";
   }
-  return `http://192.168.1.11:3000`;
+  // http://192.168.1.11:3000
+  return `http://3.121.76.2:3000`;
 };
 
 /**
