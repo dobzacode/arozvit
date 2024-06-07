@@ -7,12 +7,12 @@ import WateringCalendar from "./next-watering/watering-calendar";
 
 export default function NextWatering() {
   const [pickedDate, setPickedDate] = useState<string>(
-    moment().tz("Europe/Paris").format(),
+    moment().tz("Europe/Paris").format("YYYY-MM-DD"),
   );
 
   return (
     <View className="gap-sm px-md ">
-      <Text className="heading-h2   text-surface-fg dark:text-surface">
+      <Text className="heading-h1   text-surface-fg dark:text-surface">
         Arrosages à venir
       </Text>
       <WateringCalendar

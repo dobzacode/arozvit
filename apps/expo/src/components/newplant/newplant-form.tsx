@@ -204,7 +204,7 @@ export default function NewPlantForm() {
                     className="bg-white"
                     style={{
                       backgroundColor:
-                        colorScheme === "dark" ? "hsl(98, 20%, 5%)" : "white",
+                        colorScheme === "dark" ? "hsl(98, 20%, 10%)" : "white",
                       padding: 10,
                     }}
                   >

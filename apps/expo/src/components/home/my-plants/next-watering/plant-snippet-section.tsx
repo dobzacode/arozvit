@@ -1,4 +1,5 @@
-import { ActivityIndicator, Text, View } from "react-native";
+import { Text, useColorScheme, View } from "react-native";
+import { Skeleton } from "moti/skeleton";
 
 import { api } from "~/utils/api";
 import PlantCardSnippet from "./plant-card-snippet";
@@ -6,21 +7,23 @@ import PlantCardSnippet from "./plant-card-snippet";
 export default function PlantSnippetSection({ date }: { date: string }) {
   const { data, isLoading, isError } = api.plant.getPlantByWateringDay.useQuery(
     new Date(Date.parse(date)),
-    { refetchOnMount: true },
   );
+  const colorScheme = useColorScheme();
 
-  if (isLoading)
-    return <ActivityIndicator size="large" color="green"></ActivityIndicator>;
-  if (isError || !data) return <Text>Error</Text>;
+  if (isError || !data?.length) return <Text>Aucun arrosage à venir</Text>;
 
   return (
-    <View className="gap-sm">
-      {data.map((plant) => (
-        <PlantCardSnippet
-          key={`${plant.id}-snippet`}
-          plant={plant}
-        ></PlantCardSnippet>
-      ))}
-    </View>
+    <Skeleton.Group show={isLoading}>
+      <View className="gap-sm">
+        {data.map((plant) => (
+          <Skeleton
+            key={`${plant.id}-snippet`}
+            colorMode={colorScheme === "dark" ? "dark" : "light"}
+          >
+            <PlantCardSnippet plant={plant}></PlantCardSnippet>
+          </Skeleton>
+        ))}
+      </View>
+    </Skeleton.Group>
   );
 }

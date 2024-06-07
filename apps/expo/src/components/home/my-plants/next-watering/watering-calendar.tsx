@@ -71,7 +71,7 @@ export default function WateringCalendar({
         }}
         theme={{
           calendarBackground:
-            colorScheme === "dark" ? "hsl(98, 20%, 5%)" : "hsl(98, 20%, 98%)",
+            colorScheme === "dark" ? "hsl(98, 20%, 10%)" : "hsl(98, 20%, 98%)",
           arrowColor: colorScheme === "dark" ? "white" : "black",
           dayTextColor:
             colorScheme === "dark" ? "hsl(98, 20%, 98%)" : "hsl(98, 20%, 02%)",
@@ -92,7 +92,6 @@ export default function WateringCalendar({
             : {}
         }
         onDayPress={(day) => {
-          console.log(day.dateString);
           setPickedDate(day.dateString);
         }}
       ></Calendar>
