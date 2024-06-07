@@ -1,34 +1,29 @@
-import { ScrollView, View } from "react-native";
+import { ActivityIndicator, ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Skeleton } from "moti/skeleton";
 
 import EmptyState from "~/components/home/empty-state";
 import MyPlants from "~/components/home/my-plants";
-import NotificationAndToday from "~/components/home/notifications-and-today";
+import TopBlock from "~/components/home/top-block";
 import TopMenu from "~/components/ui/top-menu";
 import { api } from "~/utils/api";
 
 export default function Page() {
   const { data, isLoading } = api.plant.isAnyPlant.useQuery();
 
+  if (isLoading)
+    return <ActivityIndicator size="large" color="green"></ActivityIndicator>;
+
   return (
     <SafeAreaView>
       <View className="background h-full w-full ">
         <TopMenu className={`${data?.length && "relative"}`}></TopMenu>
-        {!isLoading && (
-          <>
-            {data?.length ? (
-              <ScrollView contentContainerClassName="gap-md">
-                <NotificationAndToday></NotificationAndToday>
-
-                <MyPlants></MyPlants>
-              </ScrollView>
-            ) : (
-              <Skeleton>
-                <EmptyState></EmptyState>
-              </Skeleton>
-            )}
-          </>
+        {data?.length ? (
+          <ScrollView className=" " contentContainerClassName="gap-md">
+            <TopBlock></TopBlock>
+            <MyPlants></MyPlants>
+          </ScrollView>
+        ) : (
+          <EmptyState></EmptyState>
         )}
       </View>
     </SafeAreaView>

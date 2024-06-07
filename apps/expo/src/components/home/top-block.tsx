@@ -1,16 +1,15 @@
-import { ScrollView } from "react-native";
+import { ScrollView, View } from "react-native";
 import moment from "moment-timezone";
-import { Skeleton } from "moti/skeleton";
 
 import { api } from "~/utils/api";
 import Notifications from "./top-block/notifications";
 import Today from "./top-block/today";
 
-export default function NotificationAndToday() {
+export default function TopBlock() {
   const { data, isLoading, isError } =
     api.plant.getPlantsWithWateringNeed.useQuery();
 
-  if (isError && !data?.length) {
+  if (isLoading || (isError && !data?.length)) {
     return null;
   }
 
@@ -33,22 +32,18 @@ export default function NotificationAndToday() {
   }
 
   return (
-    <Skeleton.Group show={isLoading}>
+    <View>
       <ScrollView
         contentContainerClassName="flex gap-md pl-md py-sm"
         horizontal={true}
       >
         {passedWateringDay && passedWateringDay.length > 0 && (
-          <Skeleton>
-            <Notifications plants={passedWateringDay}></Notifications>
-          </Skeleton>
+          <Notifications plants={passedWateringDay}></Notifications>
         )}
         {todayWatering && todayWatering.length > 0 && (
-          <Skeleton>
-            <Today plants={todayWatering}></Today>
-          </Skeleton>
+          <Today plants={todayWatering}></Today>
         )}
       </ScrollView>
-    </Skeleton.Group>
+    </View>
   );
 }

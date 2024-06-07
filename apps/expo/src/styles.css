@@ -54,7 +54,7 @@
   }
 
   .card-neutral {
-    @apply dark:bg-neutral-850 rounded-sm bg-neutral-1 shadow-sm shadow-black dark:border dark:border-neutral-400/[0.2];
+    @apply rounded-sm bg-neutral-1 shadow-sm shadow-black dark:border dark:border-neutral-400/[0.2] dark:bg-neutral-900;
   }
 
   .surface {
@@ -95,7 +95,7 @@
   }
 
   .input-neutral {
-    @apply surface body  dark:bg-neutral-850 placeholder:text-neutral-900/[0.4] dark:border dark:border-neutral-400/[0.2];
+    @apply surface body  placeholder:text-neutral-900/[0.4] dark:border dark:border-neutral-400/[0.2] dark:bg-neutral-900;
   }
 
   .text-link {

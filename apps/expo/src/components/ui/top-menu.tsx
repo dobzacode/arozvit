@@ -16,7 +16,7 @@ export default function TopMenu({ className }: { className?: string }) {
       className={`absolute top-0 z-30 flex w-full flex-row items-center justify-between bg-transparent p-md ${className}`}
     >
       <Image
-        className="rounded-full p-md dark:border dark:border-neutral-400/40"
+        className="rounded-full p-md"
         style={{ width: 24, height: 24 }}
         source={
           //eslint-disable-next-line
