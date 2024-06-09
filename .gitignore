@@ -13,6 +13,9 @@ coverage
 out/
 next-env.d.ts
 
+# lambda
+apps/lambda/dist
+
 # nitro
 .nitro/
 .output/
