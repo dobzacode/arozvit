@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Image, Text, View } from "react-native";
-import moment from "moment";
+import moment from "moment-timezone";
 
 import type { Plant } from "@planty/validators";
 
@@ -29,7 +29,7 @@ export default function PlantCardSnippet({ plant }: { plant: Plant }) {
             {moment(plant.nextWatering).tz("Europe/Paris").format("DD/MM/YYYY")}
           </Text>
           <Text className="body text-surface-fg dark:text-surface">
-            {plant.name} {plant.nextWatering.toLocaleDateString()}
+            {plant.name}
           </Text>
         </View>
       </View>
