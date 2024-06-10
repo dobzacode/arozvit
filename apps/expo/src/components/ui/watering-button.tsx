@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Pressable, Text } from "react-native";
+import { Pressable, Text, useColorScheme, View } from "react-native";
 import Toast from "react-native-root-toast";
 import { FontAwesome6 } from "@expo/vector-icons";
 import moment from "moment";
@@ -13,20 +13,35 @@ export default function WateringButton({
   plant,
   setIsLoading,
   isIcon = false,
+  searchTerm,
+  isLoading = false,
 }: {
   date?: Date;
   plant: Plant;
   setIsLoading: (loading: boolean) => void;
   isIcon?: boolean;
+  searchTerm?: string;
+  isLoading?: boolean;
 }) {
   const utils = api.useUtils();
+  const colorScheme = useColorScheme();
   const { mutate, isPending } = api.plant.waterPlant.useMutation({
     onSuccess: async () => {
+      await utils.plant.getPlantsWithWateringNeed.invalidate();
+      await utils.plant.get.invalidate(plant.id);
       await utils.plant.getPlantByWateringDay.invalidate(
         moment().tz("Europe/Paris").toDate(),
       );
+      searchTerm !== undefined
+        ? await utils.plant.getBySearchTerm.invalidate(searchTerm)
+        : null;
       Toast.show(`${plant.name} a été arrosée avec succès`, {
-        duration: 400,
+        duration: 1000,
+        containerStyle: {
+          marginBottom: 80,
+        },
+        backgroundColor: colorScheme === "dark" ? "black" : "white",
+        textColor: colorScheme === "dark" ? "white" : "black",
         textStyle: {
           fontFamily: "mustica-pro",
         },
@@ -41,19 +56,45 @@ export default function WateringButton({
     setIsLoading(isPending);
   }, [isPending, setIsLoading]);
 
+  console.log(
+    moment(date).format("DD/MM/YYYY") ===
+      moment(plant.lastWatering).format("DD/MM/YYYY"),
+  );
+
   return (
     <Pressable
-      disabled={isPending}
+      disabled={
+        isPending ||
+        isLoading ||
+        moment(date).format("DD/MM/YYYY") ===
+          moment(plant.lastWatering).format("DD/MM/YYYY")
+      }
       onPress={() =>
         mutate({
           id: plant.id,
           lastWatering: date ? date : moment().tz("Europe/Paris").toDate(),
         })
       }
-      className={`relative z-20   items-center whitespace-nowrap rounded-xs  p-md ${!isIcon && "bg-info px-md py-sm"}`}
+      className={`relative z-20   items-center whitespace-nowrap rounded-xs   ${!isIcon ? " bg-info px-md py-sm" : "surface body p-smd self-start  shadow-sm shadow-black"} ${
+        isPending ||
+        isLoading ||
+        moment(date).format("DD/MM/YYYY") ===
+          moment(plant.lastWatering).format("DD/MM/YYYY")
+          ? "shadow-white"
+          : ""
+      }  `}
     >
       {isIcon ? (
-        <FontAwesome6 name="droplet" size={24} color="hsl(190 40% 50%)" />
+        <View
+          className={
+            moment(date).format("DD/MM/YYYY") ===
+            moment(plant.lastWatering).format("DD/MM/YYYY")
+              ? "opacity-10"
+              : ""
+          }
+        >
+          <FontAwesome6 name="droplet" size={20} color="hsl(190 40% 50%)" />
+        </View>
       ) : (
         <Text className="button-txt  text-info-fg">Marquer comme arrosé</Text>
       )}

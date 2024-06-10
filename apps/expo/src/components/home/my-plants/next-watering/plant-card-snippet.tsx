@@ -11,7 +11,7 @@ export default function PlantCardSnippet({ plant }: { plant: Plant }) {
 
   return (
     <View
-      className={`card-neutral item-center flex-row justify-between p-sm ${isLoading && "disable-opacity"}`}
+      className={`card-neutral item-center flex-row justify-between p-sm ${isLoading && "disable-opacity shadow-none"}`}
     >
       <View className="flex-row gap-sm">
         <Image

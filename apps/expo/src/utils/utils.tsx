@@ -1,4 +1,5 @@
 import * as SecureStore from "expo-secure-store";
+import moment from "moment-timezone";
 
 export const tokenCache = {
   async getToken(key: string) {
@@ -59,4 +60,12 @@ export function translateTimeUnit(
     default:
       return "days";
   }
+}
+
+export function calculateDaysSinceDate(inputDate: Date) {
+  const date = moment(inputDate);
+  const today = moment();
+  const daysDiff = today.diff(date, "days");
+
+  return 1000 - daysDiff * 100 < 500 ? 500 : 1000 - daysDiff * 100;
 }

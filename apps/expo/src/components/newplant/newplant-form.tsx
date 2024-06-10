@@ -1,3 +1,7 @@
+import { useAuth } from "@clerk/clerk-expo";
+import { Entypo, FontAwesome5 } from "@expo/vector-icons";
+import { router } from "expo-router";
+import moment from "moment-timezone";
 import { useState } from "react";
 import {
   ActivityIndicator,
@@ -10,10 +14,6 @@ import {
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import Toast from "react-native-root-toast";
 import SelectDropdown from "react-native-select-dropdown";
-import { router } from "expo-router";
-import { useAuth } from "@clerk/clerk-expo";
-import { Entypo, FontAwesome5 } from "@expo/vector-icons";
-import moment from "moment-timezone";
 
 import { api } from "~/utils/api";
 import { translateTimeUnit } from "~/utils/utils";
@@ -52,9 +52,16 @@ export default function NewPlantForm() {
       setLastWatering(moment().tz("Europe/Paris").toDate());
       await utils.plant.isAnyPlant.invalidate();
       await utils.plant.getPlantsWithWateringNeed.invalidate();
+      await utils.plant.getBySearchTerm.invalidate();
       router.push("/myplants");
       Toast.show("Votre plante a été ajouté avec succès", {
-        duration: 400,
+        duration: 1000,
+        animation: true,
+        containerStyle: {
+          marginBottom: 80,
+        },
+        backgroundColor: colorScheme === "dark" ? "black" : "white",
+        textColor: colorScheme === "dark" ? "white" : "black",
         textStyle: {
           fontFamily: "mustica-pro",
         },
@@ -193,6 +200,7 @@ export default function NewPlantForm() {
                 );
               }}
               dropdownStyle={{
+                marginTop: -20,
                 borderRadius: 4,
                 borderColor: "hsl(98, 20%, 20%)",
                 borderWidth: colorScheme === "dark" ? 1 : 0,
@@ -262,8 +270,8 @@ export default function NewPlantForm() {
             timeZoneName="Europe/Paris"
             maximumDate={moment().utcOffset(0).toDate()}
             onConfirm={(date) => {
-              setLastWatering(date);
               setDatePickerVisibility(false);
+              setLastWatering(date);
             }}
             onCancel={() => setDatePickerVisibility(false)}
           />

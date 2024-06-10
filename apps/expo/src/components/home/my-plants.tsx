@@ -25,7 +25,7 @@ export default function MyPlants() {
           </Link>
         </View>
         <ScrollView
-          contentContainerClassName="flex gap-sm pl-md py-sm"
+          contentContainerClassName="flex gap-md pl-md py-sm"
           horizontal={true}
         >
           {data.map(({ id }) => (

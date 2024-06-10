@@ -90,6 +90,9 @@ importers:
       expo-auth-session:
         specifier: ^5.5.2
         version: 5.5.2(expo@51.0.8(@babel/core@7.24.5)(@babel/preset-env@7.24.5(@babel/core@7.24.5))(bufferutil@4.0.8))
+      expo-checkbox:
+        specifier: ~3.0.0
+        version: 3.0.0
       expo-constants:
         specifier: ~16.0.1
         version: 16.0.1(expo@51.0.8(@babel/core@7.24.5)(@babel/preset-env@7.24.5(@babel/core@7.24.5))(bufferutil@4.0.8))
@@ -4750,6 +4753,9 @@ packages:
 
   expo-auth-session@5.5.2:
     resolution: {integrity: sha512-fgqrNz9FhCl/kNyU2Vy2AmLWk+X7vmgiGN2KVUgB8yLHl/tPogYLpNOiqFl/pMLMveoKjPpVOVfbz3RTJHJoTg==}
+
+  expo-checkbox@3.0.0:
+    resolution: {integrity: sha512-ZfNUawE0Bp/Xa5Gwtn04yfg6rCnKdqdmBXvEGbYg5U+IfRfLh+ocLiiBAcx760DfdYpzMGQOGpUtWQeEVmJwNw==}
 
   expo-constants@16.0.1:
     resolution: {integrity: sha512-s6aTHtglp926EsugWtxN7KnpSsE9FCEjb7CgEjQQ78Gpu4btj4wB+IXot2tlqNwqv+x7xFe5veoPGfJDGF/kVg==}
@@ -14110,6 +14116,8 @@ snapshots:
     transitivePeerDependencies:
       - expo
       - supports-color
+
+  expo-checkbox@3.0.0: {}
 
   expo-constants@16.0.1(expo@51.0.8(@babel/core@7.24.5)(@babel/preset-env@7.24.5(@babel/core@7.24.5))(bufferutil@4.0.8)):
     dependencies:

@@ -1,17 +1,19 @@
 import { Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import MyPlantsContent from "~/components/myplants/myplants-content";
 import TopMenu from "~/components/ui/top-menu";
 
 export default function Page() {
   return (
     <SafeAreaView>
-      <View className="background h-full w-full ">
-        <TopMenu></TopMenu>
-        <View className="flex h-full w-full items-center justify-center gap-lg">
-          <Text className="heading-h1 text-surface-fg dark:text-surface ">
+      <View className="background  w-full ">
+        <TopMenu className={`relative`}></TopMenu>
+        <View className=" w-full  justify-between gap-lg  align-middle">
+          <Text className="heading-h1  px-md  text-surface-fg dark:text-surface">
             Mes plantes
           </Text>
+          <MyPlantsContent></MyPlantsContent>
         </View>
       </View>
     </SafeAreaView>
