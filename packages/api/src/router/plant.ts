@@ -2,7 +2,7 @@ import type { TRPCRouterRecord } from "@trpc/server";
 import moment from "moment-timezone";
 import { z } from "zod";
 
-import { and, eq, gte, lt, lte } from "@planty/db";
+import { and, eq, gte, like, lt, lte } from "@planty/db";
 import { CreatePlantSchema, Plant } from "@planty/db/schema";
 import { translateTimeUnit } from "@planty/utils";
 
@@ -19,6 +19,17 @@ export const plantRouter = {
   getAll: protectedProcedure.query(({ ctx }) => {
     return ctx.db.select().from(Plant).where(eq(Plant.userId, ctx.auth.userId));
   }),
+
+  getBySearchTerm: protectedProcedure
+    .input(z.string())
+    .query(({ ctx, input }) => {
+      return ctx.db
+        .select()
+        .from(Plant)
+        .where(
+          and(eq(Plant.userId, ctx.auth.userId), like(Plant.name, `${input}%`)),
+        );
+    }),
 
   getPlantByWateringDay: protectedProcedure
     .input(z.date())
