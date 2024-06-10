@@ -15,13 +15,13 @@ export default function Notifications({ plants }: { plants: Plant[] }) {
 
   return (
     <View
-      className={`card-neutral w-7xl gap-sm rounded-sm p-sm shadow-md ${isLoading && "disable-opacity"}`}
+      className={`card-neutral  gap-sm rounded-sm p-sm shadow-md ${isLoading && "disable-opacity"}`}
     >
       <Text className="heading-h4 text-surface-fg dark:text-surface">
         Notification
       </Text>
 
-      <Text className="body text-surface-fg dark:text-surface">
+      <Text className="body w-7xl text-surface-fg dark:text-surface">
         {firstLetterCapitalize(plantToWater.name)} nécessite un arrosage depuis
         le {plantToWater.nextWatering.toLocaleDateString()}
       </Text>

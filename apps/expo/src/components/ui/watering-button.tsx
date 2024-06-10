@@ -50,12 +50,12 @@ export default function WateringButton({
           lastWatering: date ? date : moment().tz("Europe/Paris").toDate(),
         })
       }
-      className="relative z-20   items-center rounded-xs p-md"
+      className={`relative z-20   items-center whitespace-nowrap rounded-xs  p-md ${!isIcon && "bg-info px-md py-sm"}`}
     >
       {isIcon ? (
         <FontAwesome6 name="droplet" size={24} color="hsl(190 40% 50%)" />
       ) : (
-        <Text className="button-txt text-info-fg">Marquer comme arrosé</Text>
+        <Text className="button-txt  text-info-fg">Marquer comme arrosé</Text>
       )}
     </Pressable>
   );
