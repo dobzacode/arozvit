@@ -104,7 +104,7 @@ export const plantRouter = {
         .set({
           lastWatering:
             input.lastWatering ?? moment().tz("Europe/Paris").toDate(),
-          nextWatering: moment()
+          nextWatering: moment(input.lastWatering)
             .tz("Europe/Paris")
             .add(
               actualPlant.dayBetweenWatering,
