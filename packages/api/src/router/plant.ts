@@ -16,6 +16,10 @@ export const plantRouter = {
       .where(and(eq(Plant.id, input), eq(Plant.userId, ctx.auth.userId)));
   }),
 
+  getAll: protectedProcedure.query(({ ctx }) => {
+    return ctx.db.select().from(Plant).where(eq(Plant.userId, ctx.auth.userId));
+  }),
+
   getPlantByWateringDay: protectedProcedure
     .input(z.date())
     .query(({ ctx, input }) => {
