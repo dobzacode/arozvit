@@ -28,6 +28,7 @@ export default function PlantCardAction({
     <View className={`card-neutral relative flex-row  gap-xs `}>
       {isLoading && (
         <ActivityIndicator
+          testID="loading-indicator"
           className="absolute right-sm top-sm"
           color={colorScheme === "dark" ? "white" : "black"}
         ></ActivityIndicator>
@@ -73,7 +74,7 @@ export default function PlantCardAction({
             />
             <Link disabled={isLoading} href={`/myplants/${plant.id}`}>
               <View
-                className={`surface body p-smd relative  z-20 items-center    self-start   whitespace-nowrap rounded-xs shadow-sm  shadow-black ${isLoading && "shadow-white"}`}
+                className={`surface body relative z-20  items-center self-start    whitespace-nowrap   rounded-xs p-smd shadow-sm  shadow-black ${isLoading && "shadow-white"}`}
               >
                 <FontAwesome
                   name="cog"
