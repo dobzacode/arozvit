@@ -15,7 +15,10 @@ export default function Today({ plants }: { plants?: Plant[] }) {
   }
 
   return (
-    <View className="card-neutral w-7xl gap-sm self-start rounded-sm p-sm shadow-md">
+    <View
+      testID="today-component"
+      className="card-neutral w-7xl gap-sm self-start rounded-sm p-sm shadow-md"
+    >
       <Text className="heading-h4 text-surface-fg dark:text-surface">
         Aujourd'hui
       </Text>
