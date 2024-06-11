@@ -28,4 +28,5 @@ appId: com.corentinkittel.planty
 - tapOn: "1"
 - tapOn: "OK"
 - tapOn: Ajouter ma plante
-- assertVisible: "Mes plantes"
+- assertVisible:
+    id: "mes-plantes-titre"

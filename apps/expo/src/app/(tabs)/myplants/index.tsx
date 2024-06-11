@@ -10,7 +10,10 @@ export default function Page() {
       <View className="background  w-full ">
         <TopMenu className={`relative`}></TopMenu>
         <View className=" w-full  justify-between gap-lg  align-middle">
-          <Text className="heading-h1  px-md  text-surface-fg dark:text-surface">
+          <Text
+            testID="mes-plantes-titre"
+            className="heading-h1  px-md  text-surface-fg dark:text-surface"
+          >
             Mes plantes
           </Text>
           <MyPlantsContent></MyPlantsContent>
