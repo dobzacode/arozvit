@@ -1,8 +1,8 @@
+import { FontAwesome6 } from "@expo/vector-icons";
+import moment from "moment-timezone";
 import { useEffect } from "react";
 import { Pressable, Text, useColorScheme, View } from "react-native";
 import Toast from "react-native-root-toast";
-import { FontAwesome6 } from "@expo/vector-icons";
-import moment from "moment";
 
 import type { Plant } from "@planty/validators";
 
@@ -56,13 +56,10 @@ export default function WateringButton({
     setIsLoading(isPending);
   }, [isPending, setIsLoading]);
 
-  console.log(
-    moment(date).format("DD/MM/YYYY") ===
-      moment(plant.lastWatering).format("DD/MM/YYYY"),
-  );
-
   return (
     <Pressable
+      testID={"watering-button"}
+   
       disabled={
         isPending ||
         isLoading ||
@@ -75,7 +72,7 @@ export default function WateringButton({
           lastWatering: date ? date : moment().tz("Europe/Paris").toDate(),
         })
       }
-      className={`relative z-20   items-center whitespace-nowrap rounded-xs   ${!isIcon ? " bg-info px-md py-sm" : "surface body p-smd self-start  shadow-sm shadow-black"} ${
+      className={`relative z-20   items-center whitespace-nowrap rounded-xs   ${!isIcon ? " bg-info px-md py-sm" : "surface body self-start p-smd  shadow-sm shadow-black"} ${
         isPending ||
         isLoading ||
         moment(date).format("DD/MM/YYYY") ===
@@ -86,6 +83,7 @@ export default function WateringButton({
     >
       {isIcon ? (
         <View
+          testID={"watering-icon"}
           className={
             moment(date).format("DD/MM/YYYY") ===
             moment(plant.lastWatering).format("DD/MM/YYYY")

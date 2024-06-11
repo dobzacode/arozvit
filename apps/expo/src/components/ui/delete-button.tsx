@@ -1,7 +1,7 @@
-import { MaterialIcons } from "@expo/vector-icons";
 import { useEffect } from "react";
-import { Alert, Pressable, Text, useColorScheme } from "react-native";
+import { Alert, Pressable, Text, useColorScheme, View } from "react-native";
 import Toast from "react-native-root-toast";
+import { MaterialIcons } from "@expo/vector-icons";
 
 import type { Plant } from "@planty/validators";
 
@@ -11,12 +11,12 @@ export default function DeleteButton({
   plant,
   setIsLoading,
   isIcon = false,
-  isLoading = false
+  isLoading = false,
 }: {
   plant: Plant;
   isLoading?: boolean;
   setIsLoading: (loading: boolean) => void;
-  isIcon: boolean;
+  isIcon?: boolean;
 }) {
   const utils = api.useUtils();
   const colorScheme = useColorScheme();
@@ -50,6 +50,7 @@ export default function DeleteButton({
 
   return (
     <Pressable
+      testID={"delete-button"}
       disabled={isPending || isLoading}
       onPress={() =>
         Alert.alert(
@@ -72,12 +73,14 @@ export default function DeleteButton({
           },
         )
       }
-      className={`relative z-20   items-center whitespace-nowrap  ${!isIcon ? "bg-error px-md py-sm" : "surface body p-smd self-start  rounded-xs shadow-sm shadow-black "} ${isPending || isLoading ? "shadow-white" : ""}  `}
+      className={`relative z-20   items-center whitespace-nowrap  ${!isIcon ? "bg-error px-md py-sm" : "surface body self-start rounded-xs  p-smd shadow-sm shadow-black "} ${isPending || isLoading ? "shadow-white" : ""}  `}
     >
       {isIcon ? (
-        <MaterialIcons name="delete" size={20} color="hsl(352 95% 50%)" />
+        <View testID={"delete-icon"}>
+          <MaterialIcons name="delete" size={20} color="hsl(352 95% 50%)" />
+        </View>
       ) : (
-        <Text className="button-txt  text-error-fg">Supprimer la plante</Text>
+        <Text className="button-txt  text-error-fg">Supprimer</Text>
       )}
     </Pressable>
   );

@@ -17,7 +17,8 @@
     "**/*.tsx",
     "index.js",
     ".expo/types/**/*.ts",
-    "expo-env.d.ts"
+    "expo-env.d.ts",
+    "jest-setup.ts"
   ],
   "exclude": ["node_modules"]
 }
