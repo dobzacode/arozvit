@@ -2,7 +2,18 @@ import { Pressable, Text, View } from "react-native";
 
 import type { Plant } from "@planty/validators";
 
-export default function Today({ plants }: { plants: Plant[] }) {
+export default function Today({ plants }: { plants?: Plant[] }) {
+  if (
+    !plants ||
+    plants.filter(
+      (plant) =>
+        plant.nextWatering.toLocaleDateString() ===
+        new Date().toLocaleDateString(),
+    ).length === 0
+  ) {
+    return null;
+  }
+
   return (
     <View className="card-neutral w-7xl gap-sm self-start rounded-sm p-sm shadow-md">
       <Text className="heading-h4 text-surface-fg dark:text-surface">
