@@ -8,7 +8,10 @@ import { firstLetterCapitalize } from "~/utils/utils";
 export default function MainCard({ plant }: { plant: Plant }) {
   return (
     <View className=" relative h-[140] flex-row gap-sm">
-      <View className="surface rounded-xs shadow-sm shadow-black">
+      <View
+        testID="image"
+        className="surface rounded-xs shadow-sm shadow-black"
+      >
         <Image
           className="card-neutral rounded-xs"
           style={{ width: 140, height: 140 }}
