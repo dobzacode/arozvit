@@ -9,7 +9,13 @@ export default function MyPlants() {
   const { data, isLoading, isError } = api.plant.listID.useQuery();
 
   if (isLoading)
-    return <ActivityIndicator size="large" color="green"></ActivityIndicator>;
+    return (
+      <ActivityIndicator
+        testID="activity-indicator"
+        size="large"
+        color="green"
+      ></ActivityIndicator>
+    );
   if (isError) return <Text>Error</Text>;
   if (!data) return null;
 
@@ -25,6 +31,7 @@ export default function MyPlants() {
           </Link>
         </View>
         <ScrollView
+          testID={"my-plants-scrollview"}
           contentContainerClassName="flex gap-md pl-md py-sm"
           horizontal={true}
         >
