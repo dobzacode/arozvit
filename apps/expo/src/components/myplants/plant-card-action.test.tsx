@@ -45,6 +45,7 @@ const mockPlant: Plant = {
   wateringInterval: "années",
   nextWatering: new Date(2024, 5, 2),
   lastWatering: new Date(2024, 2, 2),
+  species: "species",
 };
 
 describe("PlantCardAction component", () => {
