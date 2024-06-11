@@ -30,12 +30,10 @@ export default function MainCard({ plant }: { plant: Plant }) {
         >
           {firstLetterCapitalize(plant.name)}
         </Text>
-        {!plant.species && (
-          <Text className="body text-surface-fg  dark:text-surface">
-            Xdsqdsqdqsdq
-          </Text>
+
+        {plant.species && (
+          <Text testID="species">{firstLetterCapitalize(plant.species)}</Text>
         )}
-        {plant.species && <Text>{firstLetterCapitalize(plant.species)}</Text>}
         <Text className="body-sm text-surface-fg opacity-40 dark:text-surface dark:opacity-60">
           Ajouté le{" "}
           {moment(plant.createdAt).tz("Europe/Paris").format("DD/MM/YYYY")}
