@@ -13,8 +13,13 @@ export default function Notifications({ plants }: { plants: Plant[] }) {
     return plante.nextWatering > planteMax.nextWatering ? plante : planteMax;
   });
 
+  if (plantToWater.nextWatering > new Date()) {
+    return null;
+  }
+
   return (
     <View
+      testID={`${plantToWater.name}-notification`}
       className={`card-neutral  gap-sm rounded-sm p-sm shadow-md ${isLoading && "disable-opacity"}`}
     >
       <Text className="heading-h4 text-surface-fg dark:text-surface">
