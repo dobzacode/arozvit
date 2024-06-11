@@ -48,6 +48,7 @@ export const Plant = pgTable("plant", {
     .references(() => User.id)
     .notNull(),
   name: text("name").notNull(),
+  species: text("species"),
   description: text("description"),
   imageUrl: text("image_url"),
   dayBetweenWatering: integer("day_between_watering").notNull(),
@@ -83,9 +84,15 @@ export const CreatePlantSchema = createInsertSchema(Plant, {
     .max(90, {
       message: "Le nom de la plante ne doit pas dépasser 90 caractères",
     }),
+  species: z
+    .string()
+    .max(90, {
+      message: "Le nom de l'espèce ne doit pas dépasser 90 caractères",
+    })
+    .optional(),
+
   description: z
     .string()
-
     .max(255, {
       message: "La description ne doit pas dépasser 255 caractères",
     })

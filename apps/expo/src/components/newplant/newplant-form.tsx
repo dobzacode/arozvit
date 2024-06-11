@@ -1,7 +1,3 @@
-import { useAuth } from "@clerk/clerk-expo";
-import { Entypo, FontAwesome5 } from "@expo/vector-icons";
-import { router } from "expo-router";
-import moment from "moment-timezone";
 import { useState } from "react";
 import {
   ActivityIndicator,
@@ -14,12 +10,17 @@ import {
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import Toast from "react-native-root-toast";
 import SelectDropdown from "react-native-select-dropdown";
+import { router } from "expo-router";
+import { useAuth } from "@clerk/clerk-expo";
+import { Entypo, FontAwesome5 } from "@expo/vector-icons";
+import moment from "moment-timezone";
 
 import { api } from "~/utils/api";
 import { translateTimeUnit } from "~/utils/utils";
 
 export default function NewPlantForm() {
   const [name, setName] = useState<string>("");
+  const [species, setSpecies] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [dayBetweenWatering, setDayBetweenWatering] = useState<number | null>(
     1,
@@ -46,6 +47,7 @@ export default function NewPlantForm() {
   const { mutate, error, isPending } = api.plant.create.useMutation({
     onSuccess: async () => {
       setName("");
+      setSpecies("");
       setDescription("");
       setDayBetweenWatering(1);
       setWateringInterval("jours");
@@ -75,6 +77,7 @@ export default function NewPlantForm() {
   const handleSubmit = () => {
     const formData = {
       userId: auth.userId,
+      species,
       name,
       description,
       dayBetweenWatering: dayBetweenWatering ?? 1,
@@ -103,7 +106,7 @@ export default function NewPlantForm() {
           <TextInput
             testID="nameInput"
             className={`input-neutral  rounded-xs p-sm shadow-sm ${error?.data?.zodError?.fieldErrors.name && "border border-error-500"}`}
-            placeholder="Monstera"
+            placeholder="Ma plante"
             value={name}
             selectionColor={"hsl(100, 36%, 40%)"}
             editable={!isPending}
@@ -112,6 +115,25 @@ export default function NewPlantForm() {
           {error?.data?.zodError?.fieldErrors.name && (
             <Text className="mb-2 text-error-400 dark:text-error-200">
               {error.data.zodError.fieldErrors.name[0]}
+            </Text>
+          )}
+        </View>
+        <View className=" gap-xs">
+          <Text className="body surface-container-lowest bg-transparent">
+            Espèce
+          </Text>
+          <TextInput
+            testID="speciesInput"
+            className={`input-neutral  rounded-xs p-sm shadow-sm ${error?.data?.zodError?.fieldErrors.species && "border border-error-500"}`}
+            placeholder="Monstera"
+            value={species}
+            selectionColor={"hsl(100, 36%, 40%)"}
+            editable={!isPending}
+            onChangeText={setName}
+          ></TextInput>
+          {error?.data?.zodError?.fieldErrors.species && (
+            <Text className="mb-2 text-error-400 dark:text-error-200">
+              {error.data.zodError.fieldErrors.species[0]}
             </Text>
           )}
         </View>
@@ -260,6 +282,7 @@ export default function NewPlantForm() {
               color={colorScheme === "dark" ? "white" : "black"}
             />
           </Pressable>
+
           <DateTimePickerModal
             testID="dateTimePicker"
             textColor="green"
