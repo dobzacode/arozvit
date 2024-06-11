@@ -1,7 +1,7 @@
 import { Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import NewPlantForm from "~/components/newplant/newplant-form";
+import PlantForm from "~/components/ui/plant-form";
 import TopMenu from "~/components/ui/top-menu";
 
 export default function Page() {
@@ -13,7 +13,7 @@ export default function Page() {
           <Text className="heading-h1 surface-container-lowest bg-transparent">
             Nouvelle plante
           </Text>
-          <NewPlantForm></NewPlantForm>
+          <PlantForm></PlantForm>
         </View>
       </View>
     </SafeAreaView>

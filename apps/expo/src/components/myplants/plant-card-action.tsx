@@ -1,8 +1,8 @@
+import { FontAwesome } from "@expo/vector-icons";
+import { Link } from "expo-router";
+import moment from "moment-timezone";
 import { useState } from "react";
 import { ActivityIndicator, Image, Text, View } from "react-native";
-import { Link } from "expo-router";
-import { FontAwesome } from "@expo/vector-icons";
-import moment from "moment-timezone";
 
 import type { Plant } from "@planty/validators";
 

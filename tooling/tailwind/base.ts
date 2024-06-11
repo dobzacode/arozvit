@@ -91,6 +91,7 @@ const config = {
         smd: "12px",
         sm: "8px",
         xs: "4px",
+        xxs: "2px",
       },
       transitionDuration: {
         "extra-fast": "100ms",

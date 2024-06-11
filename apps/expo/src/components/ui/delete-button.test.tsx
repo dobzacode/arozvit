@@ -58,6 +58,7 @@ const plantObj: Plant = {
   wateringInterval: "années",
   nextWatering: new Date(2024, 5, 2),
   lastWatering: new Date(2024, 2, 2),
+  species: "species",
 };
 
 describe("DeleteButton component", () => {
@@ -79,7 +80,7 @@ describe("DeleteButton component", () => {
         setIsLoading={() => console.log()}
       />,
     );
-    expect(screen.getByText("Supprimer")).toBeTruthy();
+    expect(screen.getByText("Supprimer la plante")).toBeTruthy();
     expect(() => screen.getByTestId("delete-icon")).toThrow();
   });
 
@@ -92,7 +93,7 @@ describe("DeleteButton component", () => {
       />,
     );
     expect(screen.getByTestId("delete-icon")).toBeTruthy();
-    expect(() => screen.getByText("Supprimer")).toThrow();
+    expect(() => screen.getByText("Supprimer la plante")).toThrow();
   });
 
   it("shows a confirmation alert on button press", async () => {
@@ -105,7 +106,7 @@ describe("DeleteButton component", () => {
     const alert = jest.spyOn(Alert, "alert");
 
     await act(async () => {
-      fireEvent.press(getByText("Supprimer"));
+      fireEvent.press(getByText("Supprimer la plante"));
     });
 
     expect(alert).toHaveBeenCalledWith(
@@ -128,7 +129,7 @@ describe("DeleteButton component", () => {
     const mockOnPress = jest.fn();
 
     Alert.alert("Title", "Message", [
-      { text: "Supprimer", onPress: mockOnPress },
+      { text: "Supprimer la plante", onPress: mockOnPress },
     ]);
 
     await act(async () => {

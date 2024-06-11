@@ -73,14 +73,14 @@ export default function DeleteButton({
           },
         )
       }
-      className={`relative z-20   items-center whitespace-nowrap  ${!isIcon ? "bg-error px-md py-sm" : "surface body self-start rounded-xs  p-smd shadow-sm shadow-black "} ${isPending || isLoading ? "shadow-white" : ""}  `}
+      className={`relative z-20   items-center whitespace-nowrap rounded-xs   ${!isIcon ? "bg-error px-md py-sm" : "surface body self-start  p-smd shadow-sm shadow-black "} ${isPending || isLoading ? "shadow-white" : ""}  `}
     >
       {isIcon ? (
         <View testID={"delete-icon"}>
           <MaterialIcons name="delete" size={20} color="hsl(352 95% 50%)" />
         </View>
       ) : (
-        <Text className="button-txt  text-error-fg">Supprimer</Text>
+        <Text className="button-txt  text-error-fg">Supprimer la plante</Text>
       )}
     </Pressable>
   );

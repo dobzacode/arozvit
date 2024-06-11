@@ -24,16 +24,16 @@
     @apply font-['space-grotesk'] text-4xl  leading-3xl;
   }
   .heading-h2 {
-    @apply font-['space-grotesk'] text-3xl  leading-3xl;
+    @apply font-['space-grotesk'] text-3xl  leading-2xl;
   }
   .heading-h3 {
-    @apply font-['space-grotesk'] text-2xl  leading-2xl;
+    @apply font-['space-grotesk'] text-2xl  leading-xl;
   }
   .heading-h4 {
-    @apply font-['space-grotesk'] text-xl leading-xl;
+    @apply font-['space-grotesk'] text-xl leading-lg;
   }
   .heading-h5 {
-    @apply font-['space-grotesk'] text-lg  leading-lg;
+    @apply font-['space-grotesk'] text-lg  leading-base;
   }
   .body {
     @apply font-['mustica-pro'] text-base  leading-base;
