@@ -1,4 +1,4 @@
-import { Appearance, Image, View } from "react-native";
+import { Appearance, Image, Pressable, View } from "react-native";
 import { useUser } from "@clerk/clerk-expo";
 import { Feather } from "@expo/vector-icons";
 import { useColorScheme } from "nativewind";
@@ -16,8 +16,10 @@ export default function TopMenu({ className }: { className?: string }) {
       className={`absolute top-0 z-30 flex w-full flex-row items-center justify-between bg-transparent p-md ${className}`}
     >
       <Image
+        testID="user-image"
         className="rounded-full p-md"
         style={{ width: 24, height: 24 }}
+        alt={user?.imageUrl ? "User image" : "Placeholder user image"}
         source={
           //eslint-disable-next-line
           user?.imageUrl
@@ -28,18 +30,21 @@ export default function TopMenu({ className }: { className?: string }) {
         }
       ></Image>
 
-      <Feather
-        className="relative z-30 p-md"
+      <Pressable
         onPress={() => {
-          console.log("xd");
           Appearance.setColorScheme(colorScheme === "light" ? "dark" : "light");
         }}
-        style={{
-          color: colorScheme === "light" ? "black" : "white",
-        }}
-        name={colorScheme === "light" ? "sun" : "moon"}
-        size={20}
-      />
+        testID={`${colorScheme}-icon`}
+      >
+        <Feather
+          className="relative z-30 p-md"
+          style={{
+            color: colorScheme === "light" ? "black" : "white",
+          }}
+          name={colorScheme === "light" ? "sun" : "moon"}
+          size={20}
+        />
+      </Pressable>
     </View>
   );
 }
