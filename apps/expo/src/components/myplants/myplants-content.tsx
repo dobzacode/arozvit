@@ -76,7 +76,7 @@ export default function MyPlantsContent() {
           setSearchTerm={setSearchTerm}
         ></SearchBar>
 
-        <View className="flex-row gap-sm">
+        <View className="flex-row gap-xs">
           <View
             className={`input-neutral flex h-[44px] w-7xl rounded-xs text-sm   dark:h-[46px] ${isLoading || data?.length === 1 ? "disable-opacity shadow-none" : "shadow-sm shadow-black"}`}
           >
@@ -180,14 +180,14 @@ export default function MyPlantsContent() {
             </Pressable>
           </MotiView>
         </View>
-        <View className="flex flex-row items-center gap-sm">
-          <Text className="body text-surface--fg dark:text-surface">
-            Marquée comme arrosé le
+        <View className=" items-start gap-xs self-start ">
+          <Text className="body-sm text-surface--fg dark:text-surface">
+            Marquer comme arrosé le
           </Text>
           <Pressable
             disabled={isLoading}
             testID="datePickerButton"
-            className="input-neutral flex h-[44px] flex-row items-center justify-center gap-md rounded-xs p-sm px-md shadow-sm shadow-black"
+            className="input-neutral flex h-[44px]  flex-row items-center justify-center gap-md rounded-xs p-sm px-md shadow-sm shadow-black"
             onPress={() => setDatePickerVisibility(true)}
           >
             <Text className="text-surface-fg dark:text-surface">
@@ -221,7 +221,7 @@ export default function MyPlantsContent() {
         </View>
       </View>
 
-      <ScrollView contentContainerClassName="flex gap-md px-md pb-[900]">
+      <ScrollView contentContainerClassName="flex gap-md px-md pt-md pb-[900]">
         {data
           ? sortedPlant && sortedBy !== null
             ? sortedPlant.map((plant, index) => (

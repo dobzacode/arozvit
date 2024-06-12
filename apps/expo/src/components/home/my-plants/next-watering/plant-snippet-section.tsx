@@ -1,4 +1,5 @@
 import { useColorScheme, View } from "react-native";
+import { AnimatePresence } from "moti/build";
 import { Skeleton } from "moti/skeleton";
 
 import { api } from "~/utils/api";
@@ -20,24 +21,23 @@ export default function PlantSnippetSection({ date }: { date: string }) {
           <Skeleton
             show={true}
             colorMode={colorScheme === "dark" ? "dark" : "light"}
-            key={index}
+            key={`${index}-skeleton`}
             height={76}
           >
             <View></View>
           </Skeleton>
         ))
       ) : (
-        <>
+        <AnimatePresence exitBeforeEnter>
           {data
             ? data.map((plant, index) => (
                 <PlantCardSnippet
                   index={index}
-                  key={`${plant.id}-snippet`}
                   plant={plant}
                 ></PlantCardSnippet>
               ))
             : null}
-        </>
+        </AnimatePresence>
       )}
     </View>
   );

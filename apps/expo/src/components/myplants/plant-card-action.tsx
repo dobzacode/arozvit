@@ -33,6 +33,7 @@ export default function PlantCardAction({
     <MotiView
       from={{ translateX }}
       animate={{ translateX: 0 }}
+      exit={{ translateX }}
       delay={index * 100}
     >
       <View className={`card-neutral relative flex-row  gap-xs `}>

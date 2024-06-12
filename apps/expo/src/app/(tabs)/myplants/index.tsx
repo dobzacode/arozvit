@@ -9,7 +9,7 @@ export default function Page() {
     <SafeAreaView>
       <View className="background  w-full ">
         <TopMenu className={`relative`}></TopMenu>
-        <View className=" w-full  justify-between gap-lg  align-middle">
+        <View className=" w-full  justify-between gap-xs  align-middle">
           <Text
             testID="mes-plantes-titre"
             className="heading-h1  px-md  text-surface-fg dark:text-surface"

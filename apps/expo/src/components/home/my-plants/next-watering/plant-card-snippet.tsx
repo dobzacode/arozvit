@@ -16,11 +16,16 @@ export default function PlantCardSnippet({
 }) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const translateX = index % 2 === 0 ? -100 : 100;
+
   return (
     <MotiView
-      from={{ translateX: index % 2 === 0 ? -100 : 100 }}
-      animate={{ translateX: 0 }}
+      from={{ translateX, opacity: 0 }}
+      animate={{ translateX: 0, opacity: 1 }}
+      transition={{ damping: 300 }}
+      exit={{ translateX, opacity: 0 }}
       delay={index * 100}
+      needsOffscreenAlphaCompositing
     >
       <View
         className={`card-neutral flex-row items-center justify-between  ${isLoading && "disable-opacity shadow-none"}`}
