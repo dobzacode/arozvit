@@ -1,43 +1,52 @@
-import { ActivityIndicator, ScrollView, Text, View } from "react-native";
+import { ScrollView, Text, useColorScheme, View } from "react-native";
 import { Link } from "expo-router";
+import { Skeleton } from "moti/skeleton";
 
 import { api } from "~/utils/api";
 import NextWatering from "./my-plants/next-watering";
 import PlantCard from "./my-plants/plant-card";
 
 export default function MyPlants() {
-  const { data, isLoading, isError } = api.plant.listID.useQuery();
-
-  if (isLoading)
-    return (
-      <ActivityIndicator
-        testID="activity-indicator"
-        size="large"
-        color="green"
-      ></ActivityIndicator>
-    );
-  if (isError) return <Text>Error</Text>;
-  if (!data) return null;
+  const { data, isLoading } = api.plant.getAll.useQuery();
+  const colorScheme = useColorScheme();
 
   return (
-    <View className="gap-md pb-4xl">
+    <View className=" gap-lg pb-4xl">
       <View className="gap-sm">
-        <View className="w-full flex-row items-end justify-between px-md align-middle">
-          <Text className="heading-h1 -mb-2  text-surface-fg dark:text-surface">
+        <View className=" flex-row items-end justify-between  px-md align-middle">
+          <Text className="heading-h1 -mb-2   text-surface-fg dark:text-surface">
             Mes plantes
           </Text>
-          <Link href="myplants">
+          <Link href="myplants" className="">
             <Text className="text-link body-sm ">Voir mes plantes</Text>
           </Link>
         </View>
+
         <ScrollView
           testID={"my-plants-scrollview"}
-          contentContainerClassName="flex gap-md pl-md py-sm"
+          className="h-[286]"
+          contentContainerClassName="flex gap-sm pl-md py-sm h-[286]"
           horizontal={true}
         >
-          {data.map(({ id }) => (
-            <PlantCard key={id} plant={id} />
-          ))}
+          {isLoading || !data ? (
+            [1, 2, 3, 4, 5].map((index) => (
+              <Skeleton
+                colorMode={colorScheme === "dark" ? "dark" : "light"}
+                show={true}
+                key={index}
+                height={280}
+                width={172}
+              >
+                <View></View>
+              </Skeleton>
+            ))
+          ) : (
+            <>
+              {data.map((plant, index) => (
+                <PlantCard index={index} key={plant.id} plant={plant} />
+              ))}
+            </>
+          )}
         </ScrollView>
       </View>
 

@@ -20,16 +20,20 @@ export default function Notifications({ plants }: { plants: Plant[] }) {
   return (
     <View
       testID={`${plantToWater.name}-notification`}
-      className={`card-neutral  gap-sm rounded-sm p-sm shadow-md ${isLoading && "disable-opacity"}`}
+      className={`card-neutral  gap-sm rounded-sm p-sm  ${isLoading && "disable-opacity"}`}
     >
       <Text className="heading-h4 text-surface-fg dark:text-surface">
-        Notification
+        {firstLetterCapitalize(plantToWater.name)}
       </Text>
 
-      <Text className="body w-7xl text-surface-fg dark:text-surface">
-        {firstLetterCapitalize(plantToWater.name)} nécessite un arrosage depuis
-        le {plantToWater.nextWatering.toLocaleDateString()}
+      <Text
+        numberOfLines={3}
+        className="body w-7xl text-surface-fg dark:text-surface"
+      >
+        A besoin d'un arrosage depuis le{" "}
+        {plantToWater.nextWatering.toLocaleDateString()}
       </Text>
+
       <WateringButton plant={plantToWater} setIsLoading={setIsLoading} />
     </View>
   );

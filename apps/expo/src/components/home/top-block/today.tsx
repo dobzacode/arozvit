@@ -17,18 +17,18 @@ export default function Today({ plants }: { plants?: Plant[] }) {
   return (
     <View
       testID="today-component"
-      className="card-neutral w-7xl gap-sm self-start rounded-sm p-sm shadow-md"
+      className="card-neutral gap-sm self-start rounded-sm p-sm shadow-black"
     >
       <Text className="heading-h4 text-surface-fg dark:text-surface">
         Aujourd'hui
       </Text>
 
-      <Text className="body text-surface-fg dark:text-surface">
+      <Text className="body w-7xl text-surface-fg dark:text-surface">
         {plants.length} {plants.length > 1 ? "plantes ont" : "plante a"} un
         arrosage prévu pour aujourd'hui
       </Text>
-      <Pressable className="mt-sm items-center justify-center rounded-xs bg-secondary py-xs shadow-sm shadow-black">
-        <Text className="button-txt text-secondary-fg">
+      <Pressable className=" items-center justify-center rounded-xs bg-secondary px-md py-sm shadow-sm shadow-black">
+        <Text className="button-txt whitespace-nowrap text-secondary-fg">
           Accéder à {plants.length > 1 ? "ces plantes" : "cette plante"}
         </Text>
       </Pressable>

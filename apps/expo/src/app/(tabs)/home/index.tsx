@@ -10,20 +10,28 @@ import { api } from "~/utils/api";
 export default function Page() {
   const { data, isLoading } = api.plant.isAnyPlant.useQuery();
 
-  if (isLoading)
-    return <ActivityIndicator size="large" color="green"></ActivityIndicator>;
-
   return (
-    <SafeAreaView>
-      <View className="background h-full w-full ">
-        <TopMenu className={`${data?.length && "relative"}`}></TopMenu>
-        {data?.length ? (
-          <ScrollView className=" " contentContainerClassName="gap-md">
-            <TopBlock></TopBlock>
-            <MyPlants></MyPlants>
-          </ScrollView>
+    <SafeAreaView className="background">
+      <View className="background h-full w-full items-center justify-center ">
+        <TopMenu
+          className={`${data?.length ? "relative " : "absolute"}`}
+        ></TopMenu>
+        {isLoading ? (
+          <ActivityIndicator size="large" color="green"></ActivityIndicator>
         ) : (
-          <EmptyState></EmptyState>
+          <>
+            {data?.length ? (
+              <ScrollView
+                className="min-h-[60%] w-full"
+                contentContainerClassName="gap-lg"
+              >
+                <TopBlock></TopBlock>
+                <MyPlants></MyPlants>
+              </ScrollView>
+            ) : (
+              <EmptyState></EmptyState>
+            )}
+          </>
         )}
       </View>
     </SafeAreaView>

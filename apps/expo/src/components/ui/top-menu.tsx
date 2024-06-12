@@ -13,7 +13,8 @@ export default function TopMenu({ className }: { className?: string }) {
 
   return (
     <View
-      className={`absolute top-0 z-30 flex w-full flex-row items-center justify-between bg-transparent p-md ${className}`}
+      className={`absolute top-0 z-30 flex w-full flex-row items-center justify-between bg-transparent p-md ${className}
+      `}
     >
       <Image
         testID="user-image"

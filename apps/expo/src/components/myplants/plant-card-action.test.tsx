@@ -13,7 +13,9 @@ jest.mock("../ui/watering-button", () => ({
 
 jest.mock("../ui/delete-button", () => ({
   __esModule: true,
-  default: jest.fn(() => <div data-testid="delete-button" />),
+  default: jest.fn(({ children }) => (
+    <div data-testid="delete-button">{children}</div>
+  )),
 }));
 
 jest.mock("react", () => ({
@@ -31,6 +33,14 @@ jest.doMock("moment-timezone", () => {
   };
 
   return moment;
+});
+
+jest.mock("moti/build", () => {
+  return {
+    MotiView: jest.fn(({ children }) => (
+      <div data-testid="moti-view">{children}</div>
+    )),
+  };
 });
 
 const mockPlant: Plant = {

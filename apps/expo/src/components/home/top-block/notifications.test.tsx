@@ -27,7 +27,7 @@ describe("Notifications component", () => {
       <Notifications plants={plants as Plant[]} />,
     );
 
-    expect(getByText("Notification")).toBeTruthy();
+    expect(getByText("Plant B")).toBeTruthy();
     expect(getByTestId("Plant B-notification")).toBeTruthy();
   });
 
@@ -39,6 +39,6 @@ describe("Notifications component", () => {
 
     const { getByText } = render(<Notifications plants={plants as Plant[]} />);
     screen.debug();
-    expect(() => getByText("Notification")).toThrow();
+    expect(() => getByText("Plant B")).toThrow();
   });
 });

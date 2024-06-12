@@ -17,7 +17,7 @@ jest.mock("./my-plants/next-watering", () => ({
 jest.mock("~/utils/api", () => ({
   api: {
     plant: {
-      listID: {
+      getAll: {
         useQuery: jest.fn(() => ({
           data: [],
           isLoading: false,
@@ -29,30 +29,8 @@ jest.mock("~/utils/api", () => ({
 }));
 
 describe("MyPlants component", () => {
-  it("renders loading indicator while data is being fetched", () => {
-    (api.plant.listID.useQuery as jest.Mock).mockReturnValueOnce({
-      data: [],
-      isLoading: true,
-      isError: false,
-    });
-    const { getByTestId } = render(<MyPlants />);
-
-    expect(getByTestId("activity-indicator")).toBeTruthy();
-  });
-
-  it("renders error message when data fetching fails", () => {
-    (api.plant.listID.useQuery as jest.Mock).mockReturnValueOnce({
-      data: [],
-      isLoading: false,
-      isError: true,
-    });
-    const { getByText } = render(<MyPlants />);
-
-    expect(getByText("Error")).toBeTruthy();
-  });
-
   it("renders no content when data is null", () => {
-    (api.plant.listID.useQuery as jest.Mock).mockReturnValueOnce({
+    (api.plant.getAll.useQuery as jest.Mock).mockReturnValueOnce({
       data: null,
       isLoading: false,
       isError: false,
@@ -62,8 +40,8 @@ describe("MyPlants component", () => {
     expect(queryByTestId("my-plants")).toBeFalsy();
   });
 
-  it("renders plant list and NextWatering component with data", () => {
-    (api.plant.listID.useQuery as jest.Mock).mockReturnValueOnce({
+  it("renders plant list", () => {
+    (api.plant.getAll.useQuery as jest.Mock).mockReturnValueOnce({
       data: [{ id: 1 }, { id: 2 }],
       isLoading: false,
       isError: false,

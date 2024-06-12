@@ -12,7 +12,7 @@ export default function NextWatering() {
 
   return (
     <View className="gap-sm px-md ">
-      <Text className="heading-h2   text-surface-fg dark:text-surface">
+      <Text className="heading-h1   text-surface-fg dark:text-surface">
         Arrosages à venir
       </Text>
       <WateringCalendar

@@ -154,7 +154,7 @@ export default function MyPlantsContent() {
                 setSortedPlant(null);
                 setSortedBy(null);
               }}
-              className={`input-neutral   p-smd relative  z-20 items-center self-start whitespace-nowrap  rounded-xs ${isLoading || data?.length === 1 ? "disable-opacity shadow-none" : "shadow-sm shadow-black"} `}
+              className={`input-neutral   relative z-20  items-center self-start whitespace-nowrap rounded-xs  p-smd ${isLoading || data?.length === 1 ? "disable-opacity shadow-none" : "shadow-sm shadow-black"} `}
             >
               <AntDesign
                 name="close"
@@ -170,7 +170,7 @@ export default function MyPlantsContent() {
                   setSortedPlant([...sortedPlant]);
                 }
               }}
-              className={`input-neutral   p-smd relative  z-20 items-center self-start whitespace-nowrap  rounded-xs ${isLoading || data?.length === 1 ? "disable-opacity shadow-none" : "shadow-sm shadow-black"} `}
+              className={`input-neutral   relative z-20  items-center self-start whitespace-nowrap rounded-xs  p-smd ${isLoading || data?.length === 1 ? "disable-opacity shadow-none" : "shadow-sm shadow-black"} `}
             >
               <MaterialCommunityIcons
                 name="sort"
@@ -224,8 +224,9 @@ export default function MyPlantsContent() {
       <ScrollView contentContainerClassName="flex gap-md px-md pb-[900]">
         {data
           ? sortedPlant && sortedBy !== null
-            ? sortedPlant.map((plant) => (
+            ? sortedPlant.map((plant, index) => (
                 <PlantCardAction
+                  index={index}
                   key={`${plant.id}-plant-card-action`}
                   lastWatering={lastWatering}
                   searchTerm={searchTerm}
@@ -233,8 +234,9 @@ export default function MyPlantsContent() {
                   plant={plant}
                 />
               ))
-            : data.map((plant) => (
+            : data.map((plant, index) => (
                 <PlantCardAction
+                  index={index}
                   key={`${plant.id}-plant-card-action`}
                   lastWatering={lastWatering}
                   searchTerm={searchTerm}
