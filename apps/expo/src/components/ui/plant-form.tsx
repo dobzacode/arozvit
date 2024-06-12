@@ -329,6 +329,7 @@ export default function PlantForm({ plant }: { plant?: Plant }) {
           />
         </View>
         <Pressable
+          testID="submitButton"
           disabled={isPending || isMutating}
           onPress={handleSubmit}
           className="primary flex flex-row items-center justify-center gap-md rounded-xs px-md py-2 shadow-sm shadow-black"

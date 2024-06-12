@@ -27,8 +27,5 @@ appId: com.corentinkittel.planty
     id: datePickerButton
 - tapOn: "1"
 - tapOn: "OK"
-- tapOn:
-    retryTapIfNoChange: false
-    id: submitButton
-- assertVisible:
-    id: "mes-plantes-titre"
+- tapOn: "Ajouter ma plante"
+- assertVisible: "Mes plantes"
