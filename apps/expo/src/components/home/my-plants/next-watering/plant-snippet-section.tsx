@@ -21,17 +21,18 @@ export default function PlantSnippetSection({ date }: { date: string }) {
           <Skeleton
             show={true}
             colorMode={colorScheme === "dark" ? "dark" : "light"}
-            key={`${index}-skeleton`}
+            key={`${index}-skeleton-snippet`}
             height={76}
           >
             <View></View>
           </Skeleton>
         ))
       ) : (
-        <AnimatePresence exitBeforeEnter>
+        <AnimatePresence>
           {data
             ? data.map((plant, index) => (
                 <PlantCardSnippet
+                  key={`plant-snippet-${plant.id}`}
                   index={index}
                   plant={plant}
                 ></PlantCardSnippet>

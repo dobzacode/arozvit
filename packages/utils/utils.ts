@@ -1,3 +1,5 @@
+import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { createEnv } from "@t3-oss/env-nextjs";
 import { vercel } from "@t3-oss/env-nextjs/presets";
 import { ClassValue, clsx } from "clsx";
@@ -16,6 +18,10 @@ export const env = createEnv({
     POSTGRES_URL: z.string().url(),
     WEBHOOK_SECRET: z.string(),
     CLERK_SECRET_KEY: z.string(),
+    AWS_ACCESS_KEY_ID: z.string(),
+    AWS_SECRET_ACCESS_KEY: z.string(),
+    S3_REGION: z.string(),
+    S3_BUCKET: z.string(),
   },
 
   client: {
@@ -64,5 +70,34 @@ export function translateTimeUnit(
       return "years";
     default:
       return "days";
+  }
+}
+
+const client = new S3Client({
+  credentials: {
+    accessKeyId: env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: env.AWS_SECRET_ACCESS_KEY,
+  },
+  region: "eu-central-1",
+});
+
+export async function uploadImage(
+  base64: string,
+  key: string,
+): Promise<string> {
+  const command = new PutObjectCommand({
+    Bucket: env.S3_BUCKET,
+    Key: key,
+    Body: base64,
+    ContentType: "image/jpeg",
+    ContentEncoding: "base64",
+  });
+  try {
+    await client.send(command);
+    const imageUrl = await getSignedUrl(client, command, { expiresIn: 3600 });
+    return imageUrl;
+  } catch (error) {
+    console.error("Error uploading image:", error);
+    throw error;
   }
 }

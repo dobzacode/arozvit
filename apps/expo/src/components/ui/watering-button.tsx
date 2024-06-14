@@ -1,8 +1,8 @@
-import { FontAwesome6 } from "@expo/vector-icons";
-import moment from "moment-timezone";
 import { useEffect } from "react";
 import { Pressable, Text, useColorScheme, View } from "react-native";
 import Toast from "react-native-root-toast";
+import { FontAwesome6 } from "@expo/vector-icons";
+import moment from "moment-timezone";
 
 import type { Plant } from "@planty/validators";
 
@@ -25,6 +25,7 @@ export default function WateringButton({
 }) {
   const utils = api.useUtils();
   const colorScheme = useColorScheme();
+
   const { mutate, isPending } = api.plant.waterPlant.useMutation({
     onSuccess: async () => {
       await utils.plant.getPlantsWithWateringNeed.invalidate();
@@ -59,7 +60,6 @@ export default function WateringButton({
   return (
     <Pressable
       testID={"watering-button"}
-   
       disabled={
         isPending ||
         isLoading ||

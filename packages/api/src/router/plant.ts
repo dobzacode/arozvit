@@ -4,7 +4,7 @@ import { z } from "zod";
 
 import { and, eq, gte, like, lt, lte } from "@planty/db";
 import { CreatePlantSchema, Plant } from "@planty/db/schema";
-import { translateTimeUnit } from "@planty/utils";
+import { translateTimeUnit, uploadImage } from "@planty/utils";
 
 import { protectedProcedure } from "../trpc";
 
@@ -116,9 +116,25 @@ export const plantRouter = {
     }),
 
   create: protectedProcedure
-    .input(CreatePlantSchema)
-    .mutation(({ ctx, input }) => {
-      return ctx.db.insert(Plant).values(input);
+    .input(
+      CreatePlantSchema.extend({
+        imageObj: z.union([
+          z.object({
+            base64: z.string(),
+            key: z.string(),
+          }),
+          z.null(),
+        ]),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      if (!input.imageObj) return ctx.db.insert(Plant).values(input);
+      const {
+        imageObj: { base64, key },
+        ...props
+      } = input;
+      const imageUrl = await uploadImage(base64, key);
+      return ctx.db.insert(Plant).values({ ...props, imageUrl });
     }),
 
   update: protectedProcedure

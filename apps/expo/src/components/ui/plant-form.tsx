@@ -19,8 +19,20 @@ import type { Plant } from "@planty/validators";
 
 import { api } from "~/utils/api";
 import { translateTimeUnit } from "~/utils/utils";
+import ImageUpload from "./image-upload";
 
 export default function PlantForm({ plant }: { plant?: Plant }) {
+  const [image, setImage] = useState<null | {
+    base64?: string;
+    key?: string;
+    uri: string;
+  }>(
+    plant?.imageUrl
+      ? {
+          uri: plant.imageUrl,
+        }
+      : null,
+  );
   const [name, setName] = useState<string>(plant?.name ?? "");
   const [species, setSpecies] = useState<string>(plant?.species ?? "");
   const [description, setDescription] = useState<string>(
@@ -108,6 +120,10 @@ export default function PlantForm({ plant }: { plant?: Plant }) {
       userId: auth.userId,
       species,
       name,
+      imageObj:
+        image?.key && image.base64
+          ? { key: image.key, base64: image.base64 }
+          : null,
       description,
       dayBetweenWatering: dayBetweenWatering ?? 1,
       wateringInterval,
@@ -128,6 +144,11 @@ export default function PlantForm({ plant }: { plant?: Plant }) {
   return (
     <View className="gap-lg">
       <View className="gap-md">
+        <ImageUpload
+          userId={auth.userId}
+          image={image}
+          setImage={setImage}
+        ></ImageUpload>
         <View className=" gap-xs">
           <Text className="body surface-container-lowest bg-transparent">
             Nom
@@ -290,7 +311,7 @@ export default function PlantForm({ plant }: { plant?: Plant }) {
 
         <View className="flex flex-row items-center gap-sm">
           <Text className="body text-surface-fg dark:text-surface">
-            Dernier arrosage le
+            Dernier arrosage
           </Text>
           <Pressable
             disabled={isPending || isMutating}
@@ -328,6 +349,7 @@ export default function PlantForm({ plant }: { plant?: Plant }) {
             onCancel={() => setDatePickerVisibility(false)}
           />
         </View>
+
         <Pressable
           testID="submitButton"
           disabled={isPending || isMutating}

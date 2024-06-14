@@ -50,7 +50,9 @@ export default function PlantCardAction({
           resizeMode="cover"
           source={
             //eslint-disable-next-line
-            require("./../../../assets/plant-placeholder.png")
+            plant.imageUrl
+              ? { uri: plant.imageUrl }
+              : require("./../../../assets/plant-placeholder.png")
           }
         ></Image>
         <View className="flex-grow justify-between  gap-sm p-sm ">

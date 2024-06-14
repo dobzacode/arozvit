@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import {
   Pressable,
   ScrollView,
@@ -18,54 +18,67 @@ import moment from "moment-timezone";
 import { MotiView } from "moti/build";
 import { Skeleton } from "moti/skeleton";
 
-import type { Plant } from "@planty/validators";
-
 import useDebounce from "~/hooks/useDebounce";
 import { api } from "~/utils/api";
 import PlantCardAction from "./plant-card-action";
 import SearchBar from "./search-bar";
 
-const reversePlantList = (plantList: Plant[]) => {
-  let left = 0;
-  let right = plantList.length - 1;
-  while (left < right) {
-    //@ts-expect-error swap
-    [plantList[left], plantList[right]] = [plantList[right], plantList[left]];
-    left++;
-    right--;
-  }
-};
-
 export default function MyPlantsContent() {
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [reverse, setReverse] = useState<boolean>(false);
   const debouncedValue = useDebounce(searchTerm, 250);
   const { data, isLoading } =
     api.plant.getBySearchTerm.useQuery(debouncedValue);
   const colorScheme = useColorScheme();
   const [sortedBy, setSortedBy] = useState<
     "Dernier arrosage" | "Prochain arrosage" | "Nom" | null
-  >();
+  >(null);
   const [lastWatering, setLastWatering] = useState<Date>(moment().toDate());
   const [isDatePickerVisible, setDatePickerVisibility] =
     useState<boolean>(false);
-  const [sortedPlant, setSortedPlant] = useState<Plant[] | null>(null);
 
-  useEffect(() => {
-    const sortedPlant = !data || !sortedBy ? null : [...data];
-    if (!sortedPlant || !sortedBy) return;
-
-    if (sortedBy === "Dernier arrosage") {
-      setSortedPlant(
-        sortedPlant.sort((a, b) => (a.lastWatering > b.lastWatering ? 1 : -1)),
-      );
-    } else if (sortedBy === "Nom") {
-      setSortedPlant(sortedPlant.sort((a, b) => (a.name > b.name ? 1 : -1)));
-    } else {
-      setSortedPlant(
-        sortedPlant.sort((a, b) => (a.nextWatering > b.nextWatering ? 1 : -1)),
-      );
+  const sortedPlant = useMemo(() => {
+    if (!data || !sortedBy) {
+      return data ? [...data] : null;
     }
-  }, [data, sortedBy]);
+
+    const sortedData = [...data].sort((a, b) => {
+      switch (sortedBy) {
+        case "Dernier arrosage":
+          return reverse
+            ? b.lastWatering.getTime() - a.lastWatering.getTime()
+            : a.lastWatering.getTime() - b.lastWatering.getTime();
+        case "Nom":
+          return reverse
+            ? b.name.localeCompare(a.name)
+            : a.name.localeCompare(b.name);
+        case "Prochain arrosage":
+          return reverse
+            ? b.nextWatering.getTime() - a.nextWatering.getTime()
+            : a.nextWatering.getTime() - b.nextWatering.getTime();
+        default:
+          console.warn("Unsupported sorting criteria:", sortedBy);
+          return 0; // Maintain original order
+      }
+    });
+
+    return sortedData;
+  }, [data, sortedBy, reverse]);
+
+  const memoizedPlantCard = useMemo(() => {
+    if (!sortedPlant) return null;
+
+    return sortedPlant.map((plant, index) => (
+      <PlantCardAction
+        index={index}
+        key={`${plant.id}-plant-card-action-sorted`}
+        lastWatering={lastWatering}
+        searchTerm={searchTerm}
+        colorScheme={colorScheme}
+        plant={plant}
+      />
+    ));
+  }, [sortedPlant, lastWatering, searchTerm, colorScheme]);
 
   return (
     <>
@@ -151,7 +164,6 @@ export default function MyPlantsContent() {
             <Pressable
               disabled={sortedPlant === null}
               onPress={() => {
-                setSortedPlant(null);
                 setSortedBy(null);
               }}
               className={`input-neutral   relative z-20  items-center self-start whitespace-nowrap rounded-xs  p-smd ${isLoading || data?.length === 1 ? "disable-opacity shadow-none" : "shadow-sm shadow-black"} `}
@@ -166,8 +178,7 @@ export default function MyPlantsContent() {
               disabled={sortedPlant === null}
               onPress={() => {
                 if (sortedPlant) {
-                  reversePlantList(sortedPlant);
-                  setSortedPlant([...sortedPlant]);
+                  setReverse(!reverse);
                 }
               }}
               className={`input-neutral   relative z-20  items-center self-start whitespace-nowrap rounded-xs  p-smd ${isLoading || data?.length === 1 ? "disable-opacity shadow-none" : "shadow-sm shadow-black"} `}
@@ -224,16 +235,7 @@ export default function MyPlantsContent() {
       <ScrollView contentContainerClassName="flex gap-md px-md pt-md pb-[900]">
         {data
           ? sortedPlant && sortedBy !== null
-            ? sortedPlant.map((plant, index) => (
-                <PlantCardAction
-                  index={index}
-                  key={`${plant.id}-plant-card-action`}
-                  lastWatering={lastWatering}
-                  searchTerm={searchTerm}
-                  colorScheme={colorScheme}
-                  plant={plant}
-                />
-              ))
+            ? memoizedPlantCard
             : data.map((plant, index) => (
                 <PlantCardAction
                   index={index}
@@ -248,7 +250,7 @@ export default function MyPlantsContent() {
               <Skeleton
                 colorMode={colorScheme === "dark" ? "dark" : "light"}
                 show={isLoading}
-                key={index}
+                key={`${index}-skeleton`}
                 height={160}
               >
                 <View></View>

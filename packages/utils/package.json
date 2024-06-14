@@ -5,7 +5,9 @@
   "dependencies": {
     "@t3-oss/env-nextjs": "^0.10.1",
     "clsx": "^2.1.1",
-    "tailwind-merge": "^2.3.0"
+    "tailwind-merge": "^2.3.0",
+    "@aws-sdk/client-s3": "^3.592.0",
+    "@aws-sdk/s3-request-presigner": "^3.592.0"
   },
   "exports": {
     "default": "./utils.ts"

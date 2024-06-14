@@ -24,7 +24,6 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   extra: {
     CLERK_PUBLISHABLE_KEY: process.env.CLERK_PUBLISHABLE_KEY,
-
     eas: {
       projectId: "986ce81f-fce0-48e9-8166-ca41c3d9a89d",
     },
@@ -52,6 +51,15 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
           "./assets/fonts/MusticaPro-Regular.ttf",
           "./assets/fonts/MusticaPro-Medium.ttf",
         ],
+      },
+    ],
+    [
+      "expo-image-picker",
+      {
+        photosPermission:
+          "L'application utilise votre galerie de photos pour ajouter des images à vos plantes",
+        cameraPermission:
+          "L'application utilise votre appareil photo pour prendre des photos de vos plantes",
       },
     ],
   ],
