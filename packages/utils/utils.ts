@@ -1,5 +1,4 @@
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { createEnv } from "@t3-oss/env-nextjs";
 import { vercel } from "@t3-oss/env-nextjs/presets";
 import { ClassValue, clsx } from "clsx";
@@ -89,10 +88,8 @@ export async function uploadImage(
     ContentEncoding: "base64",
   });
   try {
-    console.log(process.env.S3_BUCKET);
-
-    const imageUrl = await getSignedUrl(client, command, { expiresIn: 3600 });
-    return imageUrl;
+    await client.send(command);
+    return key;
   } catch (error) {
     console.error("Error uploading image:", error);
     throw error;
