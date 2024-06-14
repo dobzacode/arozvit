@@ -57,8 +57,7 @@ export default function MyPlantsContent() {
             ? b.nextWatering.getTime() - a.nextWatering.getTime()
             : a.nextWatering.getTime() - b.nextWatering.getTime();
         default:
-          console.warn("Unsupported sorting criteria:", sortedBy);
-          return 0; // Maintain original order
+          return 0;
       }
     });
 

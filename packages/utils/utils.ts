@@ -18,10 +18,6 @@ export const env = createEnv({
     POSTGRES_URL: z.string().url(),
     WEBHOOK_SECRET: z.string(),
     CLERK_SECRET_KEY: z.string(),
-    AWS_ACCESS_KEY_ID: z.string(),
-    AWS_SECRET_ACCESS_KEY: z.string(),
-    S3_REGION: z.string(),
-    S3_BUCKET: z.string(),
   },
 
   client: {
@@ -75,8 +71,8 @@ export function translateTimeUnit(
 
 const client = new S3Client({
   credentials: {
-    accessKeyId: env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: env.AWS_SECRET_ACCESS_KEY,
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID as string,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY as string,
   },
   region: "eu-central-1",
 });
@@ -86,14 +82,15 @@ export async function uploadImage(
   key: string,
 ): Promise<string> {
   const command = new PutObjectCommand({
-    Bucket: env.S3_BUCKET,
+    Bucket: "planty-turbo",
     Key: key,
     Body: base64,
     ContentType: "image/jpeg",
     ContentEncoding: "base64",
   });
   try {
-    await client.send(command);
+    console.log(process.env.S3_BUCKET);
+
     const imageUrl = await getSignedUrl(client, command, { expiresIn: 3600 });
     return imageUrl;
   } catch (error) {

@@ -133,8 +133,12 @@ export const plantRouter = {
         imageObj: { base64, key },
         ...props
       } = input;
-      const imageUrl = await uploadImage(base64, key);
-      return ctx.db.insert(Plant).values({ ...props, imageUrl });
+      try {
+        const imageUrl = await uploadImage(base64, key);
+        return ctx.db.insert(Plant).values({ ...props, imageUrl });
+      } catch (e) {
+        console.log(e);
+      }
     }),
 
   update: protectedProcedure

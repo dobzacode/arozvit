@@ -1,8 +1,8 @@
-import { useState } from "react";
 import { useAuth } from "@clerk/clerk-expo";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink, loggerLink } from "@trpc/client";
 import { createTRPCReact } from "@trpc/react-query";
+import { useState } from "react";
 import superjson from "superjson";
 
 import type { AppRouter } from "@planty/api";
@@ -32,7 +32,7 @@ const getBaseUrl = () => {
     return "http://3.121.76.2:3000";
   }
   // http://192.168.1.11:3000
-  return `http://3.121.76.2:3000`;
+  return `http://192.168.1.11:3000`;
 };
 
 /**

@@ -37,7 +37,7 @@ export default function ImageUpload({
   const handleLaunchCamera = useCallback(
     async (gallery: boolean) => {
       const permission = await handleCameraPermission();
-      console.log(cameraStatus);
+
       if (!permission && !gallery) {
         Alert.alert("Vous n'avez pas autorisé l'accès à la caméra !");
         return;
