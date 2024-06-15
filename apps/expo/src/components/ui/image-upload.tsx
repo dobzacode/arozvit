@@ -100,8 +100,8 @@ export default function ImageUpload({
         resizeMode="cover"
         source={
           //eslint-disable-next-line
-          image?.uri
-            ? { uri: image.uri }
+          image?.base64
+            ? { uri: `data:image/jpeg;base64,${image.base64}` }
             : require("../../../assets/plant-placeholder.png")
         }
       ></Image>

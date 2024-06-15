@@ -1,4 +1,9 @@
-import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import {
+  GetObjectCommand,
+  PutObjectCommand,
+  S3Client,
+} from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { createEnv } from "@t3-oss/env-nextjs";
 import { vercel } from "@t3-oss/env-nextjs/presets";
 import { ClassValue, clsx } from "clsx";
@@ -97,4 +102,15 @@ export async function uploadImage(
     console.error("Error uploading image:", error);
     throw error;
   }
+}
+
+export async function getImage(Key: string): Promise<string> {
+  const getCommand = new GetObjectCommand({
+    Key,
+    Bucket: "planty-bucket",
+  });
+
+  const getUrl = await getSignedUrl(client, getCommand, { expiresIn: 3600 });
+
+  return getUrl;
 }

@@ -4,7 +4,7 @@ import { z } from "zod";
 
 import { and, eq, gte, like, lt, lte } from "@planty/db";
 import { CreatePlantSchema, Plant } from "@planty/db/schema";
-import { translateTimeUnit, uploadImage } from "@planty/utils";
+import { getImage, translateTimeUnit, uploadImage } from "@planty/utils";
 
 import { protectedProcedure } from "../trpc";
 
@@ -149,5 +149,10 @@ export const plantRouter = {
 
   delete: protectedProcedure.input(z.string()).mutation(({ ctx, input }) => {
     return ctx.db.delete(Plant).where(eq(Plant.id, input));
+  }),
+
+  getImage: protectedProcedure.input(z.string()).query(async ({ input }) => {
+    const url = await getImage(input);
+    return url;
   }),
 } satisfies TRPCRouterRecord;
