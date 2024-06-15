@@ -9,6 +9,11 @@ jest.mock("@clerk/clerk-expo", () => ({
   useAuth: jest.fn(() => ({ userId: "mock-user-id", isLoaded: true })),
 }));
 
+jest.mock("./image-upload", () => ({
+  __esModule: true,
+  default: () => <p data-testid="image-upload">image-upload</p>,
+}));
+
 jest.mock("~/utils/api", () => ({
   api: {
     useUtils: jest.fn(() => ({})),
