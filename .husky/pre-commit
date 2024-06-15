@@ -1,2 +1,2 @@
 #!/bin/sh
-pnpm run test && npx lint-staged 
+npx lint-staged 

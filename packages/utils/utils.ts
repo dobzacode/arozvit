@@ -88,10 +88,15 @@ export async function uploadImage(
   base64: string,
   key: string,
 ): Promise<string> {
+  const base64Data = Buffer.from(
+    base64.replace(/^data:\w+\/[a-zA-Z+\-.]+;base64,/, ""),
+    "base64",
+  );
+
   const command = new PutObjectCommand({
     Bucket: "planty-bucket",
     Key: key,
-    Body: base64,
+    Body: base64Data,
     ContentType: "image/jpeg",
     ContentEncoding: "base64",
   });

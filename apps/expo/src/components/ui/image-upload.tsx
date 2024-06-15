@@ -64,6 +64,7 @@ export default function ImageUpload({
             encoding: "base64",
           },
         );
+        console.log(base64);
 
         const id = uuid.v4() as string;
         const key = `${userId}-${id}`;

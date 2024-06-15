@@ -151,8 +151,10 @@ export const plantRouter = {
     return ctx.db.delete(Plant).where(eq(Plant.id, input));
   }),
 
-  getImage: protectedProcedure.input(z.string()).query(async ({ input }) => {
-    const url = await getImage(input);
-    return url;
-  }),
+  getImage: protectedProcedure
+    .input(z.string().nullable())
+    .query(async ({ input }) => {
+      const url = input ? await getImage(input) : null;
+      return url;
+    }),
 } satisfies TRPCRouterRecord;

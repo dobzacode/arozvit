@@ -20,6 +20,13 @@ jest.doMock("moment-timezone", () => {
 jest.mock("~/utils/api", () => ({
   api: {
     plant: {
+      getImage: {
+        useQuery: jest.fn(() => ({
+          isLoading: false,
+          isError: false,
+          data: ["url"],
+        })),
+      },
       get: {
         useQuery: jest.fn(() => ({
           isLoading: false,

@@ -6,6 +6,8 @@ import { MotiView } from "moti/build";
 
 import type { Plant } from "@planty/validators";
 
+import { api } from "~/utils/api";
+
 export default function PlantCard({
   plant,
   index = 1,
@@ -14,6 +16,10 @@ export default function PlantCard({
   index: number;
 }) {
   const colorScheme = useColorScheme();
+  const queryPic = plant.imageUrl ? true : false;
+  const { data, isLoading } = api.plant.getImage.useQuery(plant.imageUrl, {
+    enabled: queryPic,
+  });
 
   const formatedDate = moment(plant.nextWatering).format("DD/MM/YYYY");
   const needWatering = plant.nextWatering < moment().toDate();
@@ -39,9 +45,12 @@ export default function PlantCard({
             resizeMode="cover"
             source={
               //eslint-disable-next-line
-              require("./../../../../assets/plant-placeholder.png")
+              isLoading || !plant.imageUrl
+                ? require("./../../../../assets/plant-placeholder.png")
+                : { uri: `${data}` }
             }
           ></Image>
+
           <View className="gap-sm p-sm ">
             <View className="flex flex-row items-center justify-between">
               <Text
