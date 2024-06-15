@@ -84,7 +84,7 @@ export async function uploadImage(
   key: string,
 ): Promise<string> {
   const command = new PutObjectCommand({
-    Bucket: "planty-turbo",
+    Bucket: "planty-bucket",
     Key: key,
     Body: base64,
     ContentType: "image/jpeg",
