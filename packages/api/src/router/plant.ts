@@ -142,9 +142,34 @@ export const plantRouter = {
     }),
 
   update: protectedProcedure
-    .input(CreatePlantSchema.extend({ id: z.string() }))
-    .mutation(({ ctx, input }) => {
-      return ctx.db.update(Plant).set(input).where(eq(Plant.id, input.id));
+    .input(
+      CreatePlantSchema.extend({
+        id: z.string(),
+        imageObj: z.union([
+          z.object({
+            base64: z.string(),
+            key: z.string(),
+          }),
+          z.null(),
+        ]),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      if (!input.imageObj)
+        return ctx.db.update(Plant).set(input).where(eq(Plant.id, input.id));
+      const {
+        imageObj: { base64, key },
+        ...props
+      } = input;
+      try {
+        const imageUrl = await uploadImage(base64, key);
+        return ctx.db
+          .update(Plant)
+          .set({ ...props, imageUrl })
+          .where(eq(Plant.id, input.id));
+      } catch (e) {
+        console.log(e);
+      }
     }),
 
   delete: protectedProcedure.input(z.string()).mutation(({ ctx, input }) => {
