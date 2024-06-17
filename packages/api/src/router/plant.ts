@@ -153,8 +153,14 @@ export const plantRouter = {
 
   getImage: protectedProcedure
     .input(z.string().nullable())
-    .query(async ({ input }) => {
-      const url = input ? await getImage(input) : null;
+    .query(async ({ ctx, input }) => {
+      if (!input) return null;
+      const data = await ctx.db
+        .select({ imageUrl: Plant.imageUrl })
+        .from(Plant)
+        .where(and(eq(Plant.id, input), eq(Plant.userId, ctx.auth.userId)));
+      if (!data[0]?.imageUrl) return null;
+      const url = input ? await getImage(data[0].imageUrl) : null;
       return url;
     }),
 } satisfies TRPCRouterRecord;
