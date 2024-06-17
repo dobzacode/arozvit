@@ -27,6 +27,13 @@ jest.mock("../../../ui/watering-button.tsx", () => () => {
 jest.mock("~/utils/api", () => ({
   api: {
     plant: {
+      getImage: {
+        useQuery: jest.fn(() => ({
+          data: ["url"],
+          isLoading: false,
+          isError: false,
+        })),
+      },
       waterPlant: {
         useMutation: jest.fn(() => ({
           mutate: jest.fn(),
@@ -35,6 +42,10 @@ jest.mock("~/utils/api", () => ({
       },
     },
   },
+}));
+
+jest.mock("nativewind", () => ({
+  useColorScheme: jest.fn(() => "light"),
 }));
 
 describe("PlantCardSnippet", () => {

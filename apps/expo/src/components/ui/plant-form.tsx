@@ -69,6 +69,7 @@ export default function PlantForm({ plant }: { plant?: Plant }) {
       setSpecies("");
       setDescription("");
       setDayBetweenWatering(1);
+      setImage(null);
       setWateringInterval("jours");
       setLastWatering(moment().tz("Europe/Paris").toDate());
       await utils.plant.isAnyPlant.invalidate();
@@ -97,6 +98,7 @@ export default function PlantForm({ plant }: { plant?: Plant }) {
     api.plant.update.useMutation({
       onSuccess: async () => {
         await utils.plant.get.invalidate(plant?.id);
+        await utils.plant.getImage.invalidate(plant?.id);
         Toast.show(`La plante a été modifiée avec succès`, {
           duration: 1000,
           animation: true,
@@ -145,6 +147,7 @@ export default function PlantForm({ plant }: { plant?: Plant }) {
     <View className="gap-lg">
       <View className="gap-md">
         <ImageUpload
+          id={plant?.id ?? null}
           userId={auth.userId}
           image={image}
           setImage={setImage}

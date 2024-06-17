@@ -11,11 +11,32 @@ jest.mock("../ui/watering-button", () => ({
   default: jest.fn(() => <div data-testid="watering-button" />),
 }));
 
+jest.mock("moti/skeleton", () => ({
+  __esModule: true,
+  Skeleton: jest.fn(({ children }) => (
+    <div data-testid="skeleton">{children}</div>
+  )),
+}));
+
 jest.mock("../ui/delete-button", () => ({
   __esModule: true,
   default: jest.fn(({ children }) => (
     <div data-testid="delete-button">{children}</div>
   )),
+}));
+
+jest.mock("~/utils/api", () => ({
+  api: {
+    plant: {
+      getImage: {
+        useQuery: jest.fn(() => ({
+          isLoading: false,
+          isError: false,
+          data: ["url"],
+        })),
+      },
+    },
+  },
 }));
 
 jest.mock("react", () => ({

@@ -30,7 +30,9 @@ export default function TopBlock() {
     (plant) => moment(plant.nextWatering).toDate() < today,
   );
 
-  if (!todayWatering && !passedWateringDay) {
+  console.log(todayWatering, passedWateringDay);
+
+  if (todayWatering?.length === 0 && passedWateringDay?.length === 0) {
     return null;
   }
 

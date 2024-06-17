@@ -1,5 +1,5 @@
-import React from "react";
 import { fireEvent, render } from "@testing-library/react-native";
+import React from "react";
 
 import SearchBar from "./search-bar";
 
@@ -7,7 +7,7 @@ describe("SearchBar component", () => {
   const mockSetSearchTerm = jest.fn();
 
   it("renders the search icon and placeholder text", () => {
-    const { getByDisplayValue, getByTestId, getByPlaceholderText } = render(
+    const { getByTestId, getByPlaceholderText } = render(
       <SearchBar
         colorScheme={"light"}
         setSearchTerm={mockSetSearchTerm}

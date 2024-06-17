@@ -12,13 +12,18 @@ import uuid from "react-native-uuid";
 import * as FileSystem from "expo-file-system";
 import * as ImagePicker from "expo-image-picker";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { Skeleton } from "moti/skeleton";
+
+import { api } from "~/utils/api";
 
 export default function ImageUpload({
   image,
   setImage,
   userId,
+  id,
 }: {
   image: { base64?: string; uri: string; key?: string } | null;
+  id: string | null;
   userId: string;
   setImage: ({
     base64,
@@ -31,6 +36,11 @@ export default function ImageUpload({
   }) => void;
 }) {
   const colorScheme = useColorScheme();
+
+  const { data, isLoading: isFetchingImage } = api.plant.getImage.useQuery(id, {
+    staleTime: 86400000,
+    refetchInterval: 86400000,
+  });
   const [cameraStatus, requestCameraPermission] =
     ImagePicker.useCameraPermissions();
 
@@ -45,17 +55,17 @@ export default function ImageUpload({
       const result = gallery
         ? await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
-
+            allowsEditing: true,
             selectionLimit: 1,
             quality: 1,
-            aspect: [3, 4],
+            aspect: [4, 4],
           })
         : await ImagePicker.launchCameraAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
-
+            allowsEditing: true,
             selectionLimit: 1,
             quality: 1,
-            aspect: [3, 4],
+            aspect: [4, 4],
           });
       if (!result.canceled && result.assets[0]?.uri) {
         const base64 = await FileSystem.readAsStringAsync(
@@ -64,7 +74,6 @@ export default function ImageUpload({
             encoding: "base64",
           },
         );
-        console.log(base64);
 
         const id = uuid.v4() as string;
         const key = `${userId}-${id}`;
@@ -96,33 +105,42 @@ export default function ImageUpload({
 
   return (
     <View className="flex w-full flex-row gap-sm">
-      <Image
-        className="h-[150] w-[150] rounded-xs"
-        resizeMode="cover"
-        source={
-          //eslint-disable-next-line
-          image?.base64
-            ? { uri: `data:image/jpeg;base64,${image.base64}` }
-            : require("../../../assets/plant-placeholder.png")
-        }
-      ></Image>
+      <Skeleton
+        colorMode={colorScheme === "dark" ? "dark" : "light"}
+        show={isFetchingImage}
+      >
+        <Image
+          className="h-[150] w-[150] rounded-xs"
+          resizeMode="cover"
+          source={
+            //eslint-disable-next-line
+            image?.base64
+              ? { uri: `data:image/jpeg;base64,${image.base64}` }
+              : !id
+                ? require("../../../assets/plant-placeholder.png")
+                : { uri: `${data}` }
+          }
+        ></Image>
+      </Skeleton>
       <View className="flex-1  gap-sm">
         <Pressable
           onPress={async () => handleLaunchCamera(true)}
           testID={"watering-button"}
-          className={`relative z-20 flex-row items-center  justify-center gap-sm   whitespace-nowrap rounded-xs border-[1px] border-surface px-md py-sm`}
+          className={`surface relative z-20 flex-row  items-center justify-center   gap-sm whitespace-nowrap rounded-xs border-[1px] border-surface px-md py-sm shadow-xs shadow-black`}
         >
           <FontAwesome5
             name="images"
             size={20}
             color={colorScheme !== "dark" ? "black" : "white"}
           />
-          <Text className="button-txt  text-surface">Ouvrir ma galerie</Text>
+          <Text className="button-txt text-surface-fg  dark:text-surface">
+            Ouvrir ma galerie
+          </Text>
         </Pressable>
         <Pressable
           onPress={async () => handleLaunchCamera(false)}
           testID={"watering-button"}
-          className={`relative z-20  flex-row items-center justify-center gap-sm   whitespace-nowrap rounded-xs bg-surface-fg px-md py-sm dark:bg-surface`}
+          className={`relative z-20  flex-row items-center justify-center gap-sm   whitespace-nowrap rounded-xs bg-surface-fg px-md py-sm shadow-xs shadow-black dark:bg-surface`}
         >
           <FontAwesome5
             name="camera-retro"

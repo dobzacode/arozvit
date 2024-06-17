@@ -1,8 +1,9 @@
 import { Image, Text, useColorScheme, View } from "react-native";
 import { Link } from "expo-router";
-import { Entypo, MaterialIcons } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
 import moment from "moment-timezone";
 import { MotiView } from "moti/build";
+import { Skeleton } from "moti/skeleton";
 
 import type { Plant } from "@planty/validators";
 
@@ -16,9 +17,10 @@ export default function PlantCard({
   index: number;
 }) {
   const colorScheme = useColorScheme();
-  const queryPic = plant.imageUrl ? true : false;
-  const { data, isLoading } = api.plant.getImage.useQuery(plant.imageUrl, {
-    enabled: queryPic,
+
+  const { data, isLoading } = api.plant.getImage.useQuery(plant.id, {
+    staleTime: 86400000,
+    refetchInterval: 86400000,
   });
 
   const formatedDate = moment(plant.nextWatering).format("DD/MM/YYYY");
@@ -33,23 +35,29 @@ export default function PlantCard({
     >
       <Link
         testID={`plant-card-${plant.id}-link`}
+        style={{ elevation: 2 }}
         href={{
           pathname: "/myplants/[id]",
           params: { id: plant.id },
         }}
       >
         <View className="card-neutral gap-sm  ">
-          <Image
-            className="rounded-t-xs "
-            style={{ width: 176, height: 176 }}
-            resizeMode="cover"
-            source={
-              //eslint-disable-next-line
-              isLoading || !plant.imageUrl
-                ? require("./../../../../assets/plant-placeholder.png")
-                : { uri: `${data}` }
-            }
-          ></Image>
+          <Skeleton
+            show={isLoading}
+            colorMode={colorScheme === "dark" ? "dark" : "light"}
+          >
+            <Image
+              className="rounded-t-xs "
+              style={{ width: 176, height: 176 }}
+              resizeMode="cover"
+              source={
+                //eslint-disable-next-line
+                !plant.imageUrl
+                  ? require("./../../../../assets/plant-placeholder.png")
+                  : { uri: `${data}` }
+              }
+            ></Image>
+          </Skeleton>
 
           <View className="gap-sm p-sm ">
             <View className="flex flex-row items-center justify-between">
@@ -74,11 +82,11 @@ export default function PlantCard({
               >
                 {plant.name}
               </Text>
-              <MaterialIcons
+              {/* <MaterialIcons
                 name="more-horiz"
                 size={16}
                 color={colorScheme === "light" ? "black" : "white"}
-              />
+              /> */}
             </View>
           </View>
         </View>

@@ -32,7 +32,7 @@ const getBaseUrl = () => {
     return "http://3.121.76.2:3000";
   }
   // http://192.168.1.11:3000
-  return `http://192.168.1.11:3000`;
+  return `http://3.121.76.2:3000`;
 };
 
 /**
@@ -41,6 +41,7 @@ const getBaseUrl = () => {
  */
 export function TRPCProvider(props: { children: React.ReactNode }) {
   const { getToken } = useAuth();
+
   const [queryClient] = useState(() => new QueryClient());
   const [trpcClient] = useState(() =>
     api.createClient({

@@ -10,6 +10,20 @@ jest.mock("@planty/validators", () => ({
   Plant: jest.fn(() => ({})),
 }));
 
+jest.mock("~/utils/api", () => ({
+  api: {
+    plant: {
+      getImage: {
+        useQuery: jest.fn(() => ({
+          data: ["url"],
+          isLoading: false,
+          isError: false,
+        })),
+      },
+    },
+  },
+}));
+
 const plantObj: Plant = {
   id: "2",
   description: "lorem",

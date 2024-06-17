@@ -115,7 +115,7 @@ export async function getImage(Key: string): Promise<string> {
     Bucket: "planty-bucket",
   });
 
-  const getUrl = await getSignedUrl(client, getCommand, { expiresIn: 3600 });
+  const getUrl = await getSignedUrl(client, getCommand, { expiresIn: 86400 });
 
   return getUrl;
 }

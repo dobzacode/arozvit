@@ -1,12 +1,14 @@
-import { useState } from "react";
-import { ActivityIndicator, Image, Text, View } from "react-native";
-import { Link } from "expo-router";
 import { FontAwesome } from "@expo/vector-icons";
+import { Link } from "expo-router";
 import moment from "moment-timezone";
 import { MotiView } from "moti/build";
+import { Skeleton } from "moti/skeleton";
+import { useState } from "react";
+import { ActivityIndicator, Image, Text, View } from "react-native";
 
 import type { Plant } from "@planty/validators";
 
+import { api } from "~/utils/api";
 import DeleteButton from "../ui/delete-button";
 import WateringButton from "../ui/watering-button";
 
@@ -25,15 +27,24 @@ export default function PlantCardAction({
 }) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const { data, isLoading: isFetchingImage } = api.plant.getImage.useQuery(
+    plant.id,
+    {
+      staleTime: 86400000,
+      refetchInterval: 86400000,
+    },
+  );
+
   //text-error-900 text-error-800 text-error-700 text-error-600 text-error-500
 
   const translateX = index % 2 === 0 ? -100 : 100;
 
   return (
     <MotiView
-      from={{ translateX }}
-      animate={{ translateX: 0 }}
+      from={{ translateX, opacity: 0 }}
+      animate={{ translateX: 0, opacity: 1 }}
       exit={{ translateX }}
+      needsOffscreenAlphaCompositing
       delay={index * 100}
     >
       <View className={`card-neutral relative flex-row  gap-xs `}>
@@ -44,17 +55,22 @@ export default function PlantCardAction({
             color={colorScheme === "dark" ? "white" : "black"}
           ></ActivityIndicator>
         )}
-        <Image
-          className="-xs rounded-l"
-          style={{ width: 190, height: 160 }}
-          resizeMode="cover"
-          source={
-            //eslint-disable-next-line
-            plant.imageUrl
-              ? { uri: plant.imageUrl }
-              : require("./../../../assets/plant-placeholder.png")
-          }
-        ></Image>
+        <Skeleton
+          colorMode={colorScheme === "dark" ? "dark" : "light"}
+          show={isFetchingImage}
+        >
+          <Image
+            className="-xs rounded-l"
+            style={{ width: 190, height: 160 }}
+            resizeMode="cover"
+            source={
+              //eslint-disable-next-line
+              !plant.imageUrl
+                ? require("./../../../assets/plant-placeholder.png")
+                : { uri: `${data}` }
+            }
+          ></Image>
+        </Skeleton>
         <View className="flex-grow justify-between  gap-sm p-sm ">
           <View className="gap-xs">
             <Text
