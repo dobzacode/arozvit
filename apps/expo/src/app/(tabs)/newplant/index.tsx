@@ -1,4 +1,4 @@
-import { ScrollView, Text, View } from "react-native";
+import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import PlantForm from "~/components/ui/plant-form";
@@ -9,12 +9,9 @@ export default function Page() {
     <SafeAreaView>
       <View className="background  flex h-full w-full  ">
         <TopMenu className={"relative"}></TopMenu>
-        <ScrollView contentContainerClassName="flex gap-md px-md pb-2xl pt-sm">
-          <Text className="heading-h1 surface-container-lowest bg-transparent">
-            Nouvelle plante
-          </Text>
+        <View className="flex pt-sm">
           <PlantForm></PlantForm>
-        </ScrollView>
+        </View>
       </View>
     </SafeAreaView>
   );

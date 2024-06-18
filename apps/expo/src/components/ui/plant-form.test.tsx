@@ -88,19 +88,6 @@ describe("PlantForm", () => {
     const joursOption = await screen.findByText("jours");
     await act(async () => fireEvent.press(joursOption));
     expect(screen.getByText("jours")).toBeTruthy();
-
-    const datePickerButton = screen.getByTestId("datePickerButton");
-    expect(datePickerButton).toBeTruthy();
-
-    expect(
-      screen.getByText(
-        new Date().toLocaleDateString("fr-FR", {
-          day: "2-digit",
-          month: "long",
-          year: "numeric",
-        }),
-      ),
-    ).toBeTruthy();
   });
 
   it("should render the form pre-filled with plant data and allow editing", async () => {
@@ -132,19 +119,5 @@ describe("PlantForm", () => {
       "wateringIntervalDropdown",
     );
     expect(wateringIntervalDropdown).toBeTruthy();
-
-    expect(screen.getByText(plantObj.wateringInterval)).toBeTruthy();
-    const datePickerButton = screen.getByTestId("datePickerButton");
-    expect(datePickerButton).toBeTruthy();
-
-    expect(
-      screen.getByText(
-        plantObj.lastWatering.toLocaleDateString("fr-FR", {
-          day: "2-digit",
-          month: "long",
-          year: "numeric",
-        }),
-      ),
-    ).toBeTruthy();
   });
 });

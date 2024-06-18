@@ -6,6 +6,7 @@ import {
   Pressable,
   Text,
   useColorScheme,
+  useWindowDimensions,
   View,
 } from "react-native";
 import uuid from "react-native-uuid";
@@ -36,6 +37,7 @@ export default function ImageUpload({
   }) => void;
 }) {
   const colorScheme = useColorScheme();
+  const windowWidth = useWindowDimensions().width;
 
   const { data, isLoading: isFetchingImage } = api.plant.getImage.useQuery(id, {
     staleTime: 86400000,
@@ -103,52 +105,60 @@ export default function ImageUpload({
     }
   }, [cameraStatus, handleLaunchCamera, requestCameraPermission]);
 
+  console.log(windowWidth);
+
   return (
-    <View className="flex w-full flex-row gap-sm">
+    <View className="flex flex-col gap-sm overflow-hidden">
       <Skeleton
         colorMode={colorScheme === "dark" ? "dark" : "light"}
         show={isFetchingImage}
       >
         <Image
-          className="h-[150] w-[150] rounded-xs"
+          className="rounded-xs "
+          style={{ width: windowWidth - 32, height: windowWidth - 32 }}
           resizeMode="cover"
           source={
             //eslint-disable-next-line
             image?.base64
               ? { uri: `data:image/jpeg;base64,${image.base64}` }
-              : !id
+              : !id || data === null
                 ? require("../../../assets/plant-placeholder.png")
                 : { uri: `${data}` }
           }
         ></Image>
       </Skeleton>
-      <View className="flex-1  gap-sm">
+      <View
+        style={{ width: windowWidth - 32 }}
+        className="mb-xs flex-row gap-sm"
+      >
         <Pressable
           onPress={async () => handleLaunchCamera(true)}
           testID={"watering-button"}
-          className={`surface relative z-20 flex-row  items-center justify-center   gap-sm whitespace-nowrap rounded-xs border-[1px] border-surface px-md py-sm shadow-xs shadow-black`}
+          style={{ width: (windowWidth - 40) / 2 }}
+          className={`surface relative z-20  flex-row  items-center justify-center   gap-sm whitespace-nowrap rounded-xs border-[1px] border-surface px-md py-sm shadow-sm shadow-black`}
         >
           <FontAwesome5
             name="images"
-            size={20}
+            size={16}
             color={colorScheme !== "dark" ? "black" : "white"}
           />
           <Text className="button-txt text-surface-fg  dark:text-surface">
-            Ouvrir ma galerie
+            Galerie
           </Text>
         </Pressable>
         <Pressable
           onPress={async () => handleLaunchCamera(false)}
           testID={"watering-button"}
-          className={`relative z-20  flex-row items-center justify-center gap-sm   whitespace-nowrap rounded-xs bg-surface-fg px-md py-sm shadow-xs shadow-black dark:bg-surface`}
+          style={{ width: (windowWidth - 40) / 2 }}
+          className={`relative z-20  flex-row items-center justify-center gap-sm  whitespace-nowrap rounded-xs bg-surface-fg px-md py-sm  dark:bg-surface`}
         >
           <FontAwesome5
             name="camera-retro"
-            size={20}
+            size={16}
             color={colorScheme === "dark" ? "black" : "white"}
           />
           <Text className="button-txt  text-surface dark:text-surface-fg">
-            Prendre une photo
+            Appareil photo
           </Text>
         </Pressable>
       </View>

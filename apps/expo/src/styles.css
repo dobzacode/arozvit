@@ -76,7 +76,7 @@
     @apply bg-neutral-400 text-surface-fg dark:bg-neutral-500 dark:text-neutral-1;
   }
   .primary {
-    @apply bg-primary text-primary-fg dark:bg-primary-200 dark:text-primary-800;
+    @apply bg-primary text-primary-fg dark:bg-primary-300 dark:text-primary-800;
   }
   .primary-container {
     @apply bg-primary-200 text-primary-container-fg dark:bg-primary-600 dark:text-primary-100;
@@ -95,7 +95,7 @@
   }
 
   .input-neutral {
-    @apply surface body  placeholder:text-neutral-900/[0.4] dark:border dark:border-neutral-400/[0.2] dark:bg-neutral-900 dark:placeholder:text-neutral-100/[0.8];
+    @apply surface body   placeholder:text-neutral-900/[0.4] dark:border dark:border-neutral-400/[0.2] dark:bg-neutral-900 dark:placeholder:text-neutral-100/[0.8];
   }
 
   .text-link {

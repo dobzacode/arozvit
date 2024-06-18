@@ -50,12 +50,17 @@ LocaleConfig.defaultLocale = "fr";
 
 export default function WateringCalendar({
   pickedDate,
+  minDate,
+  maxDate,
   setPickedDate,
 }: {
   pickedDate: string;
   setPickedDate: (date: string) => void;
+  minDate?: string;
+  maxDate?: string;
 }) {
   const colorScheme = useColorScheme();
+  console.log(maxDate);
 
   return (
     <MotiView
@@ -63,17 +68,18 @@ export default function WateringCalendar({
       animate={{ opacity: 1 }}
       needsOffscreenAlphaCompositing={colorScheme === "light" ? true : false}
     >
-      <View className="card-neutral">
+      <View className="card-neutral px-sm pb-sm">
         <Calendar
           key={colorScheme}
-          className=" rounded-sm"
-          minDate={moment().tz("Europe/Paris").format()}
-          style={{
-            borderRadius: 8,
-            borderColor: "hsl(98, 20%, 10%)",
-            borderWidth: colorScheme === "dark" ? 1 : 0,
-          }}
+          className=" rounded-sm "
+          minDate={minDate}
+          maxDate={maxDate}
           theme={{
+            textDisabledColor:
+              colorScheme === "dark"
+                ? "hsla(98, 05%, 50%, 0.4)"
+                : "hsla(98, 05%, 50%, 0.4)",
+            weekVerticalMargin: 4,
             calendarBackground:
               colorScheme === "dark" ? "hsl(98, 20%, 5%)" : "hsl(98, 20%, 98%)",
             arrowColor: colorScheme === "dark" ? "white" : "black",

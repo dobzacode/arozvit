@@ -43,6 +43,8 @@ export default function PlantCard({
       >
         <View className="card-neutral gap-sm  ">
           <Skeleton
+            width={176}
+            height={176}
             show={isLoading}
             colorMode={colorScheme === "dark" ? "dark" : "light"}
           >

@@ -44,6 +44,8 @@ export default function PlantCardSnippet({
       >
         <View className="flex-row gap-sm">
           <Skeleton
+            width={76}
+            height={76}
             colorMode={colorScheme === "dark" ? "dark" : "light"}
             show={isFetchingImage}
           >

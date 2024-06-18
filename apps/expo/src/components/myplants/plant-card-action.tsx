@@ -1,10 +1,10 @@
-import { FontAwesome } from "@expo/vector-icons";
+import { useState } from "react";
+import { ActivityIndicator, Image, Text, View } from "react-native";
 import { Link } from "expo-router";
+import { FontAwesome } from "@expo/vector-icons";
 import moment from "moment-timezone";
 import { MotiView } from "moti/build";
 import { Skeleton } from "moti/skeleton";
-import { useState } from "react";
-import { ActivityIndicator, Image, Text, View } from "react-native";
 
 import type { Plant } from "@planty/validators";
 
@@ -56,6 +56,8 @@ export default function PlantCardAction({
           ></ActivityIndicator>
         )}
         <Skeleton
+          width={190}
+          height={160}
           colorMode={colorScheme === "dark" ? "dark" : "light"}
           show={isFetchingImage}
         >

@@ -26,6 +26,8 @@ export default function MainCard({ plant }: { plant: Plant }) {
         className="surface rounded-xs shadow-sm shadow-black"
       >
         <Skeleton
+          width={140}
+          height={140}
           colorMode={colorScheme === "dark" ? "dark" : "light"}
           show={isFetchingImage}
         >

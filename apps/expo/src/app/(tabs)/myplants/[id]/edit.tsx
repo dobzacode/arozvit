@@ -1,4 +1,4 @@
-import { ActivityIndicator, ScrollView, Text, View } from "react-native";
+import { ActivityIndicator, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useLocalSearchParams } from "expo-router";
 
@@ -29,13 +29,8 @@ export default function Page() {
     <SafeAreaView>
       <View className="background h-full w-full ">
         <TopMenu className={`relative`}></TopMenu>
-        <View className=" w-full   justify-between   px-md align-middle ">
-          <ScrollView contentContainerClassName="pb-5xl gap-lg">
-            <Text className="heading-h1   text-surface-fg dark:text-surface">
-              Modifier
-            </Text>
-            <PlantForm plant={data[0]}></PlantForm>
-          </ScrollView>
+        <View className="flex pt-sm">
+          <PlantForm plant={data[0]}></PlantForm>
         </View>
       </View>
       <GoBackButton path={`/myplants/${id}`}></GoBackButton>

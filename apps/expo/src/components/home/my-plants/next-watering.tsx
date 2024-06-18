@@ -16,6 +16,7 @@ export default function NextWatering() {
         Arrosages à venir
       </Text>
       <WateringCalendar
+        minDate={moment().tz("Europe/Paris").format()}
         pickedDate={pickedDate}
         setPickedDate={setPickedDate}
       ></WateringCalendar>
