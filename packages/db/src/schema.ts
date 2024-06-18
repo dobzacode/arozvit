@@ -11,6 +11,30 @@ import {
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
+export const ExpoPushToken = pgTable("expo_push_token", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  userId: text("user_id")
+    .references(() => User.id)
+    .notNull(),
+  token: varchar("token", { length: 255 }).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at")
+    .defaultNow()
+    .$onUpdate(() => new Date())
+    .notNull(),
+});
+
+export type ExpoPushToken = InferSelectModel<typeof ExpoPushToken>;
+
+export const CreateExpoPushTokenSchema = createInsertSchema(ExpoPushToken, {
+  userId: z.string(),
+  token: z.string().min(1).max(255),
+});
+
+export const ExpoPushTokenRelations = relations(ExpoPushToken, ({ one }) => ({
+  user: one(User, { fields: [ExpoPushToken.userId], references: [User.id] }),
+}));
+
 export const User = pgTable("user", {
   id: text("id").primaryKey(),
   firstName: varchar("first_name", { length: 255 }),
@@ -34,6 +58,10 @@ export const CreateUserSchema = createInsertSchema(User, {
   createdAt: true,
   updatedAt: true,
 });
+
+export const UserRelations = relations(User, ({ many }) => ({
+  expoPushTokens: many(ExpoPushToken),
+}));
 
 export const wateringIntervalEnum = pgEnum("watering_interval", [
   "jours",

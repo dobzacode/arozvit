@@ -34,6 +34,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       foregroundImage: "./assets/icon.png",
       backgroundColor: "#1F104A",
     },
+    googleServicesFile: "./google-services.json",
   },
 
   experiments: {

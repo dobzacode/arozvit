@@ -1,3 +1,4 @@
+import Expo from "expo-server-sdk";
 import {
   GetObjectCommand,
   PutObjectCommand,
@@ -83,6 +84,37 @@ const client = new S3Client({
       : undefined,
   region: "eu-central-1",
 });
+
+const expo = new Expo({
+  useFcmV1: env.NODE_ENV === "development" ? true : false,
+});
+
+export async function sendNotification({
+  to,
+  title,
+  body,
+  expoPushToken,
+}: {
+  to: string;
+  title: string;
+  body: string;
+  expoPushToken: string;
+}) {
+  const notifications = [
+    {
+      to,
+      title,
+      body,
+    },
+  ];
+
+  try {
+    const receipts = await expo.sendPushNotificationsAsync(notifications);
+    console.log("Notifications envoyées avec succès:", receipts);
+  } catch (error) {
+    console.error("Erreur lors de l'envoi des notifications:", error);
+  }
+}
 
 export async function uploadImage(
   base64: string,
