@@ -27,7 +27,9 @@ export default function useNotification() {
   const { isLoaded, userId } = useAuth();
   const notificationListener = useRef<Notifications.Subscription>();
   const responseListener = useRef<Notifications.Subscription>();
-  const { mutate } = api.user.addExpoPushToken.useMutation({});
+  const { mutate } = api.expoPushToken.addExpoPushToken.useMutation({});
+  const { data, isLoading } =
+    api.expoPushToken.getUserExpoPushTokens.useQuery();
 
   useEffect(() => {
     registerForPushNotificationsAsync()
@@ -65,10 +67,11 @@ export default function useNotification() {
   }, []);
 
   useEffect(() => {
-    if (isLoaded && userId && expoPushToken) {
-      mutate(expoPushToken);
+    if (isLoaded && userId && expoPushToken && !isLoading) {
+      data?.some((token) => token.token !== expoPushToken) &&
+        mutate(expoPushToken);
     }
-  }, [isLoaded, userId, expoPushToken, mutate]);
+  }, [isLoaded, userId, expoPushToken, mutate, isLoading]);
 
   return { expoPushToken, notification, channels };
 }
