@@ -8,7 +8,7 @@ import moment from "moment";
 
 import { and, eq, lte } from "@planty/db";
 import { db } from "@planty/db/client";
-import { ExpoPushToken, Plant } from "@planty/db/schema";
+import { ExpoPushToken, Notification, Plant } from "@planty/db/schema";
 
 const expo = new Expo({
   useFcmV1: true,
@@ -54,6 +54,22 @@ export const handler = async (
           : `Une plante a besoin d'un arrosage`,
       data: {},
     });
+
+    try {
+      await db.insert(Notification).values({
+        userId: token.userId,
+        content:
+          plantWithWateringNeed.length > 1
+            ? "Des plantes ont besoin d'un arrosage"
+            : "Une plante a besoin d'un arrosage",
+        isRead: false,
+      });
+    } catch (e) {
+      console.log(
+        "Une erreur est survenue lors de l'insertion de la notification",
+        e,
+      );
+    }
   }
 
   const chunks = expo.chunkPushNotifications(messages);

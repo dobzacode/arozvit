@@ -1,5 +1,6 @@
 import { InferSelectModel, relations } from "drizzle-orm";
 import {
+  boolean,
   integer,
   pgEnum,
   pgTable,
@@ -61,6 +62,7 @@ export const CreateUserSchema = createInsertSchema(User, {
 
 export const UserRelations = relations(User, ({ many }) => ({
   expoPushTokens: many(ExpoPushToken),
+  notifications: many(Notification),
 }));
 
 export const wateringIntervalEnum = pgEnum("watering_interval", [
@@ -137,4 +139,28 @@ export const CreatePlantSchema = createInsertSchema(Plant, {
 
 export const PlantRelations = relations(Plant, ({ one }) => ({
   user: one(User, { fields: [Plant.userId], references: [User.id] }),
+}));
+
+export const Notification = pgTable("notification", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  userId: text("user_id")
+    .references(() => User.id)
+    .notNull(),
+  content: text("content").notNull(),
+  sentAt: timestamp("sent_at").defaultNow().notNull(),
+  isRead: boolean("is_read").default(false).notNull(),
+});
+
+export type Notification = InferSelectModel<typeof Notification>;
+
+export const CreateNotificationSchema = createInsertSchema(Notification, {
+  userId: z.string(),
+  content: z
+    .string()
+    .min(1, { message: "Le contenu de la notification est obligatoire" }),
+  isRead: z.boolean().optional(),
+});
+
+export const NotificationRelations = relations(Notification, ({ one }) => ({
+  user: one(User, { fields: [Notification.userId], references: [User.id] }),
 }));
