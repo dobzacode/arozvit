@@ -190,7 +190,7 @@ export default function MyPlantsContent() {
             </Pressable>
           </MotiView>
         </View>
-        <View className=" items-start gap-xs self-start ">
+        <View className=" items-start gap-xs self-start pt-md">
           <Text className="body-sm text-surface--fg dark:text-surface">
             Marquer comme arrosé le
           </Text>

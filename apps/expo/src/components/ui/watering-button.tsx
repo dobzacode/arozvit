@@ -72,6 +72,7 @@ export default function WateringButton({
           lastWatering: date ? date : moment().tz("Europe/Paris").toDate(),
         })
       }
+      needsOffscreenAlphaCompositing
       className={`relative z-20   items-center whitespace-nowrap rounded-xs   ${!isIcon ? " bg-info px-md py-sm" : "surface body self-start p-smd  shadow-sm shadow-black"} ${
         isPending ||
         isLoading ||

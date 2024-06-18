@@ -60,7 +60,6 @@ export default function WateringCalendar({
   maxDate?: string;
 }) {
   const colorScheme = useColorScheme();
-  console.log(maxDate);
 
   return (
     <MotiView

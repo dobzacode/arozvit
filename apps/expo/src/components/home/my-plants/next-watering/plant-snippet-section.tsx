@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import { useColorScheme, View } from "react-native";
+import moment from "moment-timezone";
 import { AnimatePresence } from "moti/build";
 import { Skeleton } from "moti/skeleton";
 
@@ -8,9 +10,15 @@ import PlantCardSnippet from "./plant-card-snippet";
 export default function PlantSnippetSection({ date }: { date: string }) {
   const colorScheme = useColorScheme();
   const { data, isLoading, isError } = api.plant.getPlantByWateringDay.useQuery(
-    new Date(Date.parse(date)),
+    moment(date).toDate(),
     { refetchOnMount: true },
   );
+
+  useEffect(() => {
+    if (data?.length === 0) {
+      console.log(data[0]?.nextWatering);
+    }
+  });
 
   if (isError) return null;
 
