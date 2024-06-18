@@ -26,14 +26,11 @@ export const userRouter = {
   addExpoPushToken: protectedProcedure
     .input(z.string())
     .mutation(async ({ ctx, input }) => {
-      const user = await ctx.db
-        .select({ id: User.id })
-        .from(User)
-        .where(eq(User.id, input));
-      if (!user[0]) return;
       await ctx.db.insert(ExpoPushToken).values({
-        userId: user[0].id,
+        userId: ctx.auth.userId,
         token: input,
       });
+
+      return { message: "Expo Push Token added successfully" };
     }),
 } satisfies TRPCRouterRecord;
