@@ -27,6 +27,7 @@ export default function useNotification() {
   const { isLoaded, userId } = useAuth();
   const notificationListener = useRef<Notifications.Subscription>();
   const responseListener = useRef<Notifications.Subscription>();
+
   const { mutate } = api.expoPushToken.addExpoPushToken.useMutation({});
   const { data, isLoading } =
     api.expoPushToken.getUserExpoPushTokens.useQuery();
@@ -68,8 +69,11 @@ export default function useNotification() {
 
   useEffect(() => {
     if (isLoaded && userId && expoPushToken && !isLoading) {
-      data?.some((token) => token.token !== expoPushToken) &&
-        mutate(expoPushToken);
+      console.log(data?.length === 0);
+      //eslint-disable-next-line
+      data?.some((token) => token.token !== expoPushToken) || data?.length === 0
+        ? mutate(expoPushToken)
+        : null;
     }
   }, [isLoaded, userId, expoPushToken, mutate, isLoading]);
 

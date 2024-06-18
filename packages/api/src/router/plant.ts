@@ -4,12 +4,7 @@ import { z } from "zod";
 
 import { and, eq, gte, like, lt, lte } from "@planty/db";
 import { CreatePlantSchema, Plant } from "@planty/db/schema";
-import {
-  getImage,
-  sendNotification,
-  translateTimeUnit,
-  uploadImage,
-} from "@planty/utils";
+import { getImage, translateTimeUnit, uploadImage } from "@planty/utils";
 
 import { protectedProcedure } from "../trpc";
 
@@ -191,29 +186,5 @@ export const plantRouter = {
       if (!data[0]?.imageUrl) return null;
       const url = input ? await getImage(data[0].imageUrl) : null;
       return url;
-    }),
-
-  wateringNotification: protectedProcedure
-    .input(z.string())
-    .mutation(async ({ ctx, input }) => {
-      const plants = await ctx.db
-        .select({ name: Plant.name })
-        .from(Plant)
-        .where(
-          and(
-            eq(Plant.userId, ctx.auth.userId),
-            lte(Plant.nextWatering, moment().tz("Europe/Paris").toDate()),
-          ),
-        );
-      if (plants.length === 0 || !plants[0]?.name) return;
-      await sendNotification({
-        to: input,
-        title: "Arrosage",
-        body:
-          plants.length > 1 && plants[0].name
-            ? `${plants.length} plantes ont un arrosage prévu pour aujourd'hui`
-            : `${plants[0].name} a un arrosage prévu pour aujourd'hui`,
-        expoPushToken: input,
-      });
     }),
 } satisfies TRPCRouterRecord;
