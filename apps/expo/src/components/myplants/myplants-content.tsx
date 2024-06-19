@@ -2,8 +2,10 @@ import { useMemo, useState } from "react";
 import {
   Pressable,
   ScrollView,
+  Switch,
   Text,
   useColorScheme,
+  useWindowDimensions,
   View,
 } from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -33,13 +35,16 @@ export default function MyPlantsContent() {
   const [sortedBy, setSortedBy] = useState<
     "Dernier arrosage" | "Prochain arrosage" | "Nom" | null
   >(null);
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
   const [lastWatering, setLastWatering] = useState<Date>(moment().toDate());
   const [isDatePickerVisible, setDatePickerVisibility] =
     useState<boolean>(false);
+  const height = useWindowDimensions().height;
 
   const sortedPlant = useMemo(() => {
     if (!data || !sortedBy) {
-      return data ? [...data] : null;
+      return null;
     }
 
     const sortedData = [...data].sort((a, b) => {
@@ -67,17 +72,30 @@ export default function MyPlantsContent() {
   const memoizedPlantCard = useMemo(() => {
     if (!sortedPlant) return null;
 
-    return sortedPlant.map((plant, index) => (
-      <PlantCardAction
-        index={index}
-        key={`${plant.id}-plant-card-action-sorted`}
-        lastWatering={lastWatering}
-        searchTerm={searchTerm}
-        colorScheme={colorScheme}
-        plant={plant}
-      />
-    ));
-  }, [sortedPlant, lastWatering, searchTerm, colorScheme]);
+    return sortedPlant.map((plant) => {
+      if (isEnabled) {
+        return plant.nextWatering < moment().toDate() ? (
+          <PlantCardAction
+            key={`${plant.id}-plant-card-action-sorted`}
+            lastWatering={lastWatering}
+            searchTerm={searchTerm}
+            colorScheme={colorScheme}
+            plant={plant}
+          />
+        ) : null;
+      } else {
+        return (
+          <PlantCardAction
+            key={`${plant.id}-plant-card-action-sorted`}
+            lastWatering={lastWatering}
+            searchTerm={searchTerm}
+            colorScheme={colorScheme}
+            plant={plant}
+          />
+        );
+      }
+    });
+  }, [sortedPlant, lastWatering, searchTerm, colorScheme, isEnabled]);
 
   return (
     <>
@@ -88,7 +106,7 @@ export default function MyPlantsContent() {
           setSearchTerm={setSearchTerm}
         ></SearchBar>
 
-        <View className="flex-row gap-xs">
+        <View className="flex-row gap-sm">
           <View
             className={`input-neutral flex h-[44px] w-7xl rounded-xs text-sm   dark:h-[46px] ${isLoading || data?.length === 1 ? "disable-opacity shadow-none" : "shadow-sm shadow-black"}`}
           >
@@ -190,61 +208,92 @@ export default function MyPlantsContent() {
             </Pressable>
           </MotiView>
         </View>
-        <View className=" items-start gap-xs self-start pt-md">
-          <Text className="body-sm text-surface--fg dark:text-surface">
-            Marquer comme arrosé le
-          </Text>
-          <Pressable
-            disabled={isLoading}
-            testID="datePickerButton"
-            className="input-neutral flex h-[44px]  flex-row items-center justify-center gap-md rounded-xs p-sm px-md shadow-sm shadow-black"
-            onPress={() => setDatePickerVisibility(true)}
-          >
-            <Text className="text-surface-fg dark:text-surface">
-              {lastWatering.toLocaleDateString("fr-FR", {
-                day: "2-digit",
-                month: "long",
-                year: "numeric",
-              })}
+        <View className="flex-row justify-between gap-md pt-md">
+          <View className=" items-start gap-xs self-start ">
+            <Text className="body-sm text-surface--fg dark:text-surface">
+              Marquer comme arrosé le
             </Text>
-            <FontAwesome5
-              name="calendar-alt"
-              size={20}
-              color={colorScheme === "dark" ? "white" : "black"}
+            <Pressable
+              disabled={isLoading}
+              testID="datePickerButton"
+              className="input-neutral flex h-[44px]  flex-row items-center justify-center gap-md rounded-xs p-sm px-md shadow-sm shadow-black"
+              onPress={() => setDatePickerVisibility(true)}
+            >
+              <Text className="text-surface-fg dark:text-surface">
+                {lastWatering.toLocaleDateString("fr-FR", {
+                  day: "2-digit",
+                  month: "long",
+                  year: "numeric",
+                })}
+              </Text>
+              <FontAwesome5
+                name="calendar-alt"
+                size={20}
+                color={colorScheme === "dark" ? "white" : "black"}
+              />
+            </Pressable>
+            <DateTimePickerModal
+              testID="dateTimePicker"
+              textColor="green"
+              accentColor="green"
+              isVisible={isDatePickerVisible}
+              mode="date"
+              date={lastWatering}
+              timeZoneName="Europe/Paris"
+              maximumDate={moment().utcOffset(0).toDate()}
+              onConfirm={(date) => {
+                setDatePickerVisibility(false);
+                setLastWatering(date);
+              }}
+              onCancel={() => setDatePickerVisibility(false)}
             />
-          </Pressable>
-          <DateTimePickerModal
-            testID="dateTimePicker"
-            textColor="green"
-            accentColor="green"
-            isVisible={isDatePickerVisible}
-            mode="date"
-            date={lastWatering}
-            timeZoneName="Europe/Paris"
-            maximumDate={moment().utcOffset(0).toDate()}
-            onConfirm={(date) => {
-              setDatePickerVisibility(false);
-              setLastWatering(date);
-            }}
-            onCancel={() => setDatePickerVisibility(false)}
-          />
+          </View>
+          <View className="flex-row items-center justify-center gap-xs">
+            <Text className="body-sm text-surface--fg dark:text-surface">
+              Non arrosée
+            </Text>
+            <Switch
+              trackColor={{ false: "#767577", true: "hsl(100, 36%, 55%)" }}
+              thumbColor={colorScheme !== "dark" ? "white" : "white"}
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={toggleSwitch}
+              value={isEnabled}
+            />
+          </View>
         </View>
       </View>
 
-      <ScrollView contentContainerClassName="flex gap-md px-md pt-md pb-[900]">
+      <ScrollView
+        style={{ height: height * 0.55 }}
+        className="pt-md"
+        contentContainerClassName="flex gap-md px-md pb-4xl"
+      >
         {data
           ? sortedPlant && sortedBy !== null
             ? memoizedPlantCard
-            : data.map((plant, index) => (
-                <PlantCardAction
-                  index={index}
-                  key={`${plant.id}-plant-card-action`}
-                  lastWatering={lastWatering}
-                  searchTerm={searchTerm}
-                  colorScheme={colorScheme}
-                  plant={plant}
-                />
-              ))
+            : data.map((plant) => {
+                if (isEnabled) {
+                  return plant.nextWatering < moment().toDate() ? (
+                    <PlantCardAction
+                      key={`${plant.id}-plant-card-action-sorted`}
+                      lastWatering={lastWatering}
+                      searchTerm={searchTerm}
+                      colorScheme={colorScheme}
+                      plant={plant}
+                    />
+                  ) : null;
+                } else {
+                  return (
+                    <PlantCardAction
+                      key={`${plant.id}-plant-card-action-sorted`}
+                      lastWatering={lastWatering}
+                      searchTerm={searchTerm}
+                      colorScheme={colorScheme}
+                      plant={plant}
+                    />
+                  );
+                }
+              })
           : [1, 2, 3, 4, 5].map((index) => (
               <Skeleton
                 colorMode={colorScheme === "dark" ? "dark" : "light"}
