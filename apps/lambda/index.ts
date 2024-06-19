@@ -51,6 +51,13 @@ export const handler = async (
         ),
       );
 
+    if (plantWithWateringNeed.length === 0) {
+      return {
+        statusCode: 200,
+        body: JSON.stringify({ message: "No plant to water" }),
+      };
+    }
+
     messages.push({
       to: token.token,
       title: "Arrosage à venir",
