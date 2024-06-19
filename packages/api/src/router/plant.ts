@@ -34,11 +34,6 @@ export const plantRouter = {
   getPlantByWateringDay: protectedProcedure
     .input(z.date())
     .query(({ ctx, input }) => {
-      console.log(
-        moment(input).utcOffset(0).startOf("day").toDate(),
-        moment(input).utcOffset(0).add(1, "day").startOf("day").toDate(),
-      );
-
       return ctx.db
         .select()
         .from(Plant)
@@ -71,6 +66,17 @@ export const plantRouter = {
       .from(Plant)
       .where(eq(Plant.userId, ctx.auth.userId));
   }),
+
+  isWatered: protectedProcedure
+    .input(z.string())
+    .query(async ({ ctx, input }) => {
+      const plant = await ctx.db
+        .select({ nextWatering: Plant.nextWatering })
+        .from(Plant)
+        .where(and(eq(Plant.userId, ctx.auth.userId), eq(Plant.id, input)));
+      if (!plant[0]) return false;
+      return plant[0]?.nextWatering > moment().toDate();
+    }),
 
   getPlantsWithWateringNeed: protectedProcedure.query(({ ctx }) => {
     return ctx.db
