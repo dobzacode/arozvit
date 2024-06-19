@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Text, useColorScheme, View } from "react-native";
+import { Pressable, Text, useColorScheme } from "react-native";
+import { useRouter } from "expo-router";
 import { AntDesign } from "@expo/vector-icons";
 import { MotiView } from "moti/build";
 import { Skeleton } from "moti/skeleton";
@@ -20,6 +21,8 @@ export default function NotificationCard({
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const colorScheme = useColorScheme();
+
+  const router = useRouter();
 
   const plantQueries = api.useQueries((t) =>
     notification.notificationPlant.map((notificationPlant) => {
@@ -47,6 +50,8 @@ export default function NotificationCard({
     setIsLoading(false);
   }, [plantQueries.some((query) => query.isLoading)]);
 
+  console.log(notification.notificationPlant[0]?.plantId);
+
   return (
     <MotiView
       from={{ translateX, opacity: 0 }}
@@ -60,7 +65,15 @@ export default function NotificationCard({
         show={isLoading}
         colorMode={colorScheme === "dark" ? "dark" : "light"}
       >
-        <View
+        <Pressable
+          disabled={isLoading || notification.isRead}
+          onPress={() => {
+            router.push(
+              notification.notificationPlant.length > 1
+                ? `/myplants?isFiltered=true`
+                : `/myplants/${notification.notificationPlant[0]?.plantId}`,
+            );
+          }}
           className={`card-neutral  flex-row items-center justify-between p-sm ${notification.isRead && "opacity-40 shadow-none"}`}
         >
           <Text
@@ -82,7 +95,7 @@ export default function NotificationCard({
           {notification.isRead && (
             <AntDesign name="check" size={20} color="green" />
           )}
-        </View>
+        </Pressable>
       </Skeleton>
     </MotiView>
   );

@@ -1,24 +1,25 @@
-import { useMemo, useState } from "react";
-import {
-  Pressable,
-  ScrollView,
-  Switch,
-  Text,
-  useColorScheme,
-  useWindowDimensions,
-  View,
-} from "react-native";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
-import SelectDropdown from "react-native-select-dropdown";
 import {
   AntDesign,
   Entypo,
   FontAwesome5,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
+import { useLocalSearchParams } from "expo-router";
 import moment from "moment-timezone";
 import { MotiView } from "moti/build";
 import { Skeleton } from "moti/skeleton";
+import { useMemo, useState } from "react";
+import {
+  Pressable,
+  ScrollView,
+  Switch,
+  Text,
+  View,
+  useColorScheme,
+  useWindowDimensions,
+} from "react-native";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import SelectDropdown from "react-native-select-dropdown";
 
 import useDebounce from "~/hooks/useDebounce";
 import { api } from "~/utils/api";
@@ -26,6 +27,8 @@ import PlantCardAction from "./plant-card-action";
 import SearchBar from "./search-bar";
 
 export default function MyPlantsContent() {
+  const params: { isFiltered?: boolean } = useLocalSearchParams();
+  const { isFiltered } = params;
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [reverse, setReverse] = useState<boolean>(false);
   const debouncedValue = useDebounce(searchTerm, 250);
@@ -35,7 +38,7 @@ export default function MyPlantsContent() {
   const [sortedBy, setSortedBy] = useState<
     "Dernier arrosage" | "Prochain arrosage" | "Nom" | null
   >(null);
-  const [isEnabled, setIsEnabled] = useState(false);
+  const [isEnabled, setIsEnabled] = useState(isFiltered ? true : false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
   const [lastWatering, setLastWatering] = useState<Date>(moment().toDate());
   const [isDatePickerVisible, setDatePickerVisibility] =
