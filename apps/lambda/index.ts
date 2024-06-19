@@ -8,7 +8,12 @@ import moment from "moment";
 
 import { and, eq, lte } from "@planty/db";
 import { db } from "@planty/db/client";
-import { ExpoPushToken, Notification, Plant } from "@planty/db/schema";
+import {
+  ExpoPushToken,
+  Notification,
+  NotificationPlant,
+  Plant,
+} from "@planty/db/schema";
 
 const expo = new Expo({
   useFcmV1: true,
@@ -33,7 +38,7 @@ export const handler = async (
     }
 
     const plantWithWateringNeed = await db
-      .select({ nextWatering: Plant.nextWatering })
+      .select({ nextWatering: Plant.nextWatering, id: Plant.id })
       .from(Plant)
       .where(
         and(
@@ -56,14 +61,26 @@ export const handler = async (
     });
 
     try {
-      await db.insert(Notification).values({
-        userId: token.userId,
-        content:
-          plantWithWateringNeed.length > 1
-            ? "Des plantes ont besoin d'un arrosage"
-            : "Une plante a besoin d'un arrosage",
-        isRead: false,
-      });
+      const notification = await db
+        .insert(Notification)
+        .values({
+          userId: token.userId,
+          content:
+            plantWithWateringNeed.length > 1
+              ? "Des plantes ont besoin d'un arrosage"
+              : "Une plante a besoin d'un arrosage",
+          isRead: false,
+        })
+        .returning({ id: Notification.id });
+
+      if (!notification[0]) throw new Error("Notification not created");
+
+      for (const plant of plantWithWateringNeed) {
+        await db.insert(NotificationPlant).values({
+          notificationId: notification[0].id,
+          plantId: plant.id,
+        });
+      }
     } catch (e) {
       console.log(
         "Une erreur est survenue lors de l'insertion de la notification",

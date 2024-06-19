@@ -1,6 +1,6 @@
-import { ScrollView, Text, useColorScheme, View } from "react-native";
 import { Link } from "expo-router";
 import { Skeleton } from "moti/skeleton";
+import { ScrollView, Text, useColorScheme, View } from "react-native";
 
 import { api } from "~/utils/api";
 import NextWatering from "./my-plants/next-watering";
@@ -18,7 +18,7 @@ export default function MyPlants() {
             Mes plantes
           </Text>
           <Link href="myplants" className="">
-            <Text className="text-link body-sm ">Voir mes plantes</Text>
+            <Text className="text-link bo-dy-sm ">Voir mes plantes</Text>
           </Link>
         </View>
 

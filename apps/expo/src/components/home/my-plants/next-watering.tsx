@@ -1,6 +1,6 @@
+import moment from "moment";
 import { useState } from "react";
 import { Text, View } from "react-native";
-import moment from "moment";
 
 import PlantSnippetSection from "./next-watering/plant-snippet-section";
 import WateringCalendar from "./next-watering/watering-calendar";

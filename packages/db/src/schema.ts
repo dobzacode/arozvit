@@ -4,6 +4,7 @@ import {
   integer,
   pgEnum,
   pgTable,
+  primaryKey,
   text,
   timestamp,
   uuid,
@@ -137,8 +138,9 @@ export const CreatePlantSchema = createInsertSchema(Plant, {
   updatedAt: true,
 });
 
-export const PlantRelations = relations(Plant, ({ one }) => ({
+export const PlantRelations = relations(Plant, ({ one, many }) => ({
   user: one(User, { fields: [Plant.userId], references: [User.id] }),
+  notificationPlant: many(NotificationPlant),
 }));
 
 export const Notification = pgTable("notification", {
@@ -147,8 +149,12 @@ export const Notification = pgTable("notification", {
     .references(() => User.id)
     .notNull(),
   content: text("content").notNull(),
-  sentAt: timestamp("sent_at").defaultNow().notNull(),
   isRead: boolean("is_read").default(false).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at")
+    .defaultNow()
+    .$onUpdate(() => new Date())
+    .notNull(),
 });
 
 export type Notification = InferSelectModel<typeof Notification>;
@@ -161,6 +167,39 @@ export const CreateNotificationSchema = createInsertSchema(Notification, {
   isRead: z.boolean().optional(),
 });
 
-export const NotificationRelations = relations(Notification, ({ one }) => ({
-  user: one(User, { fields: [Notification.userId], references: [User.id] }),
-}));
+export const NotificationRelations = relations(
+  Notification,
+  ({ one, many }) => ({
+    user: one(User, { fields: [Notification.userId], references: [User.id] }),
+    notificationPlant: many(NotificationPlant),
+  }),
+);
+
+export const NotificationPlant = pgTable(
+  "notification_plant",
+  {
+    notificationId: uuid("notification_id")
+      .references(() => Notification.id)
+      .notNull(),
+    plantId: uuid("plant_id")
+      .references(() => Plant.id)
+      .notNull(),
+  },
+  (t) => ({
+    pk: primaryKey({ columns: [t.notificationId, t.plantId] }),
+  }),
+);
+
+export const NotificationPlantRelations = relations(
+  NotificationPlant,
+  ({ one }) => ({
+    notification: one(Notification, {
+      fields: [NotificationPlant.notificationId],
+      references: [Notification.id],
+    }),
+    plant: one(Plant, {
+      fields: [NotificationPlant.plantId],
+      references: [Plant.id],
+    }),
+  }),
+);
