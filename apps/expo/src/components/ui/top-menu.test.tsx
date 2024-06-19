@@ -2,13 +2,17 @@ import { render, screen } from "@testing-library/react-native";
 
 import TopMenu from "./top-menu";
 
-jest.mock("@clerk/clerk-expo", () => ({
-  useUser: jest.fn().mockReturnValue({
+jest.mock("~/utils/api", () => ({
+  api: {
     user: {
-      imageUrl: "https://example.com/image.jpg",
+      getImage: {
+        useQuery: jest.fn(() => ({
+          data: "https://example.com/image.jpg",
+          isLoading: true,
+        })),
+      },
     },
-    isLoaded: true,
-  }),
+  },
 }));
 
 describe("TopMenu component", () => {
