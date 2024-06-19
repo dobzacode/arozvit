@@ -20,7 +20,7 @@ export default function Page() {
           <ScrollView contentContainerClassName="px-md pb-md gap-lg">
             <DarkModeSection colorScheme={colorScheme}></DarkModeSection>
             <AccountSection></AccountSection>
-            <ActionSection colorScheme={colorScheme}></ActionSection>
+            <ActionSection></ActionSection>
           </ScrollView>
         </View>
       </View>

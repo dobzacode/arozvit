@@ -1,5 +1,5 @@
+import type { WebhookEvent } from "@clerk/nextjs/server";
 import { headers } from "next/headers";
-import { type WebhookEvent } from "@clerk/nextjs/server";
 import { Webhook } from "svix";
 import { z } from "zod";
 

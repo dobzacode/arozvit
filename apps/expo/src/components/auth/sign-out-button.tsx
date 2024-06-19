@@ -15,7 +15,7 @@ export const SignOutButton = () => {
     >
       <Pressable
         onPress={async () => await signOut()}
-        className="card-neutral flex-row items-center justify-between p-md shadow-sm shadow-black"
+        className="card-neutral flex-row items-center justify-between px-md py-smd shadow-sm shadow-black"
       >
         <View className="flex-row gap-md">
           <Ionicons
