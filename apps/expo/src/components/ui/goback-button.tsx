@@ -10,7 +10,7 @@ export default function GoBackButton({ path }: { path: string }) {
     <Pressable
       role="button"
       onPress={() => router.push(path)}
-      className="card-neutral dark:bg-sr absolute bottom-md left-md items-center justify-center rounded-full p-sm shadow-sm shadow-black"
+      className="card-neutral dark:bg-sr absolute bottom-md left-md items-center justify-center rounded-xs p-sm shadow-sm shadow-black"
     >
       <AntDesign
         name="left"

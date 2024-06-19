@@ -37,7 +37,7 @@ export default function TopBlock() {
   }
 
   return (
-    <View className="flex ">
+    <View className="flex">
       <Text className="heading-h1 px-md text-surface-fg dark:text-surface">
         Notifications
       </Text>

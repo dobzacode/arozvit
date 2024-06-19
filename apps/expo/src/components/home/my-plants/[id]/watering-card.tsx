@@ -11,7 +11,7 @@ export default function WateringCard({ plant }: { plant: Plant }) {
   const colorScheme = useColorScheme();
 
   return (
-    <View className="card-neutral w-full gap-sm self-start p-sm shadow-sm shadow-black">
+    <View className="card-neutral w-full gap-xs self-start p-sm shadow-sm shadow-black">
       {isLoading && (
         <ActivityIndicator
           testID="loading-indicator"
@@ -22,7 +22,7 @@ export default function WateringCard({ plant }: { plant: Plant }) {
       <Text className="heading-h3  text-surface-fg dark:text-surface">
         Arrosage
       </Text>
-      <View className="gap-xxs">
+      <View className="gap-xxs pb-smd">
         <Text className="body body text-surface-fg dark:text-surface">
           Dernier arrosage : {moment(plant.lastWatering).format("DD/MM/YYYY")}
         </Text>

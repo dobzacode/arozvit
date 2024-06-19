@@ -153,6 +153,7 @@ export default function PlantForm({ plant }: { plant?: Plant }) {
             fontFamily: "mustica-pro",
           },
         });
+        router.back();
       },
       onError: (e) => {
         console.log(e);

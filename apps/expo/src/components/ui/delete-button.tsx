@@ -73,7 +73,7 @@ export default function DeleteButton({
           },
         )
       }
-      className={`relative z-20   items-center whitespace-nowrap rounded-xs   ${!isIcon ? "bg-error px-md py-sm" : "surface body self-start  p-smd shadow-sm shadow-black "} ${isPending || isLoading ? "shadow-white" : ""}  `}
+      className={`relative z-20   items-center whitespace-nowrap rounded-xs   ${!isIcon ? "bg-error px-md py-sm shadow-sm shadow-error" : "surface body self-start  p-smd shadow-sm shadow-black "} ${isPending || isLoading ? "shadow-white" : ""}  `}
     >
       {isIcon ? (
         <View testID={"delete-icon"}>

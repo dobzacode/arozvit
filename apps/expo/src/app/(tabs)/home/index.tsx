@@ -12,7 +12,7 @@ export default function Page() {
 
   return (
     <SafeAreaView className="background">
-      <View className="background h-full w-full items-center justify-center ">
+      <View className="background h-full w-full items-center justify-center gap-md">
         <TopMenu
           className={`${data?.length ? "relative " : "absolute"}`}
         ></TopMenu>
@@ -23,7 +23,7 @@ export default function Page() {
             {data?.length ? (
               <ScrollView
                 className="min-h-[60%] w-full"
-                contentContainerClassName="gap-lg"
+                contentContainerClassName="gap-xl"
               >
                 <TopBlock></TopBlock>
                 <MyPlants></MyPlants>

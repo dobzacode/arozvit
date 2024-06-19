@@ -74,7 +74,7 @@ export default function WateringButton({
         })
       }
       needsOffscreenAlphaCompositing
-      className={`relative z-20   items-center whitespace-nowrap rounded-xs   ${!isIcon ? " bg-info px-md py-sm" : "surface body self-start p-smd  shadow-sm shadow-black"} ${
+      className={`relative z-20   items-center whitespace-nowrap rounded-xs   ${!isIcon ? " bg-info px-md py-sm shadow-sm shadow-info" : "surface body self-start p-smd  shadow-sm shadow-black"} ${
         isPending ||
         isLoading ||
         moment(date).format("DD/MM/YYYY") ===

@@ -29,13 +29,13 @@ export default function Page() {
 
   return (
     <SafeAreaView>
-      <View className="background h-full w-full ">
+      <View className="background h-full w-full gap-md">
         <TopMenu className="relative"></TopMenu>
-        <View className="flex h-full w-full  gap-md px-md">
-          <Text className="heading-h1 text-surface-fg dark:text-surface">
+        <View className="flex h-full w-full  gap-md ">
+          <Text className="heading-h1 px-md text-surface-fg dark:text-surface">
             Détails
           </Text>
-          <ScrollView contentContainerClassName="gap-md">
+          <ScrollView contentContainerClassName="gap-lg pb-lg px-md">
             <MainCard plant={data[0]}></MainCard>
             <WateringCard plant={data[0]}></WateringCard>
             <ActionCard plant={data[0]}></ActionCard>

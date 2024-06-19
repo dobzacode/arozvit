@@ -45,7 +45,7 @@ export default function MainCard({ plant }: { plant: Plant }) {
         </Skeleton>
       </View>
 
-      <View className="card-neutral self-start p-sm shadow-sm">
+      <View className="card-neutral flex-1 self-start p-sm shadow-sm shadow-black">
         <Text
           numberOfLines={1}
           className="heading-h2   text-surface-fg dark:text-surface"
@@ -54,7 +54,12 @@ export default function MainCard({ plant }: { plant: Plant }) {
         </Text>
 
         {plant.species && (
-          <Text testID="species">{firstLetterCapitalize(plant.species)}</Text>
+          <Text
+            className="body text-surface-fg dark:text-surface"
+            testID="species"
+          >
+            {firstLetterCapitalize(plant.species)}
+          </Text>
         )}
         <Text className="body-sm text-surface-fg opacity-40 dark:text-surface dark:opacity-60">
           Ajouté le{" "}
