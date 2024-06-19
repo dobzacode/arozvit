@@ -1,18 +1,19 @@
-import { Appearance, Image, Pressable, View } from "react-native";
+import { Image, Pressable } from "react-native";
+import { router } from "expo-router";
 import { useUser } from "@clerk/clerk-expo";
-import { Feather } from "@expo/vector-icons";
-import { useColorScheme } from "nativewind";
 
 export default function TopMenu({ className }: { className?: string }) {
   const { user, isLoaded } = useUser();
-  const { colorScheme } = useColorScheme();
 
   if (!isLoaded) {
     return null;
   }
 
   return (
-    <View
+    <Pressable
+      onPress={() => {
+        router.push("/settings");
+      }}
       className={`absolute top-0 z-30 flex w-full flex-row items-center justify-between bg-transparent p-md ${className}
       `}
     >
@@ -30,22 +31,6 @@ export default function TopMenu({ className }: { className?: string }) {
             : require("./../../../assets/placeholder-user.jpg")
         }
       ></Image>
-
-      <Pressable
-        onPress={() => {
-          Appearance.setColorScheme(colorScheme === "light" ? "dark" : "light");
-        }}
-        testID={`${colorScheme}-icon`}
-      >
-        <Feather
-          className="relative z-30 p-md"
-          style={{
-            color: colorScheme === "light" ? "black" : "white",
-          }}
-          name={colorScheme === "light" ? "sun" : "moon"}
-          size={20}
-        />
-      </Pressable>
-    </View>
+    </Pressable>
   );
 }

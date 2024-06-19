@@ -2,7 +2,7 @@ import { useColorScheme, View } from "react-native";
 import { Redirect, Tabs } from "expo-router";
 import { useRouteInfo } from "expo-router/build/hooks";
 import { useAuth } from "@clerk/clerk-expo";
-import { Feather, FontAwesome5 } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
@@ -110,24 +110,22 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
-        name="calendar"
-        options={{
-          tabBarLabel: "calendrier",
-          title: "calendrier",
-          tabBarIcon: ({ color, size }) => {
-            return (
-              <FontAwesome5 name="calendar-alt" size={size} color={color} />
-            );
-          },
-        }}
-      />
-      <Tabs.Screen
         name="notifications"
         options={{
           tabBarLabel: "notifications",
           title: "notifications",
           tabBarIcon: ({ color, size }) => {
             return <Feather name="bell" size={size} color={color} />;
+          },
+        }}
+      />
+      <Tabs.Screen
+        name="settings"
+        options={{
+          tabBarLabel: "paramètres",
+          title: "paramètres",
+          tabBarIcon: ({ color, size }) => {
+            return <Feather name="settings" size={size} color={color} />;
           },
         }}
       />

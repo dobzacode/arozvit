@@ -14,12 +14,16 @@ export const userRouter = {
     }),
 
   update: protectedProcedure
-    .input(CreateUserSchema)
+    .input(CreateUserSchema.omit({ id: true }))
     .mutation(({ ctx, input }) => {
-      return ctx.db.update(User).set(input).where(eq(User.id, input.id));
+      return ctx.db.update(User).set(input).where(eq(User.id, ctx.auth.userId));
     }),
 
   delete: protectedProcedure.input(z.string()).mutation(({ ctx, input }) => {
     return ctx.db.delete(User).where(eq(User.id, input));
+  }),
+
+  get: protectedProcedure.query(({ ctx }) => {
+    return ctx.db.select().from(User).where(eq(User.id, ctx.auth.userId));
   }),
 } satisfies TRPCRouterRecord;
