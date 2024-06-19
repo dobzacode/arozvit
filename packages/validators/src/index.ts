@@ -5,6 +5,7 @@ import {
   Notification as dbNotification,
   NotificationPlant as dbNotificationPlant,
   Plant as dbPlant,
+  User as dbUser,
 } from "@planty/db/schema";
 
 export const selectPlantSchema = createSelectSchema(dbPlant);
@@ -12,6 +13,10 @@ export const selectPlantSchema = createSelectSchema(dbPlant);
 export type Plant = z.infer<typeof selectPlantSchema>;
 
 export const selectNotificationSchema = createSelectSchema(dbNotification);
+
+export const selectUserSchema = createSelectSchema(dbUser);
+
+export type User = z.infer<typeof selectUserSchema>;
 
 export type Notification = z.infer<typeof selectNotificationSchema>;
 

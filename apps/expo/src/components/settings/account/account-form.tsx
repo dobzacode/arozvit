@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   ActivityIndicator,
   Pressable,
@@ -10,14 +10,28 @@ import {
 import Toast from "react-native-root-toast";
 import { useRouter } from "expo-router";
 
+import { User } from "@planty/validators";
+
 import { api } from "~/utils/api";
+import AvatarUpload from "./avatar-upload";
 
-export default function AccountForm() {
-  const [firstName, setFirstName] = useState<string>("");
-  const [lastName, setLastName] = useState<string>("");
-  const [username, setUsername] = useState<string>("");
-
-  const { data, isLoading } = api.user.get.useQuery();
+export default function AccountForm({ user }: { user: User }) {
+  const [firstName, setFirstName] = useState<string>(user.firstName ?? "Jean");
+  const [lastName, setLastName] = useState<string>(user.lastName ?? "Dupont");
+  const [username, setUsername] = useState<string>(
+    user.username ?? "jean.dupont",
+  );
+  const [image, setImage] = useState<null | {
+    base64?: string;
+    key?: string;
+    uri: string;
+  }>(
+    user.imageUrl
+      ? {
+          uri: user.imageUrl,
+        }
+      : null,
+  );
 
   const utils = api.useUtils();
 
@@ -42,19 +56,15 @@ export default function AccountForm() {
     },
   });
 
-  useEffect(() => {
-    if (data?.length === 1 && !isLoading && data[0]) {
-      setFirstName(data[0].firstName ?? "Jean");
-      setLastName(data[0].lastName ?? "Dupont");
-      setUsername(data[0].username ?? "jean.dupont");
-    }
-  }, [isLoading, data]);
-
   const handleSubmit = () => {
     const formData = {
       firstName,
       lastName,
       username,
+      imageObj:
+        image?.key && image.base64
+          ? { key: image.key, base64: image.base64 }
+          : null,
     };
 
     try {
@@ -80,7 +90,7 @@ export default function AccountForm() {
             value={firstName}
             maxLength={70}
             selectionColor={"hsl(100, 36%, 40%)"}
-            editable={!isPending || !isLoading}
+            editable={!isPending}
             onChangeText={setFirstName}
           ></TextInput>
           {error?.data?.zodError?.fieldErrors.firstName && (
@@ -99,7 +109,7 @@ export default function AccountForm() {
             value={lastName}
             maxLength={70}
             selectionColor={"hsl(100, 36%, 40%)"}
-            editable={!isPending || !isLoading}
+            editable={!isPending}
             onChangeText={setLastName}
           ></TextInput>
           {error?.data?.zodError?.fieldErrors.lastName && (
@@ -118,7 +128,7 @@ export default function AccountForm() {
             value={username}
             selectionColor={"hsl(100, 36%, 40%)"}
             maxLength={70}
-            editable={!isPending || !isLoading}
+            editable={!isPending}
             onChangeText={setUsername}
           ></TextInput>
           {error?.data?.zodError?.fieldErrors.userName && (
@@ -127,20 +137,25 @@ export default function AccountForm() {
             </Text>
           )}
         </View>
+        <View className="gap-sm">
+          <AvatarUpload
+            userId={user.id}
+            image={image}
+            setImage={setImage}
+          ></AvatarUpload>
+        </View>
         <Pressable
           testID="submitButton"
-          disabled={
-            isPending || isLoading || !firstName || !lastName || !username
-          }
+          disabled={isPending || !firstName || !lastName || !username}
           onPress={handleSubmit}
           className={`primary  flex flex-row  items-center justify-center gap-md rounded-xs p-smd py-2 shadow-sm shadow-primary ${!firstName || !lastName || !username ? "bg-gray-400 opacity-50" : null}`}
         >
           <Text className="button-txt text-primary-fg">
             Modifier mes informations
           </Text>
-          {isPending || isLoading ? (
+          {isPending && (
             <ActivityIndicator size="small" color="white"></ActivityIndicator>
-          ) : null}
+          )}
         </Pressable>
       </View>
     </View>

@@ -1,7 +1,7 @@
 import { ScrollView, Text, useColorScheme, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import AccountSection from "~/components/settings/account-section";
+import AccountSection from "~/components/settings/account/account-section";
 import DarkModeSection from "~/components/settings/darkmode-section";
 import TopMenu from "~/components/ui/top-menu";
 

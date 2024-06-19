@@ -17,14 +17,12 @@ import { Skeleton } from "moti/skeleton";
 
 import { api } from "~/utils/api";
 
-export default function ImageUpload({
+export default function AvatarUpload({
   image,
   setImage,
   userId,
-  id,
 }: {
   image: { base64?: string; uri: string; key?: string } | null;
-  id: string | null;
   userId: string;
   setImage: ({
     base64,
@@ -39,10 +37,13 @@ export default function ImageUpload({
   const colorScheme = useColorScheme();
   const windowWidth = useWindowDimensions().width;
 
-  const { data, isLoading: isFetchingImage } = api.plant.getImage.useQuery(id, {
-    staleTime: 86400000,
-    refetchInterval: 86400000,
-  });
+  const { data, isLoading: isFetchingImage } = api.user.getImage.useQuery(
+    void 0,
+    {
+      staleTime: 86400000,
+      refetchInterval: 86400000,
+    },
+  );
   const [cameraStatus, requestCameraPermission] =
     ImagePicker.useCameraPermissions();
 
@@ -114,8 +115,8 @@ export default function ImageUpload({
             //eslint-disable-next-line
             image?.base64
               ? { uri: `data:image/jpeg;base64,${image.base64}` }
-              : !id || data === null
-                ? require("../../../assets/plant-placeholder.png")
+              : data === null
+                ? require("../../../../assets/placeholder-user.jpg")
                 : { uri: `${data}` }
           }
         ></Image>

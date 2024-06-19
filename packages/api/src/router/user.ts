@@ -24,6 +24,8 @@ export const userRouter = {
           }),
           z.null(),
         ]),
+      }).omit({
+        id: true,
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -41,7 +43,7 @@ export const userRouter = {
         return ctx.db
           .update(User)
           .set({ ...props, imageUrl })
-          .where(eq(User.id, input.id));
+          .where(eq(User.id, ctx.auth.userId));
       } catch (e) {
         console.log(e);
       }
@@ -55,16 +57,14 @@ export const userRouter = {
     return ctx.db.select().from(User).where(eq(User.id, ctx.auth.userId));
   }),
 
-  getImage: protectedProcedure
-    .input(z.string().nullable())
-    .query(async ({ ctx, input }) => {
-      if (!input) return null;
-      const data = await ctx.db
-        .select({ imageUrl: User.imageUrl })
-        .from(User)
-        .where(eq(User.id, ctx.auth.userId));
-      if (!data[0]?.imageUrl) return null;
-      const url = input ? await getImage(data[0].imageUrl) : null;
-      return url;
-    }),
+  getImage: protectedProcedure.query(async ({ ctx }) => {
+    if (!ctx.auth.userId) return null;
+    const data = await ctx.db
+      .select({ imageUrl: User.imageUrl })
+      .from(User)
+      .where(eq(User.id, ctx.auth.userId));
+    if (!data[0]?.imageUrl) return null;
+    const url = ctx.auth.userId ? await getImage(data[0].imageUrl) : null;
+    return url;
+  }),
 } satisfies TRPCRouterRecord;

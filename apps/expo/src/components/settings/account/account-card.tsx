@@ -29,7 +29,7 @@ export default function AccountCard() {
                   ? {
                       uri: data[0]?.imageUrl,
                     }
-                  : require("./../../../assets/placeholder-user.jpg")
+                  : require("./../../../../assets/placeholder-user.jpg")
               }
             ></Image>
             <View className=" flex-col justify-center ">
