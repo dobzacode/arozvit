@@ -247,6 +247,7 @@ export default function PlantForm({ plant }: { plant?: Plant }) {
               className={`input-neutral  rounded-xs p-sm shadow-sm shadow-black ${error?.data?.zodError?.fieldErrors.name && "border border-error-500"}`}
               placeholder="Ma plante"
               value={name}
+              maxLength={90}
               selectionColor={"hsl(100, 36%, 40%)"}
               editable={!isPending || !isMutating}
               onChangeText={setName}
@@ -262,6 +263,7 @@ export default function PlantForm({ plant }: { plant?: Plant }) {
               Espèce
             </Text>
             <TextInput
+              maxLength={90}
               testID="speciesInput"
               className={`input-neutral rounded-xs  p-sm shadow-sm shadow-black ${error?.data?.zodError?.fieldErrors.species && "border border-error-500"}`}
               placeholder="Monstera"
@@ -284,6 +286,7 @@ export default function PlantForm({ plant }: { plant?: Plant }) {
               testID="descriptionInput"
               editable={!isPending || !isMutating}
               multiline
+              maxLength={255}
               numberOfLines={7}
               className={`input-neutral rounded-xs p-sm  align-top shadow-sm shadow-black ${error?.data?.zodError?.fieldErrors.description && "border border-error-500"}`}
               placeholder="Plante sur la terrasse"

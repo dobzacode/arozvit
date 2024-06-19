@@ -52,9 +52,27 @@ export const User = pgTable("user", {
 
 export const CreateUserSchema = createInsertSchema(User, {
   id: z.string(),
-  firstName: z.string().min(1).max(255).optional(),
-  lastName: z.string().min(1).max(255).optional(),
-  username: z.string().min(1).max(255).optional(),
+  firstName: z
+    .string()
+    .min(1)
+    .max(70, {
+      message: "Le nom ne peut pas dépasser 70 caractères",
+    })
+    .optional(),
+  lastName: z
+    .string()
+    .min(1)
+    .max(70, {
+      message: "Le prénom ne peut pas dépasser 70 caractères",
+    })
+    .optional(),
+  username: z
+    .string()
+    .min(1)
+    .max(70, {
+      message: "Le nom d'utilisateur ne peut pas dépasser 70 caractères",
+    })
+    .optional(),
   imageUrl: z.string().url().optional(),
 }).omit({
   createdAt: true,
