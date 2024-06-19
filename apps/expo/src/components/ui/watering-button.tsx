@@ -33,6 +33,7 @@ export default function WateringButton({
       await utils.plant.getPlantByWateringDay.invalidate(
         moment().tz("Europe/Paris").toDate(),
       );
+      await utils.plant.isWatered.invalidate(plant.id);
       searchTerm !== undefined
         ? await utils.plant.getBySearchTerm.invalidate(searchTerm)
         : null;

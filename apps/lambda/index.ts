@@ -38,7 +38,11 @@ export const handler = async (
     }
 
     const plantWithWateringNeed = await db
-      .select({ nextWatering: Plant.nextWatering, id: Plant.id })
+      .select({
+        nextWatering: Plant.nextWatering,
+        id: Plant.id,
+        name: Plant.name,
+      })
       .from(Plant)
       .where(
         and(
@@ -49,14 +53,11 @@ export const handler = async (
 
     messages.push({
       to: token.token,
-      title:
-        plantWithWateringNeed.length > 1
-          ? "Des plantes ont besoin d'un arrosage"
-          : "Une plante a besoin d'un arrosage",
+      title: "Arrosage à venir",
       body:
         plantWithWateringNeed.length > 1
           ? `${plantWithWateringNeed.length} plantes ont besoin d'un arrosage`
-          : `Une plante a besoin d'un arrosage`,
+          : `${plantWithWateringNeed[0]?.name} a besoin d'un arrosage`,
       data: {},
     });
 
