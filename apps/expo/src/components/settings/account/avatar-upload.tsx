@@ -4,7 +4,6 @@ import {
   Image,
   Linking,
   Pressable,
-  Text,
   useColorScheme,
   useWindowDimensions,
   View,
@@ -99,48 +98,47 @@ export default function AvatarUpload({
     }
   }, [cameraStatus, handleLaunchCamera, requestCameraPermission]);
 
-  console.log(windowWidth);
+  console.log(image);
 
   return (
-    <View className="flex flex-col gap-sm overflow-hidden">
+    <View
+      className="relative  flex flex-col gap-sm overflow-hidden"
+      style={{ width: windowWidth / 2, height: windowWidth / 2 }}
+    >
       <Skeleton
         colorMode={colorScheme === "dark" ? "dark" : "light"}
         show={isFetchingImage}
       >
         <Image
           className="rounded-xs "
-          style={{ width: windowWidth - 32, height: windowWidth - 32 }}
+          style={{ width: windowWidth / 2, height: windowWidth / 2 }}
           resizeMode="cover"
           source={
             //eslint-disable-next-line
-            image?.base64
-              ? { uri: `data:image/jpeg;base64,${image.base64}` }
+            image?.base64 || image?.uri.includes("https")
+              ? {
+                  uri: image.uri.includes("https")
+                    ? image.uri
+                    : `data:image/jpeg;base64,${image.base64}`,
+                }
               : data === null
                 ? require("../../../../assets/placeholder-user.jpg")
                 : { uri: `${data}` }
           }
         ></Image>
       </Skeleton>
-      <View
-        style={{ width: windowWidth - 32 }}
-        className="mb-xs flex-row gap-sm"
+
+      <Pressable
+        onPress={async () => handleLaunchCamera(true)}
+        testID={"watering-button"}
+        className={`surface absolute right-sm top-sm z-20 flex-row items-center justify-center  gap-sm  self-start whitespace-nowrap   rounded-full border-[1px]  border-surface p-smd shadow-sm shadow-black`}
       >
-        <Pressable
-          onPress={async () => handleLaunchCamera(true)}
-          testID={"watering-button"}
-          style={{ width: (windowWidth - 40) / 2 }}
-          className={`surface relative z-20  flex-row  items-center justify-center   gap-sm whitespace-nowrap rounded-xs border-[1px] border-surface px-md py-sm shadow-sm shadow-black`}
-        >
-          <FontAwesome5
-            name="images"
-            size={16}
-            color={colorScheme !== "dark" ? "black" : "white"}
-          />
-          <Text className="button-txt text-surface-fg  dark:text-surface">
-            Galerie
-          </Text>
-        </Pressable>
-      </View>
+        <FontAwesome5
+          name="images"
+          size={16}
+          color={colorScheme !== "dark" ? "black" : "white"}
+        />
+      </Pressable>
     </View>
   );
 }

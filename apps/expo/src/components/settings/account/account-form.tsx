@@ -42,6 +42,7 @@ export default function AccountForm({ user }: { user: User }) {
   const { mutate, isPending, error } = api.user.update.useMutation({
     onSuccess: async () => {
       await utils.user.get.invalidate();
+      await utils.user.getImage.invalidate();
 
       Toast.show("Vos informations ont été modifiées avec succès", {
         duration: 1000,
@@ -80,6 +81,11 @@ export default function AccountForm({ user }: { user: User }) {
         <Text className="heading-h1 surface-container-lowest bg-transparent">
           Modifications
         </Text>
+        <AvatarUpload
+          userId={user.id}
+          image={image}
+          setImage={setImage}
+        ></AvatarUpload>
         <View className=" w-full gap-xs" testID="name-section">
           <Text className="body surface-container-lowest bg-transparent ">
             Prénom
@@ -137,18 +143,12 @@ export default function AccountForm({ user }: { user: User }) {
             </Text>
           )}
         </View>
-        <View className="gap-sm">
-          <AvatarUpload
-            userId={user.id}
-            image={image}
-            setImage={setImage}
-          ></AvatarUpload>
-        </View>
+
         <Pressable
           testID="submitButton"
           disabled={isPending || !firstName || !lastName || !username}
           onPress={handleSubmit}
-          className={`primary  flex flex-row  items-center justify-center gap-md rounded-xs p-smd py-2 shadow-sm shadow-primary ${!firstName || !lastName || !username ? "bg-gray-400 opacity-50" : null}`}
+          className={`primary  mt-[20] flex flex-row items-center justify-center gap-md rounded-xs p-smd py-2 shadow-sm shadow-primary ${!firstName || !lastName || !username ? "bg-gray-400 opacity-50" : null}`}
         >
           <Text className="button-txt text-primary-fg">
             Modifier mes informations

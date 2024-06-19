@@ -2,6 +2,7 @@ import { ScrollView, Text, useColorScheme, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import AccountSection from "~/components/settings/account/account-section";
+import ActionSection from "~/components/settings/action-section";
 import DarkModeSection from "~/components/settings/darkmode-section";
 import TopMenu from "~/components/ui/top-menu";
 
@@ -19,6 +20,7 @@ export default function Page() {
           <ScrollView contentContainerClassName="px-md pb-md gap-lg">
             <DarkModeSection colorScheme={colorScheme}></DarkModeSection>
             <AccountSection></AccountSection>
+            <ActionSection colorScheme={colorScheme}></ActionSection>
           </ScrollView>
         </View>
       </View>

@@ -12,7 +12,7 @@ export default function Page() {
 
   return (
     <SafeAreaView className="background">
-      <View className="background h-full w-full items-center justify-center gap-md">
+      <View className="background h-full w-full justify-center gap-md">
         <TopMenu
           className={`${data?.length ? "relative " : "absolute"}`}
         ></TopMenu>

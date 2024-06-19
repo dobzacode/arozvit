@@ -10,61 +10,82 @@ export default function AccountCard() {
 
   const { data, isLoading } = api.user.get.useQuery();
 
+  const { data: avatar, isLoading: isLoadingAvatar } =
+    api.user.getImage.useQuery(void 0, {
+      refetchInterval: 86400000,
+      staleTime: 86400000,
+    });
+
   return (
-    <Skeleton
-      show={isLoading}
-      colorMode={colorScheme === "dark" ? "dark" : "light"}
-    >
-      {data ? (
-        <View className="card-neutral flex-row items-center justify-between gap-sm ">
-          <View className="flex-row items-center gap-lg">
-            <Image
-              testID="user-image"
-              className="rounded-l-sm p-md"
-              style={{ width: 52, height: 52 }}
-              alt={data[0]?.imageUrl ? "User image" : "Placeholder user image"}
-              source={
-                //eslint-disable-next-line
-                data[0]?.imageUrl
-                  ? {
-                      uri: data[0]?.imageUrl,
-                    }
-                  : require("./../../../../assets/placeholder-user.jpg")
-              }
-            ></Image>
-            <View className=" flex-col justify-center ">
+    <View className="card-neutral flex-row items-center justify-between gap-sm ">
+      <View className="flex-row items-center gap-lg">
+        <Skeleton
+          show={isLoadingAvatar}
+          colorMode={colorScheme === "dark" ? "dark" : "light"}
+        >
+          <Image
+            testID="user-image"
+            className="rounded-l-sm p-md"
+            style={{ width: 52, height: 52 }}
+            alt={avatar ? "User image" : "Placeholder user image"}
+            source={
+              //eslint-disable-next-line
+              avatar
+                ? {
+                    uri: avatar,
+                  }
+                : require("./../../../../assets/placeholder-user.jpg")
+            }
+          ></Image>
+        </Skeleton>
+        <View className=" flex-col justify-center ">
+          <Skeleton
+            show={isLoading}
+            height={18}
+            colorMode={colorScheme === "dark" ? "dark" : "light"}
+          >
+            {data && (
               <Text
                 numberOfLines={1}
                 className="body w-[140] text-surface-fg dark:text-surface"
               >
                 {data[0]?.firstName} {data[0]?.lastName}
               </Text>
-              {data[0]?.username && (
-                <Text
-                  numberOfLines={1}
-                  className="body-sm w-[140] text-surface-fg dark:text-surface"
-                >
-                  {data[0]?.username}
-                </Text>
-              )}
-            </View>
-          </View>
+            )}
+          </Skeleton>
 
-          <Pressable
-            className="p-md"
-            onPress={() => router.push("/settings/edit")}
+          <Skeleton
+            show={isLoading}
+            width={90}
+            height={14}
+            colorMode={colorScheme === "dark" ? "dark" : "light"}
           >
-            <MaterialCommunityIcons
-              name="pencil-outline"
-              className="relative z-30 "
-              style={{
-                color: colorScheme === "light" ? "black" : "white",
-              }}
-              size={20}
-            />
-          </Pressable>
+            {data ? (
+              <>
+                {data[0]?.username ? (
+                  <Text
+                    numberOfLines={1}
+                    className="body-sm w-[140] text-surface-fg dark:text-surface"
+                  >
+                    {data[0]?.username}
+                  </Text>
+                ) : null}
+              </>
+            ) : null}
+          </Skeleton>
         </View>
-      ) : null}
-    </Skeleton>
+      </View>
+
+      <Pressable className="p-md" onPress={() => router.push("/settings/edit")}>
+        <MaterialCommunityIcons
+          name="pencil-outline"
+          className="relative z-30 "
+          style={{
+            color: colorScheme === "light" ? "black" : "white",
+          }}
+          size={20}
+        />
+      </Pressable>
+    </View>
   );
 }

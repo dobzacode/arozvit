@@ -1,4 +1,5 @@
 import type { TRPCRouterRecord } from "@trpc/server";
+import { clerkClient } from "@clerk/nextjs/server";
 import { z } from "zod";
 
 import { eq } from "@planty/db";
@@ -49,8 +50,9 @@ export const userRouter = {
       }
     }),
 
-  delete: protectedProcedure.input(z.string()).mutation(({ ctx, input }) => {
-    return ctx.db.delete(User).where(eq(User.id, input));
+  delete: protectedProcedure.mutation(async ({ ctx }) => {
+    await clerkClient.users.deleteUser(ctx.auth.userId);
+    return ctx.db.delete(User).where(eq(User.id, ctx.auth.userId));
   }),
 
   get: protectedProcedure.query(({ ctx }) => {
