@@ -5,10 +5,11 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "format": "prettier --debug-check . --ignore-path ../../.gitignore",
+    "format": "prettier --debug-check . --ignore-path ../../.gitignore ",
     "lint": "eslint",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false",
-    "build": "esbuild index.ts --bundle --minify --sourcemap --platform=node --target=es2020 --outfile=dist/index.js"
+    "build": "esbuild index.ts --bundle --minify --sourcemap --platform=node --target=es2020 --outfile=dist/index.js",
+    "clean": "git clean -xdf dist .turbo node_modules"
   },
   "devDependencies": {
     "@aws-sdk/client-secrets-manager": "^3.588.0",

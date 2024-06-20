@@ -4,6 +4,8 @@ import type {
   Context,
 } from "aws-lambda";
 import Expo from "expo-server-sdk";
+import moment from "moment";
+
 import { and, eq, lte } from "@arozvit/db";
 import { db } from "@arozvit/db/client";
 import {
@@ -12,7 +14,6 @@ import {
   NotificationPlant,
   Plant,
 } from "@arozvit/db/schema";
-import moment from "moment";
 
 const expo = new Expo({
   useFcmV1: true,
