@@ -13,6 +13,7 @@ export const notificationRouter = {
       with: {
         notificationPlant: true,
       },
+      orderBy: (comments, { desc }) => desc(comments.createdAt),
     });
   }),
 
