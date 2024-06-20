@@ -7,7 +7,7 @@ jest.mock("~/utils/api", () => ({
     user: {
       getImage: {
         useQuery: jest.fn(() => ({
-          data: "https://example.com/image.jpg",
+          data: "https://clerk.com/example/image.jpg",
           isLoading: true,
         })),
       },
@@ -22,6 +22,8 @@ describe("TopMenu component", () => {
     const userImage = getByTestId("user-image");
     expect(userImage).toBeTruthy();
     screen.debug();
-    expect(userImage.props.source.uri).toEqual("https://example.com/image.jpg");
+    expect(userImage.props.source.uri).toEqual(
+      "https://clerk.com/example/image.jpg",
+    );
   });
 });
