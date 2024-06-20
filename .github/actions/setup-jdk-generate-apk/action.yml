@@ -23,6 +23,9 @@ inputs:
     description: "APP_ENV (one of): development, staging, production"
     required: true
     default: "staging"
+  GOOGLE_BASE64:
+    description: "Google base64 key"
+    required: true
   EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY:
     description: "Clerk publishable key"
     required: true
@@ -57,6 +60,11 @@ runs:
     - name: Write environment variables
       run: |
         echo "EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY=${{ inputs.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY }}" > ./apps/expo/.env
+      shell: bash
+
+    - name: Decode Base64 and Write to google-services.json
+      run: |
+        echo ${{ inputs.GOOGLE_BASE64 }} | base64 --decode > ./apps/expo/google-services.json
       shell: bash
 
     - name: Generate Test APK

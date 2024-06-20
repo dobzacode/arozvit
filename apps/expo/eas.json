@@ -30,6 +30,9 @@
       }
     },
     "production": {
+      "env": {
+        "EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY": "pk_test_YmVsb3ZlZC1yZWRmaXNoLTMzLmNsZXJrLmFjY291bnRzLmRldiQ"
+      },
       "extends": "base"
     }
   },
