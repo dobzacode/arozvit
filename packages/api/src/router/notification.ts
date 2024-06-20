@@ -1,7 +1,7 @@
 import type { TRPCRouterRecord } from "@trpc/server";
 import { z } from "zod";
 
-import { eq } from "@arozvit/db";
+import { and, eq } from "@arozvit/db";
 import { Notification } from "@arozvit/db/schema";
 
 import { protectedProcedure } from "../trpc";
@@ -23,5 +23,14 @@ export const notificationRouter = {
         .update(Notification)
         .set({ isRead: true })
         .where(eq(Notification.id, input));
+    }),
+
+  
+    isAnyUnread: protectedProcedure.query(({ ctx }) => {
+      return ctx.db
+        .select({ id: Notification.id })
+        .from(Notification)
+        .where(and(eq(Notification.userId, ctx.auth.userId), eq(Notification.isRead, false)))
+
     }),
 } satisfies TRPCRouterRecord;
