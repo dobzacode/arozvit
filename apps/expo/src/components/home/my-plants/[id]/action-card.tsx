@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import { useState } from "react";
 import {
   ActivityIndicator,
@@ -6,9 +7,8 @@ import {
   useColorScheme,
   View,
 } from "react-native";
-import { router } from "expo-router";
 
-import type { Plant } from "@planty/validators";
+import type { Plant } from "@arozvit/validators";
 
 import DeleteButton from "~/components/ui/delete-button";
 

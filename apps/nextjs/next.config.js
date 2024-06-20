@@ -3,7 +3,7 @@ const config = {
   reactStrictMode: true,
 
   /** Enables hot reloading for local packages without a build step */
-  transpilePackages: ["@planty/api", "@planty/db", "@planty/utils"],
+  transpilePackages: ["@arozvit/api", "@arozvit/db", "@arozvit/utils"],
   output: "standalone",
 
   /** We already do linting and typechecking as separate tasks in CI */

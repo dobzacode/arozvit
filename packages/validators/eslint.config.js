@@ -1,4 +1,4 @@
-import baseConfig from "@planty/eslint-config/base";
+import baseConfig from "@arozvit/eslint-config/base";
 
 /** @type {import('typescript-eslint').Config} */
 export default [

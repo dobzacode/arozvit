@@ -1,5 +1,5 @@
 {
-  "name": "@planty/validators",
+  "name": "@arozvit/validators",
   "private": true,
   "version": "0.1.0",
   "type": "module",
@@ -22,14 +22,14 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@planty/eslint-config": "workspace:*",
-    "@planty/prettier-config": "workspace:*",
-    "@planty/tsconfig": "workspace:*",
-    "@planty/db": "workspace:*",
+    "@arozvit/eslint-config": "workspace:*",
+    "@arozvit/prettier-config": "workspace:*",
+    "@arozvit/tsconfig": "workspace:*",
+    "@arozvit/db": "workspace:*",
     "eslint": "^9.2.0",
     "prettier": "^3.2.5",
     "typescript": "^5.3.3",
     "drizzle-zod": "^0.5.1"
   },
-  "prettier": "@planty/prettier-config"
+  "prettier": "@arozvit/prettier-config"
 }

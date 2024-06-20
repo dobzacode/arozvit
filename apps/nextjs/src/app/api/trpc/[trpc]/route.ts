@@ -1,9 +1,9 @@
-import type { NextRequest } from "next/server";
 import { getAuth } from "@clerk/nextjs/server";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
+import type { NextRequest } from "next/server";
 
-import { appRouter, createTRPCContext } from "@planty/api";
-import { env } from "@planty/utils";
+import { appRouter, createTRPCContext } from "@arozvit/api";
+import { env } from "@arozvit/utils";
 
 /**
  * Configure basic CORS headers

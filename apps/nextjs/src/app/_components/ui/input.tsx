@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { cn } from "@planty/utils";
+import { cn } from "@arozvit/utils";
 
 export type InputProps = React.InputHTMLAttributes<HTMLInputElement>;
 

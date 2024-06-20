@@ -39,4 +39,4 @@ jobs:
           env: |
             MAESTRO_PASSWORD=${{ secrets.MAESTRO_PASSWORD }}
             MAESTRO_EMAIL=${{ secrets.MAESTRO_EMAIL }}
-            APP_ID=com.corentinkittel.planty
+            APP_ID=com.corentinkittel.arozvit

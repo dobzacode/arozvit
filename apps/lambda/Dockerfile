@@ -3,7 +3,7 @@
     RUN npm install --global turbo
     WORKDIR /app
     COPY . .
-    RUN turbo prune @planty/lambda --docker
+    RUN turbo prune @arozvit/lambda --docker
 
     ##### INSTALLER
     FROM public.ecr.aws/lambda/nodejs:20 as installer
@@ -13,7 +13,7 @@
     RUN npm install --global pnpm@9.1.3 && pnpm install --frozen-lockfile
     COPY --from=builder /app/out/full/ .
     COPY turbo.json turbo.json
-    RUN pnpm turbo build --filter=@planty/lambda
+    RUN pnpm turbo build --filter=@arozvit/lambda
 
     
     FROM public.ecr.aws/lambda/nodejs:20

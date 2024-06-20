@@ -3,7 +3,7 @@ import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
-import { db } from "@planty/db/client";
+import { db } from "@arozvit/db/client";
 
 type AuthObject = ReturnType<typeof getAuth>;
 /**

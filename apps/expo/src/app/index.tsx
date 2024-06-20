@@ -1,6 +1,6 @@
-import { Image, Text, View } from "react-native";
-import { Redirect } from "expo-router";
 import { useAuth } from "@clerk/clerk-expo";
+import { Redirect } from "expo-router";
+import { Image, Text, View } from "react-native";
 
 import SignInSection from "~/components/auth/sign-in-section";
 
@@ -26,7 +26,7 @@ export default function Page() {
             alt="Home botanical"
           />
           <Text role="heading" className="heading-h1 surface text-center">
-            Bienvenue sur Planty
+            Bienvenue sur arozvit
           </Text>
           <Text className="body-sm surface text-center">
             Créer un compte ou connectez-vous et simplifier votre quotidien dès

@@ -1,12 +1,12 @@
 import { render, screen } from "@testing-library/react-native";
 import moment from "moment";
 
-import { Plant } from "@planty/validators";
+import { Plant } from "@arozvit/validators";
 
 import { firstLetterCapitalize } from "~/utils/utils";
 import MainCard from "./main-card";
 
-jest.mock("@planty/validators", () => ({
+jest.mock("@arozvit/validators", () => ({
   Plant: jest.fn(() => ({})),
 }));
 

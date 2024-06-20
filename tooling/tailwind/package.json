@@ -1,5 +1,5 @@
 {
-  "name": "@planty/tailwind-config",
+  "name": "@arozvit/tailwind-config",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -20,12 +20,12 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@planty/eslint-config": "workspace:*",
-    "@planty/prettier-config": "workspace:*",
-    "@planty/tsconfig": "workspace:*",
+    "@arozvit/eslint-config": "workspace:*",
+    "@arozvit/prettier-config": "workspace:*",
+    "@arozvit/tsconfig": "workspace:*",
     "eslint": "^9.2.0",
     "prettier": "^3.2.5",
     "typescript": "^5.3.3"
   },
-  "prettier": "@planty/prettier-config"
+  "prettier": "@arozvit/prettier-config"
 }

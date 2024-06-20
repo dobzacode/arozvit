@@ -3,7 +3,7 @@
   "extends": ["config:base"],
   "packageRules": [
     {
-      "matchPackagePatterns": ["^@planty/"],
+      "matchPackagePatterns": ["^@arozvit/"],
       "enabled": false
     }
   ],

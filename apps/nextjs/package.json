@@ -1,5 +1,5 @@
 {
-  "name": "@planty/nextjs",
+  "name": "@arozvit/nextjs",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -17,13 +17,13 @@
     "@clerk/localizations": "^2.4.2",
     "@clerk/nextjs": "^5.0.12",
     "@hookform/resolvers": "^3.4.0",
-    "@planty/api": "workspace:*",
-    "@planty/db": "workspace:*",
-    "@planty/utils": "workspace:*",
-    "@planty/tsconfig": "workspace:*",
-    "@planty/eslint-config": "workspace:*",
-    "@planty/prettier-config": "workspace:*",
-    "@planty/tailwind-config": "workspace:*",
+    "@arozvit/api": "workspace:*",
+    "@arozvit/db": "workspace:*",
+    "@arozvit/utils": "workspace:*",
+    "@arozvit/tsconfig": "workspace:*",
+    "@arozvit/eslint-config": "workspace:*",
+    "@arozvit/prettier-config": "workspace:*",
+    "@arozvit/tailwind-config": "workspace:*",
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-toast": "^1.1.5",
@@ -57,5 +57,5 @@
     "tailwindcss": "^3.4.3",
     "typescript": "^5.3.3"
   },
-  "prettier": "@planty/prettier-config"
+  "prettier": "@arozvit/prettier-config"
 }

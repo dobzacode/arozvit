@@ -1,5 +1,5 @@
 {
-  "name": "@planty/eslint-config",
+  "name": "@arozvit/eslint-config",
   "private": true,
   "version": "0.3.0",
   "type": "module",
@@ -24,11 +24,11 @@
     "typescript-eslint": "^7.8.0"
   },
   "devDependencies": {
-    "@planty/prettier-config": "workspace:*",
-    "@planty/tsconfig": "workspace:*",
+    "@arozvit/prettier-config": "workspace:*",
+    "@arozvit/tsconfig": "workspace:*",
     "eslint": "^9.2.0",
     "prettier": "^3.2.5",
     "typescript": "^5.3.3"
   },
-  "prettier": "@planty/prettier-config"
+  "prettier": "@arozvit/prettier-config"
 }

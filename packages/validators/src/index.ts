@@ -1,12 +1,11 @@
-import { createSelectSchema } from "drizzle-zod";
-import { z } from "zod";
-
 import {
   Notification as dbNotification,
   NotificationPlant as dbNotificationPlant,
   Plant as dbPlant,
   User as dbUser,
-} from "@planty/db/schema";
+} from "@arozvit/db/schema";
+import { createSelectSchema } from "drizzle-zod";
+import { z } from "zod";
 
 export const selectPlantSchema = createSelectSchema(dbPlant);
 

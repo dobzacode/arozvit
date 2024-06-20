@@ -1,8 +1,8 @@
+import moment from "moment-timezone";
 import { useState } from "react";
 import { ActivityIndicator, Text, useColorScheme, View } from "react-native";
-import moment from "moment-timezone";
 
-import type { Plant } from "@planty/validators";
+import type { Plant } from "@arozvit/validators";
 
 import WateringButton from "~/components/ui/watering-button";
 

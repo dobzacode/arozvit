@@ -1,7 +1,7 @@
 import { act, fireEvent, render, screen } from "@testing-library/react-native";
 import moment from "moment";
 
-import { Plant } from "@planty/validators";
+import { Plant } from "@arozvit/validators";
 
 import { api } from "~/utils/api";
 import WateringButton from "./watering-button";

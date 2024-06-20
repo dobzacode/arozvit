@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import { Pressable, Text, useColorScheme } from "react-native";
-import { useRouter } from "expo-router";
 import { AntDesign } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 import { MotiView } from "moti/build";
 import { Skeleton } from "moti/skeleton";
+import { useEffect, useState } from "react";
+import { Pressable, Text, useColorScheme } from "react-native";
 
-import type { Notification, NotificationPlant } from "@planty/validators";
+import type { Notification, NotificationPlant } from "@arozvit/validators";
 
 import { api } from "~/utils/api";
 

@@ -1,7 +1,7 @@
-import React from "react";
 import { act, fireEvent, render, screen } from "@testing-library/react-native";
+import React from "react";
 
-import { Plant } from "@planty/validators";
+import { Plant } from "@arozvit/validators";
 
 import PlantForm from "./plant-form";
 

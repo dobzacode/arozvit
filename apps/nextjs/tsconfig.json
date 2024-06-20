@@ -1,5 +1,5 @@
 {
-  "extends": "@planty/tsconfig/base.json",
+  "extends": "@arozvit/tsconfig/base.json",
   "compilerOptions": {
     "lib": ["es2022", "dom", "dom.iterable"],
     "jsx": "preserve",

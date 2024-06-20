@@ -1,5 +1,5 @@
 {
-  "name": "planty",
+  "name": "arozvit",
   "private": true,
   "engines": {
     "node": ">=18"
@@ -34,7 +34,7 @@
     "@commitlint/cli": "^19.3.0",
     "@commitlint/config-conventional": "^19.2.2",
     "@commitlint/cz-commitlint": "^19.2.0",
-    "@planty/prettier-config": "workspace:*",
+    "@arozvit/prettier-config": "workspace:*",
     "@turbo/gen": "^1.13.3",
     "commitizen": "^4.3.0",
     "husky": "^9.0.11",
@@ -60,5 +60,5 @@
       "prettier --write"
     ]
   },
-  "prettier": "@planty/prettier-config"
+  "prettier": "@arozvit/prettier-config"
 }

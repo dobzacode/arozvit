@@ -1,3 +1,4 @@
+import { useRouter } from "expo-router";
 import { useState } from "react";
 import {
   ActivityIndicator,
@@ -8,9 +9,8 @@ import {
   View,
 } from "react-native";
 import Toast from "react-native-root-toast";
-import { useRouter } from "expo-router";
 
-import { User } from "@planty/validators";
+import { User } from "@arozvit/validators";
 
 import { api } from "~/utils/api";
 import AvatarUpload from "./avatar-upload";

@@ -1,5 +1,5 @@
-import { execSync } from "node:child_process";
 import type { PlopTypes } from "@turbo/gen";
+import { execSync } from "node:child_process";
 
 interface PackageJson {
   name: string;
@@ -10,13 +10,13 @@ interface PackageJson {
 
 export default function generator(plop: PlopTypes.NodePlopAPI): void {
   plop.setGenerator("init", {
-    description: "Generate a new package for the planty Monorepo",
+    description: "Generate a new package for the arozvit Monorepo",
     prompts: [
       {
         type: "input",
         name: "name",
         message:
-          "What is the name of the package? (You can skip the `@planty/` prefix)",
+          "What is the name of the package? (You can skip the `@arozvit/` prefix)",
       },
       {
         type: "input",
@@ -28,8 +28,8 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
     actions: [
       (answers) => {
         if ("name" in answers && typeof answers.name === "string") {
-          if (answers.name.startsWith("@planty/")) {
-            answers.name = answers.name.replace("@planty/", "");
+          if (answers.name.startsWith("@arozvit/")) {
+            answers.name = answers.name.replace("@arozvit/", "");
           }
         }
         return "Config sanitized";

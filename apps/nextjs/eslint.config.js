@@ -1,6 +1,6 @@
-import baseConfig, { restrictEnvAccess } from "@planty/eslint-config/base";
-import nextjsConfig from "@planty/eslint-config/nextjs";
-import reactConfig from "@planty/eslint-config/react";
+import baseConfig, { restrictEnvAccess } from "@arozvit/eslint-config/base";
+import nextjsConfig from "@arozvit/eslint-config/nextjs";
+import reactConfig from "@arozvit/eslint-config/react";
 
 /** @type {import('typescript-eslint').Config} */
 export default [

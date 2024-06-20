@@ -2,9 +2,9 @@ import type { TRPCRouterRecord } from "@trpc/server";
 import moment from "moment-timezone";
 import { z } from "zod";
 
-import { and, eq, gte, like, lt, lte } from "@planty/db";
-import { CreatePlantSchema, Plant } from "@planty/db/schema";
-import { getImage, translateTimeUnit, uploadImage } from "@planty/utils";
+import { and, eq, gte, like, lt, lte } from "@arozvit/db";
+import { CreatePlantSchema, Plant } from "@arozvit/db/schema";
+import { getImage, translateTimeUnit, uploadImage } from "@arozvit/utils";
 
 import { protectedProcedure } from "../trpc";
 

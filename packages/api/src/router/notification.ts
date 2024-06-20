@@ -1,8 +1,8 @@
 import type { TRPCRouterRecord } from "@trpc/server";
 import { z } from "zod";
 
-import { eq } from "@planty/db";
-import { Notification } from "@planty/db/schema";
+import { eq } from "@arozvit/db";
+import { Notification } from "@arozvit/db/schema";
 
 import { protectedProcedure } from "../trpc";
 

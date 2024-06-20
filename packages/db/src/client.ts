@@ -1,7 +1,6 @@
+import { getSecretOrEnv } from "@arozvit/utils";
 import { neon } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
-
-import { getSecretOrEnv } from "@planty/utils";
 
 import * as schema from "./schema";
 

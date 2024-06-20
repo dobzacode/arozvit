@@ -1,5 +1,5 @@
 {
-  "name": "@planty/db",
+  "name": "@arozvit/db",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -32,7 +32,7 @@
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
-    "@planty/utils": "workspace:*",
+    "@arozvit/utils": "workspace:*",
     "@t3-oss/env-core": "^0.10.1",
     "@vercel/postgres": "^0.8.0",
     "drizzle-orm": "^0.31.0",
@@ -41,9 +41,9 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@planty/eslint-config": "workspace:*",
-    "@planty/prettier-config": "workspace:*",
-    "@planty/tsconfig": "workspace:*",
+    "@arozvit/eslint-config": "workspace:*",
+    "@arozvit/prettier-config": "workspace:*",
+    "@arozvit/tsconfig": "workspace:*",
     "@types/uuid": "^9.0.8",
     "dotenv-cli": "^7.4.2",
     "drizzle-kit": "^0.22.0",
@@ -51,5 +51,5 @@
     "prettier": "^3.2.5",
     "typescript": "^5.3.3"
   },
-  "prettier": "@planty/prettier-config"
+  "prettier": "@arozvit/prettier-config"
 }

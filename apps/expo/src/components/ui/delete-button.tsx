@@ -1,9 +1,9 @@
+import { MaterialIcons } from "@expo/vector-icons";
 import { useEffect } from "react";
 import { Alert, Pressable, Text, useColorScheme, View } from "react-native";
 import Toast from "react-native-root-toast";
-import { MaterialIcons } from "@expo/vector-icons";
 
-import type { Plant } from "@planty/validators";
+import type { Plant } from "@arozvit/validators";
 
 import { api } from "~/utils/api";
 

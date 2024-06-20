@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react-native";
 
-import { Plant } from "@planty/validators";
+import { Plant } from "@arozvit/validators";
 
 import Today from "./today";
 

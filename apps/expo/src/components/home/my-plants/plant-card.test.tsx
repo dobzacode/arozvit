@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react-native";
 import moment from "moment";
 
-import { Plant } from "@planty/validators";
+import { Plant } from "@arozvit/validators";
 
 import PlantCard from "./plant-card";
 

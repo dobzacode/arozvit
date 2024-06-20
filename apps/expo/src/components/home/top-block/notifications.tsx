@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Text, View } from "react-native";
 
-import type { Plant } from "@planty/validators";
+import type { Plant } from "@arozvit/validators";
 
 import WateringButton from "~/components/ui/watering-button";
 import { firstLetterCapitalize } from "~/utils/utils";

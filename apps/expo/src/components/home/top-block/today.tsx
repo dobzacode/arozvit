@@ -1,6 +1,6 @@
 import { Pressable, Text, View } from "react-native";
 
-import type { Plant } from "@planty/validators";
+import type { Plant } from "@arozvit/validators";
 
 export default function Today({ plants }: { plants?: Plant[] }) {
   if (

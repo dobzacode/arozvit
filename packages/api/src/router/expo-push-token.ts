@@ -1,8 +1,8 @@
 import type { TRPCRouterRecord } from "@trpc/server";
 import { z } from "zod";
 
-import { eq } from "@planty/db";
-import { ExpoPushToken } from "@planty/db/schema";
+import { eq } from "@arozvit/db";
+import { ExpoPushToken } from "@arozvit/db/schema";
 
 import { protectedProcedure } from "../trpc";
 

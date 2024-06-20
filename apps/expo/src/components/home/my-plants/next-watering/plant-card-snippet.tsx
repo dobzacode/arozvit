@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { Image, Text, View } from "react-native";
 import moment from "moment-timezone";
 import { MotiView } from "moti/build";
 import { Skeleton } from "moti/skeleton";
 import { useColorScheme } from "nativewind";
+import { useState } from "react";
+import { Image, Text, View } from "react-native";
 
-import type { Plant } from "@planty/validators";
+import type { Plant } from "@arozvit/validators";
 
 import WateringButton from "~/components/ui/watering-button";
 import { api } from "~/utils/api";

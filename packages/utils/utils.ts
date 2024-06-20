@@ -94,7 +94,7 @@ export async function uploadImage(
   );
 
   const command = new PutObjectCommand({
-    Bucket: "planty-bucket",
+    Bucket: "arozvit-bucket",
     Key: key,
     Body: base64Data,
     ContentType: "image/jpeg",
@@ -112,7 +112,7 @@ export async function uploadImage(
 export async function getImage(Key: string): Promise<string> {
   const getCommand = new GetObjectCommand({
     Key,
-    Bucket: "planty-bucket",
+    Bucket: "arozvit-bucket",
   });
 
   const getUrl = await getSignedUrl(client, getCommand, { expiresIn: 86400 });

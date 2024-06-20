@@ -4,16 +4,15 @@ import type {
   Context,
 } from "aws-lambda";
 import Expo from "expo-server-sdk";
-import moment from "moment";
-
-import { and, eq, lte } from "@planty/db";
-import { db } from "@planty/db/client";
+import { and, eq, lte } from "@arozvit/db";
+import { db } from "@arozvit/db/client";
 import {
   ExpoPushToken,
   Notification,
   NotificationPlant,
   Plant,
-} from "@planty/db/schema";
+} from "@arozvit/db/schema";
+import moment from "moment";
 
 const expo = new Expo({
   useFcmV1: true,

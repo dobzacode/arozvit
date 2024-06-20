@@ -1,5 +1,5 @@
 {
-  "name": "@planty/api",
+  "name": "@arozvit/api",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -18,8 +18,8 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
-    "@planty/db": "workspace:*",
-    "@planty/utils": "workspace:*",
+    "@arozvit/db": "workspace:*",
+    "@arozvit/utils": "workspace:*",
     "@trpc/server": "11.0.0-rc.364",
     "moment": "^2.30.1",
     "moment-timezone": "^0.5.45",
@@ -27,13 +27,13 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@planty/eslint-config": "workspace:*",
-    "@planty/prettier-config": "workspace:*",
+    "@arozvit/eslint-config": "workspace:*",
+    "@arozvit/prettier-config": "workspace:*",
     "@clerk/nextjs": "^5.0.12",
-    "@planty/tsconfig": "workspace:*",
+    "@arozvit/tsconfig": "workspace:*",
     "eslint": "^9.2.0",
     "prettier": "^3.2.5",
     "typescript": "^5.3.3"
   },
-  "prettier": "@planty/prettier-config"
+  "prettier": "@arozvit/prettier-config"
 }

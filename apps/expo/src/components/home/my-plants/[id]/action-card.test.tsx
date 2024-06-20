@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react-native";
 import { router } from "expo-router";
 
-import { Plant } from "@planty/validators";
+import { Plant } from "@arozvit/validators";
 
 import ActionCard from "./action-card";
 

@@ -2,7 +2,7 @@ import type { Config } from "tailwindcss";
 // @ts-expect-error - no types
 import nativewind from "nativewind/preset";
 
-import baseConfig from "@planty/tailwind-config/native";
+import baseConfig from "@arozvit/tailwind-config/native";
 
 export default {
   content: ["./src/**/*.{ts,tsx}"],

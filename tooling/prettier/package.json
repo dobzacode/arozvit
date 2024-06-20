@@ -1,5 +1,5 @@
 {
-  "name": "@planty/prettier-config",
+  "name": "@arozvit/prettier-config",
   "private": true,
   "version": "0.1.0",
   "type": "module",
@@ -17,8 +17,8 @@
     "prettier-plugin-tailwindcss": "^0.5.14"
   },
   "devDependencies": {
-    "@planty/tsconfig": "workspace:*",
+    "@arozvit/tsconfig": "workspace:*",
     "typescript": "^5.3.3"
   },
-  "prettier": "@planty/prettier-config"
+  "prettier": "@arozvit/prettier-config"
 }

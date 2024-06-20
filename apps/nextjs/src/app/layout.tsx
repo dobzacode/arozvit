@@ -1,8 +1,8 @@
-import type { Metadata, Viewport } from "next";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
+import type { Metadata, Viewport } from "next";
 
-import { cn, env } from "@planty/utils";
+import { cn, env } from "@arozvit/utils";
 
 import "~/app/globals.css";
 

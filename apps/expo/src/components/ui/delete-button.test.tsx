@@ -1,7 +1,7 @@
-import { Alert } from "react-native";
 import { act, fireEvent, render, screen } from "@testing-library/react-native";
+import { Alert } from "react-native";
 
-import { Plant } from "@planty/validators";
+import { Plant } from "@arozvit/validators";
 
 import { api } from "~/utils/api";
 import DeleteButton from "./delete-button";

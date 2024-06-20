@@ -1,6 +1,6 @@
 // FIXME: This kinda stinks...
 /// <reference types="../../tooling/eslint/types.d.ts" />
 
-import baseConfig from "@planty/eslint-config/base";
+import baseConfig from "@arozvit/eslint-config/base";
 
 export default [...baseConfig];

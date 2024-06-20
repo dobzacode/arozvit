@@ -1,5 +1,5 @@
-import { Image, Pressable, Text, View } from "react-native";
 import { useRouter } from "expo-router";
+import { Image, Pressable, Text, View } from "react-native";
 
 export default function EmptyState() {
   const router = useRouter();
@@ -7,7 +7,7 @@ export default function EmptyState() {
   return (
     <View className="flex h-full w-full items-center justify-center gap-lg">
       <Text className="heading-h1 text-surface-fg dark:text-surface ">
-        Bienvenue sur Planty
+        Bienvenue sur arozvit
       </Text>
       <Image
         //eslint-disable-next-line

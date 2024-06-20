@@ -1,10 +1,10 @@
+import { FontAwesome6 } from "@expo/vector-icons";
+import moment from "moment-timezone";
 import { useEffect } from "react";
 import { Pressable, Text, useColorScheme, View } from "react-native";
 import Toast from "react-native-root-toast";
-import { FontAwesome6 } from "@expo/vector-icons";
-import moment from "moment-timezone";
 
-import type { Plant } from "@planty/validators";
+import type { Plant } from "@arozvit/validators";
 
 import { api } from "~/utils/api";
 

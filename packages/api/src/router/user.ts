@@ -1,10 +1,10 @@
-import type { TRPCRouterRecord } from "@trpc/server";
 import { clerkClient } from "@clerk/nextjs/server";
+import type { TRPCRouterRecord } from "@trpc/server";
 import { z } from "zod";
 
-import { eq } from "@planty/db";
-import { CreateUserSchema, User } from "@planty/db/schema";
-import { getImage, uploadImage } from "@planty/utils";
+import { eq } from "@arozvit/db";
+import { CreateUserSchema, User } from "@arozvit/db/schema";
+import { getImage, uploadImage } from "@arozvit/utils";
 
 import { protectedProcedure } from "../trpc";
 

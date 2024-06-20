@@ -1,8 +1,8 @@
-import React from "react";
 import { render } from "@testing-library/react-native";
 import moment from "moment";
+import React from "react";
 
-import { Plant } from "@planty/validators";
+import { Plant } from "@arozvit/validators";
 
 import PlantCardAction from "./plant-card-action";
 

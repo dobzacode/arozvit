@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { ActivityIndicator, Image, Text, View } from "react-native";
-import { Link } from "expo-router";
 import { FontAwesome } from "@expo/vector-icons";
+import { Link } from "expo-router";
 import moment from "moment-timezone";
 import { Skeleton } from "moti/skeleton";
+import { useState } from "react";
+import { ActivityIndicator, Image, Text, View } from "react-native";
 
-import type { Plant } from "@planty/validators";
+import type { Plant } from "@arozvit/validators";
 
 import { api } from "~/utils/api";
 import DeleteButton from "../ui/delete-button";

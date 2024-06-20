@@ -1,6 +1,5 @@
+import { getSecretOrEnv } from "@arozvit/utils";
 import { Config, defineConfig } from "drizzle-kit";
-
-import { getSecretOrEnv } from "@planty/utils";
 
 function loadConfig() {
   const DATABASE_URL = getSecretOrEnv("POSTGRES_URL");

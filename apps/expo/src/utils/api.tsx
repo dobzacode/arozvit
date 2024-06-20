@@ -1,13 +1,13 @@
-import { useState } from "react";
 import { useAuth } from "@clerk/clerk-expo";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink, loggerLink } from "@trpc/client";
 import { createTRPCReact } from "@trpc/react-query";
+import { useState } from "react";
 import superjson from "superjson";
 
-import type { AppRouter } from "@planty/api";
+import type { AppRouter } from "@arozvit/api";
 
-export { type RouterInputs, type RouterOutputs } from "@planty/api";
+export { type RouterInputs, type RouterOutputs } from "@arozvit/api";
 
 /**
  * A set of typesafe hooks for consuming your API.

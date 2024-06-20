@@ -1,9 +1,9 @@
-import { Image, Text, View } from "react-native";
 import moment from "moment-timezone";
 import { Skeleton } from "moti/skeleton";
 import { useColorScheme } from "nativewind";
+import { Image, Text, View } from "react-native";
 
-import type { Plant } from "@planty/validators";
+import type { Plant } from "@arozvit/validators";
 
 import { api } from "~/utils/api";
 import { firstLetterCapitalize } from "~/utils/utils";

@@ -1,3 +1,7 @@
+import { useAuth } from "@clerk/clerk-expo";
+import { AntDesign, Entypo } from "@expo/vector-icons";
+import { router } from "expo-router";
+import moment from "moment-timezone";
 import { useMemo, useRef, useState } from "react";
 import {
   ActivityIndicator,
@@ -6,9 +10,9 @@ import {
   ScrollView,
   Text,
   TextInput,
+  View,
   useColorScheme,
   useWindowDimensions,
-  View,
 } from "react-native";
 import { ExpandingDot } from "react-native-animated-pagination-dots";
 import PagerView, {
@@ -16,12 +20,8 @@ import PagerView, {
 } from "react-native-pager-view";
 import Toast from "react-native-root-toast";
 import SelectDropdown from "react-native-select-dropdown";
-import { router } from "expo-router";
-import { useAuth } from "@clerk/clerk-expo";
-import { AntDesign, Entypo } from "@expo/vector-icons";
-import moment from "moment-timezone";
 
-import type { Plant } from "@planty/validators";
+import type { Plant } from "@arozvit/validators";
 
 import { api } from "~/utils/api";
 import { translateTimeUnit } from "~/utils/utils";

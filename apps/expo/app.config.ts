@@ -19,7 +19,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   assetBundlePatterns: ["**/*"],
   ios: {
-    bundleIdentifier: "com.corentinkittel.planty",
+    bundleIdentifier: "com.corentinkittel.arozvit",
     supportsTablet: true,
   },
   extra: {
@@ -29,7 +29,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     },
   },
   android: {
-    package: "com.corentinkittel.planty",
+    package: "com.corentinkittel.arozvit",
     adaptiveIcon: {
       foregroundImage: "./assets/icon.png",
       backgroundColor: "#1F104A",

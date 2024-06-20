@@ -1,5 +1,5 @@
 {
-  "extends": ["@planty/tsconfig/base.json"],
+  "extends": ["@arozvit/tsconfig/base.json"],
 
   "compilerOptions": {
     "baseUrl": ".",
