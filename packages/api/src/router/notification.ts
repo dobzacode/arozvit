@@ -26,12 +26,22 @@ export const notificationRouter = {
         .where(eq(Notification.id, input));
     }),
 
-  
-    isAnyUnread: protectedProcedure.query(({ ctx }) => {
-      return ctx.db
-        .select({ id: Notification.id })
-        .from(Notification)
-        .where(and(eq(Notification.userId, ctx.auth.userId), eq(Notification.isRead, false)))
+  isAnyUnread: protectedProcedure.query(({ ctx }) => {
+    return ctx.db
+      .select({ id: Notification.id })
+      .from(Notification)
+      .where(
+        and(
+          eq(Notification.userId, ctx.auth.userId),
+          eq(Notification.isRead, false),
+        ),
+      );
+  }),
 
-    }),
+  isAnyNotification: protectedProcedure.query(({ ctx }) => {
+    return ctx.db
+      .select({ id: Notification.id })
+      .from(Notification)
+      .where(eq(Notification.userId, ctx.auth.userId));
+  }),
 } satisfies TRPCRouterRecord;
