@@ -9,7 +9,6 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 export default function TabsLayout() {
   const route = useRouteInfo();
   const colorScheme = useColorScheme();
-
   const auth = useAuth();
 
   if (!auth.isLoaded) {
@@ -115,7 +114,11 @@ export default function TabsLayout() {
           tabBarLabel: "notifications",
           title: "notifications",
           tabBarIcon: ({ color, size }) => {
-            return <Feather name="bell" size={size} color={color} />;
+            return (
+              <View className="relative">
+                <Feather name="bell" size={size} color={color} />
+              </View>
+            );
           },
         }}
       />
