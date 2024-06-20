@@ -1,9 +1,9 @@
+import { useState } from "react";
+import { Image, Text, View } from "react-native";
 import moment from "moment-timezone";
 import { MotiView } from "moti/build";
 import { Skeleton } from "moti/skeleton";
 import { useColorScheme } from "nativewind";
-import { useState } from "react";
-import { Image, Text, View } from "react-native";
 
 import type { Plant } from "@arozvit/validators";
 
@@ -76,13 +76,16 @@ export default function PlantCardSnippet({
             </Text>
           </View>
         </View>
-        <View className="p-md shadow-sm shadow-black">
-          <WateringButton
-            isIcon={true}
-            plant={plant}
-            setIsLoading={setIsLoading}
-          />
-        </View>
+
+        {moment(plant.nextWatering).isBefore(moment().toDate()) && (
+          <View className="p-md shadow-sm shadow-black">
+            <WateringButton
+              isIcon={true}
+              plant={plant}
+              setIsLoading={setIsLoading}
+            />
+          </View>
+        )}
       </View>
     </MotiView>
   );

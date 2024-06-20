@@ -5,6 +5,7 @@ import { AnimatePresence } from "moti/build";
 import { Skeleton } from "moti/skeleton";
 
 import { api } from "~/utils/api";
+import EmptyCard from "./empty-card";
 import PlantCardSnippet from "./plant-card-snippet";
 
 export default function PlantSnippetSection({ date }: { date: string }) {
@@ -36,16 +37,18 @@ export default function PlantSnippetSection({ date }: { date: string }) {
           </Skeleton>
         ))
       ) : (
-        <AnimatePresence>
-          {data
-            ? data.map((plant, index) => (
-                <PlantCardSnippet
-                  key={`plant-snippet-${plant.id}`}
-                  index={index}
-                  plant={plant}
-                ></PlantCardSnippet>
-              ))
-            : null}
+        <AnimatePresence exitBeforeEnter>
+          {data && data.length > 0 ? (
+            data.map((plant, index) => (
+              <PlantCardSnippet
+                key={`plant-snippet-${plant.id}`}
+                index={index}
+                plant={plant}
+              ></PlantCardSnippet>
+            ))
+          ) : (
+            <EmptyCard date={date} key="empty-card-watering"></EmptyCard>
+          )}
         </AnimatePresence>
       )}
     </View>

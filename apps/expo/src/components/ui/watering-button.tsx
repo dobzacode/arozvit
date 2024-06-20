@@ -1,8 +1,8 @@
-import { FontAwesome6 } from "@expo/vector-icons";
-import moment from "moment-timezone";
 import { useEffect } from "react";
 import { Pressable, Text, useColorScheme, View } from "react-native";
 import Toast from "react-native-root-toast";
+import { FontAwesome6 } from "@expo/vector-icons";
+import moment from "moment-timezone";
 
 import type { Plant } from "@arozvit/validators";
 
@@ -30,6 +30,7 @@ export default function WateringButton({
     onSuccess: async () => {
       await utils.plant.getPlantsWithWateringNeed.invalidate();
       await utils.plant.get.invalidate(plant.id);
+      await utils.plant.getAllWateringDays.invalidate();
       await utils.plant.getPlantByWateringDay.invalidate(
         moment().tz("Europe/Paris").toDate(),
       );
@@ -74,7 +75,7 @@ export default function WateringButton({
         })
       }
       needsOffscreenAlphaCompositing
-      className={`relative z-20   items-center whitespace-nowrap rounded-xs   ${!isIcon ? " bg-info px-md py-sm shadow-sm shadow-info" : "surface body self-start p-smd  shadow-sm shadow-black"} ${
+      className={`relative z-20   items-center whitespace-nowrap rounded-xs   ${!isIcon ? " bg-info px-md py-sm shadow-sm shadow-info" : "surface body self-start p-smd shadow-sm  shadow-black dark:bg-neutral-900 dark:shadow-none"} ${
         isPending ||
         isLoading ||
         moment(date).format("DD/MM/YYYY") ===

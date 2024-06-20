@@ -13,6 +13,8 @@ export default function TopMenu({ className }: { className?: string }) {
       staleTime: 86400000,
     });
 
+  console.log(avatar);
+
   return (
     <Pressable
       onPress={() => {
@@ -35,7 +37,9 @@ export default function TopMenu({ className }: { className?: string }) {
             //eslint-disable-next-line
             avatar
               ? {
-                  uri: avatar,
+                  uri: avatar.includes("clerk")
+                    ? avatar
+                    : `data:image/jpeg;base64,${avatar}`,
                 }
               : require("./../../../assets/placeholder-user.jpg")
           }

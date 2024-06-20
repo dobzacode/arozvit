@@ -1,9 +1,9 @@
-import { FontAwesome } from "@expo/vector-icons";
-import { Link } from "expo-router";
-import moment from "moment-timezone";
-import { Skeleton } from "moti/skeleton";
 import { useState } from "react";
 import { ActivityIndicator, Image, Text, View } from "react-native";
+import { Link } from "expo-router";
+import { FontAwesome } from "@expo/vector-icons";
+import moment from "moment-timezone";
+import { Skeleton } from "moti/skeleton";
 
 import type { Plant } from "@arozvit/validators";
 
@@ -33,6 +33,8 @@ export default function PlantCardAction({
   );
 
   //text-error-900 text-error-800 text-error-700 text-error-600 text-error-500
+
+  console.log(moment().diff(plant.lastWatering, "days"));
 
   return (
     <View className={`card-neutral relative flex-row  gap-xs `}>
@@ -92,7 +94,7 @@ export default function PlantCardAction({
             />
             <Link disabled={isLoading} href={`/myplants/${plant.id}`}>
               <View
-                className={`surface body relative z-20  items-center self-start    whitespace-nowrap   rounded-xs p-smd shadow-sm  shadow-black ${isLoading && "shadow-white"}`}
+                className={`surface body relative z-20  items-center self-start    whitespace-nowrap   rounded-xs p-smd shadow-sm  shadow-black dark:bg-neutral-900 dark:shadow-none ${isLoading && "shadow-white"}`}
               >
                 <FontAwesome
                   name="cog"

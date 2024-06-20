@@ -1,25 +1,25 @@
-import {
-  AntDesign,
-  Entypo,
-  FontAwesome5,
-  MaterialCommunityIcons,
-} from "@expo/vector-icons";
-import { useLocalSearchParams } from "expo-router";
-import moment from "moment-timezone";
-import { MotiView } from "moti/build";
-import { Skeleton } from "moti/skeleton";
 import { useMemo, useState } from "react";
 import {
   Pressable,
   ScrollView,
   Switch,
   Text,
-  View,
   useColorScheme,
   useWindowDimensions,
+  View,
 } from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import SelectDropdown from "react-native-select-dropdown";
+import { useLocalSearchParams } from "expo-router";
+import {
+  AntDesign,
+  Entypo,
+  FontAwesome5,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
+import moment from "moment-timezone";
+import { MotiView } from "moti/build";
+import { Skeleton } from "moti/skeleton";
 
 import useDebounce from "~/hooks/useDebounce";
 import { api } from "~/utils/api";
@@ -178,7 +178,11 @@ export default function MyPlantsContent() {
             />
           </View>
           <MotiView
-            animate={{ left: sortedPlant === null ? -120 : 0 }}
+            needsOffscreenAlphaCompositing
+            animate={{
+              left: sortedPlant === null || data?.length === 1 ? -120 : 0,
+              opacity: sortedPlant === null || data?.length === 1 ? 0 : 1,
+            }}
             style={{ flexDirection: "row", gap: 8, zIndex: -10 }}
           >
             <Pressable

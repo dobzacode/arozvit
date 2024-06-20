@@ -1,5 +1,6 @@
 import { useColorScheme, View } from "react-native";
 import { Calendar, LocaleConfig } from "react-native-calendars";
+import { MarkedDates } from "react-native-calendars/src/types";
 import moment from "moment";
 import { MotiView } from "moti/build";
 
@@ -50,16 +51,39 @@ LocaleConfig.defaultLocale = "fr";
 
 export default function WateringCalendar({
   pickedDate,
-  minDate,
+
   maxDate,
   setPickedDate,
+  marked,
 }: {
   pickedDate: string;
   setPickedDate: (date: string) => void;
-  minDate?: string;
+
   maxDate?: string;
+  marked?: Date[];
 }) {
   const colorScheme = useColorScheme();
+
+  const markedDates: MarkedDates = Object.fromEntries(
+    marked?.map((markedDate) => [
+      moment(markedDate).format("YYYY-MM-DD"),
+      {
+        marked: true,
+        dotColor: "blue",
+        disableTouchEvent: false,
+        disabled: false,
+        inactive: false,
+      },
+    ]) ?? [],
+  );
+
+  if (pickedDate) {
+    markedDates[moment(pickedDate).format("YYYY-MM-DD")] = {
+      selected: true,
+      disableTouchEvent: false,
+      disabled: false,
+    };
+  }
 
   return (
     <MotiView
@@ -69,9 +93,10 @@ export default function WateringCalendar({
     >
       <View className="card-neutral px-sm pb-sm">
         <Calendar
+          disabledByDefault={maxDate ? false : true}
+          disableAllTouchEventsForDisabledDays={maxDate ? false : true}
           key={colorScheme}
           className=" rounded-sm "
-          minDate={minDate}
           maxDate={maxDate}
           theme={{
             textDisabledColor:
@@ -99,13 +124,7 @@ export default function WateringCalendar({
             textMonthFontFamily: "mustica-pro",
           }}
           current={pickedDate}
-          markedDates={
-            pickedDate
-              ? {
-                  [moment(pickedDate).format("YYYY-MM-DD")]: { selected: true },
-                }
-              : {}
-          }
+          markedDates={markedDates}
           onDayPress={(day) => {
             console.log(day.dateString);
             setPickedDate(day.dateString);

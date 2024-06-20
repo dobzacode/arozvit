@@ -32,46 +32,39 @@ export default function AccountCard() {
               //eslint-disable-next-line
               avatar
                 ? {
-                    uri: avatar,
+                    uri: avatar.includes("clerk")
+                      ? avatar
+                      : `data:image/jpeg;base64,${avatar}`,
                   }
                 : require("./../../../../assets/placeholder-user.jpg")
             }
           ></Image>
         </Skeleton>
-        <View className=" flex-col justify-center ">
+        <View className=" flex-col items-center justify-center">
           <Skeleton
             show={isLoading}
-            height={18}
+            height={20}
             colorMode={colorScheme === "dark" ? "dark" : "light"}
           >
             {data && (
-              <Text
-                numberOfLines={1}
-                className="body w-[140] text-surface-fg dark:text-surface"
-              >
-                {data[0]?.firstName} {data[0]?.lastName}
-              </Text>
-            )}
-          </Skeleton>
+              <View className="flex items-center ">
+                <Text
+                  numberOfLines={1}
+                  className="body -mt-1 w-[140] text-surface-fg dark:text-surface"
+                >
+                  {data[0]?.firstName} {data[0]?.lastName}
+                </Text>
 
-          <Skeleton
-            show={isLoading}
-            width={90}
-            height={14}
-            colorMode={colorScheme === "dark" ? "dark" : "light"}
-          >
-            {data ? (
-              <>
-                {data[0]?.username ? (
+                {data[0]?.username && (
                   <Text
                     numberOfLines={1}
                     className="body-sm w-[140] text-surface-fg dark:text-surface"
                   >
                     {data[0]?.username}
                   </Text>
-                ) : null}
-              </>
-            ) : null}
+                )}
+              </View>
+            )}
           </Skeleton>
         </View>
       </View>

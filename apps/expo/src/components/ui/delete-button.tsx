@@ -1,7 +1,7 @@
-import { MaterialIcons } from "@expo/vector-icons";
 import { useEffect } from "react";
 import { Alert, Pressable, Text, useColorScheme, View } from "react-native";
 import Toast from "react-native-root-toast";
+import { MaterialIcons } from "@expo/vector-icons";
 
 import type { Plant } from "@arozvit/validators";
 
@@ -73,7 +73,7 @@ export default function DeleteButton({
           },
         )
       }
-      className={`relative z-20   items-center whitespace-nowrap rounded-xs   ${!isIcon ? "bg-error px-md py-sm shadow-sm shadow-error" : "surface body self-start  p-smd shadow-sm shadow-black "} ${isPending || isLoading ? "shadow-white" : ""}  `}
+      className={`relative z-20   items-center whitespace-nowrap rounded-xs   ${!isIcon ? "bg-error px-md py-sm shadow-sm shadow-error" : "surface body self-start  p-smd shadow-sm shadow-black dark:bg-neutral-900 dark:shadow-none "} ${isPending || isLoading ? "shadow-white" : ""}  `}
     >
       {isIcon ? (
         <View testID={"delete-icon"}>
