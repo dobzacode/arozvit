@@ -1,11 +1,10 @@
-import { AntDesign } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
-import { MotiView } from "moti/build";
-import { Skeleton } from "moti/skeleton";
+import type { Notification, NotificationPlant } from "@arozvit/validators";
 import { useEffect, useState } from "react";
 import { Pressable, Text, useColorScheme } from "react-native";
-
-import type { Notification, NotificationPlant } from "@arozvit/validators";
+import { useRouter } from "expo-router";
+import { AntDesign } from "@expo/vector-icons";
+import { MotiView } from "moti/build";
+import { Skeleton } from "moti/skeleton";
 
 import { api } from "~/utils/api";
 
@@ -24,6 +23,8 @@ export default function NotificationCard({
 
   const router = useRouter();
 
+  const utils = api.useUtils();
+
   const plantQueries = api.useQueries((t) =>
     notification.notificationPlant.map((notificationPlant) => {
       return t.plant.isWatered(notificationPlant.plantId, {
@@ -33,8 +34,9 @@ export default function NotificationCard({
   );
 
   const { mutate } = api.notification.markAsRead.useMutation({
-    onSuccess: () => {
+    onSuccess: async () => {
       notification.isRead = true;
+      await utils.notification.isAnyUnread.invalidate();
     },
   });
 

@@ -5,11 +5,16 @@ import { useAuth } from "@clerk/clerk-expo";
 import { Feather } from "@expo/vector-icons";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import { Skeleton } from "moti/skeleton";
+
+import { api } from "~/utils/api";
 
 export default function TabsLayout() {
   const route = useRouteInfo();
   const colorScheme = useColorScheme();
   const auth = useAuth();
+
+  const { data, isLoading } = api.notification.isAnyUnread.useQuery();
 
   if (!auth.isLoaded) {
     return null;
@@ -116,6 +121,22 @@ export default function TabsLayout() {
           tabBarIcon: ({ color, size }) => {
             return (
               <View className="relative">
+                <View className="absolute right-0 top-0 z-20">
+                  <Skeleton
+                    width={10}
+                    height={10}
+                    radius={"round"}
+                    colorMode={colorScheme === "dark" ? "dark" : "light"}
+                    show={isLoading}
+                  >
+                    {data && data.length > 0 ? (
+                      <View
+                        className="rounded-full bg-primary p-xs"
+                        style={{ width: 10, height: 10 }}
+                      ></View>
+                    ) : null}
+                  </Skeleton>
+                </View>
                 <Feather name="bell" size={size} color={color} />
               </View>
             );
