@@ -6,7 +6,7 @@ import TopMenu from "~/components/ui/top-menu";
 
 export default function Page() {
   return (
-    <SafeAreaView>
+    <SafeAreaView className="background ">
       <View className="background  w-full gap-md">
         <TopMenu className={`relative`}></TopMenu>
         <View className=" h-full w-full justify-between gap-md  align-middle">

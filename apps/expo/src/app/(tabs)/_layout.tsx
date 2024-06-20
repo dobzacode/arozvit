@@ -14,7 +14,11 @@ export default function TabsLayout() {
   const colorScheme = useColorScheme();
   const auth = useAuth();
 
-  const { data, isLoading } = api.notification.isAnyUnread.useQuery();
+  const [notification, hasNotifications, plant] = api.useQueries((t) => [
+    t.notification.isAnyUnread(),
+    t.notification.isAnyNotification(),
+    t.plant.isAnyPlant(),
+  ]);
 
   if (!auth.isLoaded) {
     return null;
@@ -40,6 +44,7 @@ export default function TabsLayout() {
             colorScheme === "dark" ? "hsl(98, 20%, 5%)" : "white",
           flexDirection: "row",
           justifyContent: "space-around",
+          borderTopColor: "hsl(98, 20%, 95%)",
         },
 
         tabBarActiveTintColor:
@@ -55,6 +60,16 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="home"
         options={{
+          tabBarItemStyle: {
+            opacity:
+              plant.isLoading || typeof plant.data?.[0] === "undefined"
+                ? 0.3
+                : 1,
+            pointerEvents:
+              plant.isLoading || typeof plant.data?.[0] === "undefined"
+                ? "none"
+                : "auto",
+          },
           tabBarLabel: "accueil",
           title: "accueil",
           tabBarIcon: ({ color, size }) => {
@@ -65,6 +80,16 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="myplants"
         options={{
+          tabBarItemStyle: {
+            opacity:
+              plant.isLoading || typeof plant.data?.[0] === "undefined"
+                ? 0.3
+                : 1,
+            pointerEvents:
+              plant.isLoading || typeof plant.data?.[0] === "undefined"
+                ? "none"
+                : "auto",
+          },
           tabBarLabel: "mes plantes",
           title: "mes plantes",
           tabBarIcon: ({ color, size }) => {
@@ -95,7 +120,7 @@ export default function TabsLayout() {
           tabBarIcon: ({ size }) => {
             return (
               <View
-                className={`h-fit w-fit rounded-full bg-white p-0.5  ${route.pathname === "/newplant" ? " shadow-sm" : "shadow-sm shadow-black "}`}
+                className={`h-fit w-fit rounded-full bg-white p-0.5  ${route.pathname === "/newplant" || route.pathname.includes("edit") ? " shadow-sm" : "shadow-sm shadow-black "}`}
               >
                 <View
                   testID="newplant-tabs"
@@ -116,6 +141,18 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="notifications"
         options={{
+          tabBarItemStyle: {
+            opacity:
+              hasNotifications.isLoading ||
+              typeof hasNotifications.data?.[0] === "undefined"
+                ? 0.3
+                : 1,
+            pointerEvents:
+              hasNotifications.isLoading ||
+              typeof hasNotifications.data?.[0] === "undefined"
+                ? "none"
+                : "auto",
+          },
           tabBarLabel: "notifications",
           title: "notifications",
           tabBarIcon: ({ color, size }) => {
@@ -127,9 +164,9 @@ export default function TabsLayout() {
                     height={10}
                     radius={"round"}
                     colorMode={colorScheme === "dark" ? "dark" : "light"}
-                    show={isLoading}
+                    show={notification.isLoading}
                   >
-                    {data && data.length > 0 ? (
+                    {notification.data && notification.data.length > 0 ? (
                       <View
                         className="rounded-full bg-primary p-xs"
                         style={{ width: 10, height: 10 }}

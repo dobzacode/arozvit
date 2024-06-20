@@ -2,23 +2,31 @@ import type { ConfigContext, ExpoConfig } from "expo/config";
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
-  name: "expo",
-  slug: "expo",
-  scheme: "expo",
+  name: "arozvit",
+  slug: "arozvit",
+  scheme: "arozvit",
+  description:
+    "Prenez le contrôle de l'entretien de vos plantes avec Arozvit, l'outil ultime pour gérer vos plantes d'intérieures et d'extérieures",
   version: "0.1.0",
   orientation: "portrait",
   icon: "./assets/icon.png",
   userInterfaceStyle: "automatic",
-  splash: {
-    image: "./assets/icon.png",
-    resizeMode: "contain",
-    backgroundColor: "#1F104A",
-  },
+
   updates: {
     fallbackToCacheTimeout: 0,
   },
   assetBundlePatterns: ["**/*"],
   ios: {
+    splash: {
+      image: "./assets/black-icon.png",
+      resizeMode: "contain",
+      backgroundColor: "#000000",
+      dark: {
+        image: "./assets/white-icon.png",
+        resizeMode: "contain",
+        backgroundColor: "#FFFFFF",
+      },
+    },
     bundleIdentifier: "com.corentinkittel.arozvit",
     supportsTablet: true,
   },
@@ -29,10 +37,20 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     },
   },
   android: {
+    splash: {
+      image: "./assets/black-icon.png",
+      resizeMode: "contain",
+      backgroundColor: "#000000",
+      dark: {
+        image: "./assets/white-icon.png",
+        resizeMode: "contain",
+        backgroundColor: "#FFFFFF",
+      },
+    },
     package: "com.corentinkittel.arozvit",
     adaptiveIcon: {
       foregroundImage: "./assets/icon.png",
-      backgroundColor: "#1F104A",
+      backgroundColor: "#FFFFFF",
     },
     googleServicesFile: "./google-services.json",
   },

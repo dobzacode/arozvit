@@ -1,7 +1,7 @@
 import { ActivityIndicator, ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Redirect } from "expo-router";
 
-import EmptyState from "~/components/home/empty-state";
 import MyPlants from "~/components/home/my-plants";
 import TopBlock from "~/components/home/top-block";
 import TopMenu from "~/components/ui/top-menu";
@@ -29,7 +29,7 @@ export default function Page() {
                 <MyPlants></MyPlants>
               </ScrollView>
             ) : (
-              <EmptyState></EmptyState>
+              <Redirect href={"/newplant"}></Redirect>
             )}
           </>
         )}

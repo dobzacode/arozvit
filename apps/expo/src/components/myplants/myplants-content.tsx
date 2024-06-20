@@ -34,6 +34,8 @@ export default function MyPlantsContent() {
   const debouncedValue = useDebounce(searchTerm, 250);
   const { data, isLoading } =
     api.plant.getBySearchTerm.useQuery(debouncedValue);
+  const { data: isAnyPlantWithWateringNeed, isLoading: isSearching } =
+    api.plant.isAnyPlantWithWateringNeed.useQuery();
   const colorScheme = useColorScheme();
   const [sortedBy, setSortedBy] = useState<
     "Dernier arrosage" | "Prochain arrosage" | "Nom" | null
@@ -255,23 +257,31 @@ export default function MyPlantsContent() {
               onCancel={() => setDatePickerVisibility(false)}
             />
           </View>
-          <View className="flex-row items-center justify-center gap-xs">
-            <Text className="body-sm text-surface--fg dark:text-surface">
-              Non arrosée
-            </Text>
-            <Switch
-              trackColor={{ false: "#767577", true: "hsl(100, 36%, 55%)" }}
-              thumbColor={colorScheme !== "dark" ? "white" : "white"}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleSwitch}
-              value={isEnabled}
-            />
-          </View>
+
+          {!isSearching && (
+            <View
+              className={`flex-row items-center justify-center gap-xs ${!isAnyPlantWithWateringNeed && "opacity-30"}`}
+            >
+              <Text className="body-sm text-surface--fg dark:text-surface">
+                Non arrosée
+              </Text>
+              <Skeleton>
+                <Switch
+                  disabled={!isAnyPlantWithWateringNeed}
+                  trackColor={{ false: "#767577", true: "hsl(100, 36%, 55%)" }}
+                  thumbColor={colorScheme !== "dark" ? "white" : "white"}
+                  ios_backgroundColor="#3e3e3e"
+                  onValueChange={toggleSwitch}
+                  value={isEnabled}
+                />
+              </Skeleton>
+            </View>
+          )}
         </View>
       </View>
 
       <ScrollView
-        style={{ height: height * 0.55 }}
+        style={{ height: height * 0.5 }}
         className="pt-md"
         contentContainerClassName="flex gap-md px-md pb-4xl"
       >

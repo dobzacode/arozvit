@@ -37,9 +37,7 @@ export default function TopMenu({ className }: { className?: string }) {
             //eslint-disable-next-line
             avatar
               ? {
-                  uri: avatar.includes("clerk")
-                    ? avatar
-                    : `data:image/jpeg;base64,${avatar}`,
+                  uri: avatar,
                 }
               : require("./../../../assets/placeholder-user.jpg")
           }

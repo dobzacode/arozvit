@@ -6,7 +6,7 @@ import SignInWithOAuth from "./sign-in-with-oauth";
 export default function SignInSection() {
   const colorScheme = useColorScheme();
   return (
-    <View className="grid w-full gap-md">
+    <View className="w-full gap-md px-md">
       <SignInWithOAuth role="link" strategy="apple" testID="apple-oauth-button">
         <AntDesign
           name="apple1"

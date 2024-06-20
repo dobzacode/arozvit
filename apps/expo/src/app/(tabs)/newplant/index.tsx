@@ -6,7 +6,7 @@ import TopMenu from "~/components/ui/top-menu";
 
 export default function Page() {
   return (
-    <SafeAreaView>
+    <SafeAreaView className="background ">
       <View className="background  flex h-full w-full  ">
         <TopMenu className={"relative"}></TopMenu>
         <View className="flex pt-sm">

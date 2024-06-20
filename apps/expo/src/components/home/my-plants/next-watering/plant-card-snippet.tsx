@@ -35,7 +35,7 @@ export default function PlantCardSnippet({
       from={{ translateX, opacity: 0 }}
       animate={{ translateX: 0, opacity: 1 }}
       transition={{ damping: 300 }}
-      exit={{ translateX, opacity: 0 }}
+      exit={{ translateX: -translateX, opacity: 0 }}
       delay={index * 100}
       needsOffscreenAlphaCompositing
     >

@@ -37,7 +37,7 @@ export default function PlantCardAction({
   console.log(moment().diff(plant.lastWatering, "days"));
 
   return (
-    <View className={`card-neutral relative flex-row  gap-xs `}>
+    <View className={`card-neutral relative flex-row  gap-xs overflow-hidden`}>
       {isLoading && (
         <ActivityIndicator
           testID="loading-indicator"
@@ -48,6 +48,7 @@ export default function PlantCardAction({
       <Skeleton
         width={190}
         height={160}
+        radius={"square"}
         colorMode={colorScheme === "dark" ? "dark" : "light"}
         show={isFetchingImage}
       >

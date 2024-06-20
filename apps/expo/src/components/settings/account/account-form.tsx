@@ -1,4 +1,3 @@
-import { useRouter } from "expo-router";
 import { useState } from "react";
 import {
   ActivityIndicator,
@@ -9,6 +8,7 @@ import {
   View,
 } from "react-native";
 import Toast from "react-native-root-toast";
+import { useRouter } from "expo-router";
 
 import { User } from "@arozvit/validators";
 
@@ -16,11 +16,9 @@ import { api } from "~/utils/api";
 import AvatarUpload from "./avatar-upload";
 
 export default function AccountForm({ user }: { user: User }) {
-  const [firstName, setFirstName] = useState<string>(user.firstName ?? "Jean");
-  const [lastName, setLastName] = useState<string>(user.lastName ?? "Dupont");
-  const [username, setUsername] = useState<string>(
-    user.username ?? "jean.dupont",
-  );
+  const [firstName, setFirstName] = useState<string>(user.firstName ?? "");
+  const [lastName, setLastName] = useState<string>(user.lastName ?? "");
+  const [username, setUsername] = useState<string>(user.username ?? "j");
   const [image, setImage] = useState<null | {
     base64?: string;
     key?: string;
@@ -94,6 +92,7 @@ export default function AccountForm({ user }: { user: User }) {
             testID="firstNameInput"
             className={`input-neutral  rounded-xs p-sm shadow-sm shadow-black ${error?.data?.zodError?.fieldErrors.name && "border border-error-500"}`}
             value={firstName}
+            placeholder="Jean"
             maxLength={70}
             selectionColor={"hsl(100, 36%, 40%)"}
             editable={!isPending}
@@ -110,6 +109,7 @@ export default function AccountForm({ user }: { user: User }) {
             Nom
           </Text>
           <TextInput
+            placeholder="Dupont"
             testID="lastNameInput"
             className={`input-neutral  rounded-xs p-sm shadow-sm shadow-black ${error?.data?.zodError?.fieldErrors.name && "border border-error-500"}`}
             value={lastName}
@@ -129,6 +129,7 @@ export default function AccountForm({ user }: { user: User }) {
             Nom d'utilisateur
           </Text>
           <TextInput
+            placeholder="jean.dupont"
             testID="userNameInput"
             className={`input-neutral  rounded-xs p-sm shadow-sm shadow-black ${error?.data?.zodError?.fieldErrors.name && "border border-error-500"}`}
             value={username}

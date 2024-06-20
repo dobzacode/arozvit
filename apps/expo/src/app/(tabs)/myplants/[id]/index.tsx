@@ -28,7 +28,7 @@ export default function Page() {
   if (!data || isError || data[0] === undefined) return null;
 
   return (
-    <SafeAreaView>
+    <SafeAreaView className="background ">
       <View className="background h-full w-full gap-md">
         <TopMenu className="relative"></TopMenu>
         <View className="flex h-full w-full  gap-md ">

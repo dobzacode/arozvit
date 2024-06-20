@@ -8,7 +8,7 @@ export default function EmptyCard({ date }: { date: string }) {
       from={{ translateX: -100, opacity: 0 }}
       animate={{ translateX: 0, opacity: 1 }}
       transition={{ damping: 300 }}
-      exit={{ translateX: -100, opacity: 0 }}
+      exit={{ translateX: 100, opacity: 0 }}
       needsOffscreenAlphaCompositing
     >
       <View className="card-neutral h-[76] w-full items-center justify-center">

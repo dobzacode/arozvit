@@ -1,9 +1,9 @@
-import { Image, Text, useColorScheme, View } from "react-native";
-import { Link } from "expo-router";
 import { Entypo } from "@expo/vector-icons";
+import { Link } from "expo-router";
 import moment from "moment-timezone";
 import { MotiView } from "moti/build";
 import { Skeleton } from "moti/skeleton";
+import { Image, Text, useColorScheme, View } from "react-native";
 
 import type { Plant } from "@arozvit/validators";
 

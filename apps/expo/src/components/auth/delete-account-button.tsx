@@ -4,7 +4,14 @@ import { AntDesign } from "@expo/vector-icons";
 import { api } from "~/utils/api";
 
 export const DeleteAccountButton = () => {
-  const { mutate, isPending } = api.user.delete.useMutation();
+  const utils = api.useUtils();
+
+  const { mutate, isPending } = api.user.delete.useMutation({
+    onSuccess: async () => {
+      await utils.plant.isAnyPlant.invalidate();
+      await utils.notification.isAnyNotification.invalidate();
+    },
+  });
 
   return (
     <Pressable
@@ -30,7 +37,7 @@ export const DeleteAccountButton = () => {
           },
         )
       }
-      className=" flex-row items-center justify-between rounded-xs  bg-error px-md py-smd shadow-sm shadow-error "
+      className=" flex-row items-center justify-between rounded-sm  bg-error px-md py-smd shadow-sm shadow-error "
     >
       <View className="flex-row gap-md">
         <AntDesign
@@ -41,9 +48,7 @@ export const DeleteAccountButton = () => {
           }}
           size={20}
         />
-        <Text className="body text-surface-fg dark:text-surface">
-          Supprimer mon compte
-        </Text>
+        <Text className="body text-error-fg ">Supprimer mon compte</Text>
       </View>
     </Pressable>
   );
