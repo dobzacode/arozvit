@@ -66,6 +66,7 @@ export const userRouter = {
       .from(User)
       .where(eq(User.id, ctx.auth.userId));
     if (!data[0]?.imageUrl) return null;
+    if (data[0].imageUrl.includes("https")) return data[0].imageUrl;
     const url = ctx.auth.userId ? await getImage(data[0].imageUrl) : null;
     return url;
   }),
