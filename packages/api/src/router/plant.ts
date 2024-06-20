@@ -49,37 +49,37 @@ export const plantRouter = {
         );
     }),
 
-    getPlantsWithWateringNeed: protectedProcedure.query(({ ctx }) => {
-      return ctx.db
-        .select()
+  getPlantsWithWateringNeed: protectedProcedure.query(({ ctx }) => {
+    return ctx.db
+      .select()
+      .from(Plant)
+      .where(
+        and(
+          eq(Plant.userId, ctx.auth.userId),
+          lte(Plant.nextWatering, moment().toDate()),
+        ),
+      );
+  }),
+
+  getImage: protectedProcedure
+    .input(z.string().nullable())
+    .query(async ({ ctx, input }) => {
+      if (!input) return null;
+      const data = await ctx.db
+        .select({ imageUrl: Plant.imageUrl })
         .from(Plant)
-        .where(
-          and(
-            eq(Plant.userId, ctx.auth.userId),
-            lte(Plant.nextWatering, moment().toDate()),
-          ),
-        );
+        .where(and(eq(Plant.id, input), eq(Plant.userId, ctx.auth.userId)));
+      if (!data[0]?.imageUrl) return null;
+      const url = input ? await getImage(data[0].imageUrl) : null;
+      return url;
     }),
-  
-    getImage: protectedProcedure
-      .input(z.string().nullable())
-      .query(async ({ ctx, input }) => {
-        if (!input) return null;
-        const data = await ctx.db
-          .select({ imageUrl: Plant.imageUrl })
-          .from(Plant)
-          .where(and(eq(Plant.id, input), eq(Plant.userId, ctx.auth.userId)));
-        if (!data[0]?.imageUrl) return null;
-        const url = input ? await getImage(data[0].imageUrl) : null;
-        return url;
-      }),
 
   getAllWateringDays: protectedProcedure.query(({ ctx }) => {
-        return ctx.db
-          .select({ date: Plant.nextWatering })
-          .from(Plant)
-          .where(eq(Plant.userId, ctx.auth.userId))   
-      }),
+    return ctx.db
+      .select({ date: Plant.nextWatering })
+      .from(Plant)
+      .where(eq(Plant.userId, ctx.auth.userId));
+  }),
 
   list: protectedProcedure.query(({ ctx }) => {
     return ctx.db.select().from(Plant).where(eq(Plant.userId, ctx.auth.userId));
@@ -99,6 +99,19 @@ export const plantRouter = {
       .where(eq(Plant.userId, ctx.auth.userId));
   }),
 
+  isAnyPlantWithWateringNeed: protectedProcedure.query(async ({ ctx }) => {
+    const res = await ctx.db
+      .select({ id: Plant.id })
+      .from(Plant)
+      .where(
+        and(
+          eq(Plant.userId, ctx.auth.userId),
+          lte(Plant.nextWatering, moment().toDate()),
+        ),
+      );
+    return res.length > 0;
+  }),
+
   isWatered: protectedProcedure
     .input(z.string())
     .query(async ({ ctx, input }) => {
@@ -109,8 +122,6 @@ export const plantRouter = {
       if (!plant[0]) return false;
       return plant[0]?.nextWatering > moment().toDate();
     }),
-
- 
 
   waterPlant: protectedProcedure
     .input(z.object({ id: z.string(), lastWatering: z.date().optional() }))
@@ -202,9 +213,4 @@ export const plantRouter = {
   delete: protectedProcedure.input(z.string()).mutation(({ ctx, input }) => {
     return ctx.db.delete(Plant).where(eq(Plant.id, input));
   }),
-
-  
-
-
-    
 } satisfies TRPCRouterRecord;
