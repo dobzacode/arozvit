@@ -5,6 +5,7 @@
   "build": {
     "base": {
       "node": "18.20.2",
+      "pnpm": "9.1.3",
       "ios": {
         "resourceClass": "m-medium"
       }
@@ -30,10 +31,14 @@
       }
     },
     "production": {
+      "extends": "base",
       "env": {
         "EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY": "pk_test_YmVsb3ZlZC1yZWRmaXNoLTMzLmNsZXJrLmFjY291bnRzLmRldiQ"
       },
-      "extends": "base"
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      }
     }
   },
   "submit": {

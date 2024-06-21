@@ -29,11 +29,12 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     },
     bundleIdentifier: "com.corentinkittel.arozvit",
     supportsTablet: true,
+    googleServicesFile: process.env.GOOGLE_SERVICES_JSON,
   },
   extra: {
     CLERK_PUBLISHABLE_KEY: process.env.CLERK_PUBLISHABLE_KEY,
     eas: {
-      projectId: "986ce81f-fce0-48e9-8166-ca41c3d9a89d",
+      projectId: "2c017aa8-a96a-4d87-a0d0-6b812dcd5684",
     },
   },
   android: {
@@ -52,7 +53,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       foregroundImage: "./assets/icon.png",
       backgroundColor: "#FFFFFF",
     },
-    googleServicesFile: "./google-services.json",
+    googleServicesFile: process.env.GOOGLE_SERVICES_JSON,
   },
 
   experiments: {
