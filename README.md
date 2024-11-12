@@ -1,9 +1,9 @@
-<h1 align="center">Welcome to AROZVIT 🌱</h1>
+<h1 align="center">Welcome to Arozvit 🌱</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-0.1.0-blue.svg?cacheSeconds=2592000" />
 </p>
 
-> AROZVIT is a comprehensive plant management tool designed to help you effortlessly manage the watering cycles of your plants. With AROZVIT, you can track essential details, upload photos, and organize information about each of your plants to ensure they thrive.
+> Arozvit is a comprehensive plant management tool designed to help you effortlessly manage the watering cycles of your plants. With Arozvit, you can track essential details, upload photos, and organize information about each of your plants to ensure they thrive.
 
 ### ✨ [Demo](https://arozvit.vercel.app)
 
@@ -17,6 +17,7 @@
 - **Expo**: Supporting mobile interactions with Expo, allowing plant care management on the go.
 - **tRPC**: Implementing type-safe and efficient API interactions with tRPC for reliable client-server communication.
 - **S3 Integration**: Securely storing plant images with S3, providing an organized gallery for plant monitoring.
+- **Turborepo**: Managing and coordinating the monorepo structure with Turborepo, optimizing workflows and build times for efficient development across the application.
 
 ## Author
 
